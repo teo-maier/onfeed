@@ -17,7 +17,6 @@ export function App() {
   return (
     <div className={styles['app-wrapper']}>
       <OntrackRoutes />
-      <h1 className={styles['test']}>Hello</h1>;
     </div>
   );
 }
