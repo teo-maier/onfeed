@@ -1,0 +1,169 @@
+@import 'colors';
+@import 'mixins';
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: fit-content;
+	cursor: pointer;
+	padding: 16px 24px;
+	border-radius: 30px;
+	color: $primary;
+	transition: background-color 150ms;
+
+	&--icon {
+		padding: 8px;
+		width: 32px;
+		height: 32px;
+		border-radius: 12px;
+	}
+
+	// Typography
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 24px;
+
+	&--disabled {
+		color: $white !important;
+		border: none !important;
+		background-color: color($greyscale, 500) !important;
+		cursor: not-allowed;
+	}
+
+	&--compact {
+		padding: 8px 16px;
+		border-radius: 12px;
+		font-size: 14px;
+
+		// Typography
+		font-style: normal;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 16px;
+	}
+
+	&--full-width {
+		width: 100%;
+	}
+
+	&--primary {
+		background-color: $primary;
+		color: $white;
+		font-weight: 600;
+
+		&:hover,
+		&:focus {
+			background-color: color($primary-shades, 600);
+		}
+
+		&:active {
+			background-color: color($primary-shades, 300);
+		}
+
+		&--danger {
+			color: $white;
+			background-color: color($red-shades, 500);
+			font-weight: 500;
+
+			&:hover,
+			&:focus {
+				background-color: color($red-shades, 600);
+			}
+
+			&:active {
+				background-color: color($red-shades, 300);
+			}
+		}
+
+		&--success {
+			color: $white;
+			background-color: color($green-shades, 500);
+			font-weight: 500;
+
+			&:hover,
+			&:focus {
+				background-color: color($green-shades, 600);
+			}
+
+			&:active {
+				background-color: color($green-shades, 300);
+			}
+		}
+	}
+
+	&--secondary {
+		background-color: $secondary;
+		color: $primary;
+
+		&:hover,
+		&:focus {
+			background-color: color($primary-shades, 800);
+		}
+
+		&:active {
+			background-color: color($primary-shades, 700);
+		}
+
+		&--danger {
+			color: color($red-shades, 500);
+			background-color: color($red-shades, 900);
+			font-weight: 500;
+
+			&:hover,
+			&:focus {
+				background-color: color($red-shades, 800);
+			}
+
+			&:active {
+				background-color: color($red-shades, 700);
+			}
+		}
+
+		&--success {
+			color: color($green-shades, 500);
+			background-color: color($green-shades, 900);
+			font-weight: 500;
+
+			&:hover,
+			&:focus {
+				background-color: color($green-shades, 800);
+			}
+
+			&:active {
+				background-color: color($green-shades, 700);
+			}
+		}
+	}
+
+	&--tertiary {
+		background-color: transparent;
+		color: color($greyscale, 300);
+		border: 1px solid color($greyscale, 500);
+
+		&:hover,
+		&:focus {
+			background-color: color($greyscale, 700);
+		}
+
+		&:active {
+			background-color: color($greyscale, 600);
+		}
+	}
+
+	&--ghost {
+		background-color: transparent;
+		color: color($greyscale, 300);
+
+		&:hover,
+		&:focus {
+			background-color: color($greyscale, 700);
+		}
+
+		&:active {
+			background-color: color($greyscale, 600);
+		}
+	}
+}

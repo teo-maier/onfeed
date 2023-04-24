@@ -1,0 +1,18 @@
+@import "./colors.scss";
+@import "./constants.scss";
+@import "./mixins.scss";
+@import "./normalize.scss";
+@import "./typography.scss";
+
+:export {
+	color: {
+		black: $black;
+		white: $white;
+		primary: $primary;
+		secondary: $secondary;
+		time_off: $time_off;
+		sick_leave: $sick_leave;
+		pending: $pending;
+		declined: $declined;
+	}
+}

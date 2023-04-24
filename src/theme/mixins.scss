@@ -1,0 +1,20 @@
+@function color($palette, $shade) {
+	$color: map-get($palette, $shade);
+	@return $color;
+}
+
+@mixin max-width {
+	max-width: 1440px;
+}
+
+@mixin shadow($color: rgba(0, 0, 0, 0.1)) {
+	box-shadow: 0px 5px 30px $color;
+}
+
+@mixin input-highlight {
+	box-shadow: 0px 0px 4px rgba(35, 81, 212, 0.66);
+}
+
+@mixin input-error-highlight {
+	box-shadow: 0px 0px 4px rgba(239, 92, 60, 0.66);
+}

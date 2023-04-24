@@ -1,1 +1,13 @@
-/* Your styles goes here. */
+@import 'colors';
+
+.app-wrapper {
+  display: grid;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow: auto;
+}
+
+.test {
+  font-size: 80px;
+  color: $primary;
+}

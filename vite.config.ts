@@ -6,6 +6,14 @@ import viteTsConfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   cacheDir: './node_modules/.vite/onfeed',
 
+  css: {
+    preprocessorOptions: {
+      scss: {
+        includePaths: ['src/theme'],
+      },
+    },
+  },
+
   server: {
     port: 4200,
     host: 'localhost',

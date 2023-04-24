@@ -1,0 +1,61 @@
+@import 'mixins';
+@import 'colors';
+
+.log-in-container {
+  display: flex;
+  flex-direction: column;
+  padding: 64px 32px 32px;
+  background-color: $white;
+  border-radius: 32px;
+  @include shadow;
+  width: min(356px, 90vw);
+  gap: 64px;
+
+  input {
+    margin-bottom: 0px;
+  }
+
+  button:nth-child(1) {
+    margin-top: 40px;
+  }
+}
+
+.log-in-error {
+  display: flex;
+  justify-content: center;
+  background-color: $white;
+  border-radius: 32px;
+  color: color($red-shades, 300);
+  margin-bottom: 16px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-weight: 400;
+  margin-top: 24px;
+}
+
+.form-input {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1px solid color($greyscale, 500);
+  box-sizing: border-box;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    + .form-input__container {
+      margin-top: 16px;
+    }
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

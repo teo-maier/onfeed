@@ -1,15 +1,24 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { OntrackRoutes } from '../../src/routes/ontrack.routes';
 import styles from './app.module.scss';
-
-import NxWelcome from './nx-welcome';
+import { setAuthenticated, setRole } from './redux/slices/auth-slice';
+import { AuthService } from './services/auth/authentication.service';
 
 export function App() {
-  return (
-    <>
-      <NxWelcome title="onfeed" />
+  const dispatch = useDispatch();
 
-      <div />
-    </>
+  useEffect(() => {
+    dispatch(setRole(AuthService.getRoleFromToken()));
+    dispatch(setAuthenticated(AuthService.isAuthenticated()));
+  }, []);
+
+  return (
+    <div className={styles['app-wrapper']}>
+      <OntrackRoutes />
+      <h1 className={styles['test']}>Hello</h1>;
+    </div>
   );
 }
 

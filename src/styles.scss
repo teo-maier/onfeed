@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+	The files below are imported from the `components` library
+	The `theme` folder contains all SCSS constants, mixins and styles that need to be available to the components as well.
+
+	In this file, additional styles can be added that are not needed in the components library.
+*/
+// @import 'constants';
+@import 'global.module';
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+
+  // Prevent focus ring when clicking
+  &:focus:not(:focus-visible) {
+    outline: none !important;
+  }
+
+  &:focus {
+    outline: 2px inset rgba(0, 0, 0, 0.5);
+    outline-offset: 2px;
+  }
+}
+
+button {
+  border: none;
+  outline: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.vertical-bar {
+  border-left: 1px solid;
+  border-color: color($greyscale, 500);
+  border-width: 1px;
+  height: 100%;
+}
+
+.horizontal-bar {
+  border: 0;
+  height: 1px;
+  background: color($greyscale, 500);
+  margin: 8px 0;
+}
