@@ -1,5 +1,5 @@
 import { LogInForm } from '../log-in-form';
-import styles from '../log-in-form.module.scss';
+import styles from './log-in.module.scss';
 
 export const LogIn = () => {
   return (

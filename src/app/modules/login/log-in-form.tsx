@@ -1,11 +1,3 @@
-import {
-  Flex,
-  Group,
-  Paper,
-  PasswordInput,
-  Stack,
-  TextInput,
-} from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../../services/auth/authentication.service';
@@ -14,8 +6,10 @@ import { useDispatch } from 'react-redux';
 import { useForm } from '@mantine/form';
 import { login } from '../../redux/slices/auth-slice';
 import classnames from 'classnames';
-import { Button } from 'src/app/components/button/button';
-import { ButtonSize, ButtonVariant } from 'src/helpers/constants/enums';
+import { ButtonSize, ButtonVariant } from './../../../helpers/constants/enums';
+import { ReactComponent as Logo } from './../../../assets/onfeed-logo.svg';
+import { Form } from './../../components/form/form';
+import { ONFEED_ROUTES } from 'src/helpers/constants';
 
 export interface UserLoginData {
   email: string;
@@ -37,13 +31,13 @@ const LogInForm = () => {
     AuthService.login(email, password)
       .then((token) => {
         const userRole = AuthService.getRoleFromToken(token);
-        if (userRole) {
+        // if (userRole) {
           dispatch(login({ isAuthenticated: true, role: userRole }));
-          navigate('/dashboard');
-        } else {
-          setMessage('Invalid credentials or role');
-          setLoading(false);
-        }
+          navigate(ONFEED_ROUTES.DASHBOARD);
+        // } else {
+        //   setMessage('Invalid credentials or role');
+        //   setLoading(false);
+        // }
       })
       .catch(({ response }) => {
         let errorMsg = response?.data?.error || response?.data || response;
@@ -67,59 +61,105 @@ const LogInForm = () => {
   });
 
   return (
-    <Flex justify={'center'} className={styles['log-in-container']}>
-      <Paper shadow="sm" radius="md" p="xl" withBorder>
-        <form
-          onSubmit={form.onSubmit(handleLogin)}
-          className={classnames(styles['form-container'])}
-        >
-          <Stack style={{ width: '20rem' }}>
-            <TextInput
-              className={classnames('caption', styles['form-input__container'])}
-              required
-              label="Email"
-              placeholder="hello@mantine.dev"
-              value={form.values.email}
-              onChange={(event) =>
-                form.setFieldValue('email', event.currentTarget.value)
-              }
-              error={form.errors.email && 'Invalid email'}
-              radius="md"
-            />
+    // <div className={styles['log-in-container']}>
+    //   <form
+    //     onSubmit={form.onSubmit(handleLogin)}
+    //     className={classnames(styles['form-container'])}
+    //   >
+    //     <Stack style={{ width: '20rem' }}>
+    //       <TextInput
+    //         className={classnames('caption', styles['form-input__container'])}
+    //         required
+    //         label="Email"
+    //         placeholder="hello@mantine.dev"
+    //         value={form.values.email}
+    //         onChange={(event) =>
+    //           form.setFieldValue('email', event.currentTarget.value)
+    //         }
+    //         error={form.errors.email && 'Invalid email'}
+    //         radius="md"
+    //       />
 
-            <PasswordInput
-              className={classnames('caption', styles['form-input__container'])}
-              required
-              label="Password"
-              placeholder="Your password"
-              value={form.values.password}
-              onChange={(event) =>
-                form.setFieldValue('password', event.currentTarget.value)
-              }
-              error={
-                form.errors.password &&
-                'Password should include at least 6 characters'
-              }
-              radius="md"
-            />
-          </Stack>
+    //       <PasswordInput
+    //         className={classnames('caption', styles['form-input__container'])}
+    //         required
+    //         label="Password"
+    //         placeholder="Your password"
+    //         value={form.values.password}
+    //         onChange={(event) =>
+    //           form.setFieldValue('password', event.currentTarget.value)
+    //         }
+    //         error={
+    //           form.errors.password &&
+    //           'Password should include at least 6 characters'
+    //         }
+    //         radius="md"
+    //       />
+    //     </Stack>
 
-          <div className={classnames(styles['button-container'])}>
-            <Button
-              type="submit"
-              fullWidth={true}
-              size={ButtonSize.LARGE}
-              variant={ButtonVariant.PRIMARY}
-            >
-              {'Log in'}
-            </Button>
-            {/* <Button type="submit" radius="xl">
-                {'Login'}
-              </Button> */}
-          </div>
-        </form>
-      </Paper>
-    </Flex>
+    //     <div className={classnames(styles['button-container'])}>
+    //       <Button
+    //         type="submit"
+    //         fullWidth={true}
+    //         size={ButtonSize.LARGE}
+    //         variant={ButtonVariant.PRIMARY}
+    //       >
+    //         {'Log in'}
+    //       </Button>
+    //       {/* <Button type="submit" radius="xl">
+    //             {'Login'}
+    //           </Button> */}
+    //     </div>
+    //   </form>
+    // </div>
+    <>
+      {message && (
+        <div className={classnames('caption', styles['log-in-error'])}>
+          Error: {message.toLocaleLowerCase()}!
+        </div>
+      )}
+      <div className={styles['log-in-container']}>
+        <Logo />
+        <Form
+          loading={loading}
+          onSubmit={handleLogin}
+          buttonText="Log in"
+          fields={[
+            {
+              name: 'email',
+              type: 'email',
+              label: 'Email',
+              placeholder: 'e.g. address@stud.ubbcluj.com',
+              autoComplete: 'username',
+              config: {
+                required: {
+                  value: true,
+                  message: 'Please enter an email',
+                },
+              },
+            },
+            {
+              name: 'password',
+              type: 'password',
+              label: 'Password',
+              placeholder: 'Enter your password',
+              autoComplete: 'current-password',
+              config: {
+                required: {
+                  value: true,
+                  message: 'Please enter a password',
+                },
+              },
+            },
+          ]}
+          submitButtonProps={{
+            fullWidth: true,
+            size: ButtonSize.LARGE,
+            variant: ButtonVariant.PRIMARY,
+          }}
+        />
+      </div>
+    </>
   );
 };
 

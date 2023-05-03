@@ -1,0 +1,41 @@
+@import 'mixins';
+@import 'colors';
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	font-weight: 400;
+	margin-top: 24px;
+}
+
+.label {
+	color: color($greyscale, 300);
+}
+
+.form-input {
+	padding: 12px 24px;
+	border-radius: 12px;
+	border: 1px solid color($greyscale, 500);
+	box-sizing: border-box;
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		+ .form-input__container {
+			margin-top: 16px;
+		}
+	}
+}
+
+.button-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	&--inline {
+		flex-direction: row;
+	}
+}

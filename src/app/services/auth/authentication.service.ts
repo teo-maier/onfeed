@@ -19,12 +19,22 @@ export const AuthService = {
    * @param password User password
    */
   login: (email: string, password: string): Promise<any> => {
-    return HttpClient.post('/auth/authenticate', {
-      email,
-      password,
-    }).then((response) => {
+    return HttpClient.post(
+      '/auth/authenticate',
+      {
+        email,
+        password,
+      },
+      {
+        headers: {
+          Authorization:
+            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiQGIiLCJpYXQiOjE2ODMxMjQ2ODgsImV4cCI6MTY4MzIxMTA4OH0.Yhf7DOkgbecePe7ufdpTePBREtpNJ0TjxrSsRCxydqY',
+        },
+      }
+    ).then((response) => {
       console.log(response);
       if (response.headers['authorization']) {
+        console.log(response.headers['authorization']);
         sessionStorage.setItem('token', response.headers['authorization']);
       }
     });
