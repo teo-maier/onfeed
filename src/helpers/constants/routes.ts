@@ -2,6 +2,7 @@ export const NEW_ENTITY_ROUTE = 'new';
 
 export const ONFEED_ROUTES = {
 	LOGIN: `/login`,
+	LOGOUT: `/logout`,
 	UNAUTHORIZED: `/unauthorized`,
 	NOT_FOUND: `/not-found`,
 	DASHBOARD: `/dashboard`,

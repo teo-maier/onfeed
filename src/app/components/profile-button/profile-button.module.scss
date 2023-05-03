@@ -1,0 +1,26 @@
+@import 'colors';
+@import 'mixins';
+@import 'typography';
+
+.user-button {
+	&-container {
+		padding: 0px 8px 0px 8px;
+
+		h6 {
+			margin: 0;
+		}
+	}
+
+	&--overline {
+		color: color($greyscale, 300) !important;
+		width: 52px;
+	}
+
+	&--balance {
+		width: 32px;
+	}
+
+	&--balance-start {
+		color: color($greyscale, 000) !important;
+	}
+}

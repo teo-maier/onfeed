@@ -8,8 +8,8 @@ import { login } from '../../redux/slices/auth-slice';
 import classnames from 'classnames';
 import { ButtonSize, ButtonVariant } from './../../../helpers/constants/enums';
 import { ReactComponent as Logo } from './../../../assets/onfeed-logo.svg';
-import { Form } from './../../components/form/form';
 import { ONFEED_ROUTES } from 'src/helpers/constants';
+import { Form } from '@onfeed/components';
 
 export interface UserLoginData {
   email: string;

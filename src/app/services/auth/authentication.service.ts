@@ -25,12 +25,12 @@ export const AuthService = {
         email,
         password,
       },
-      {
-        headers: {
-          Authorization:
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiQGIiLCJpYXQiOjE2ODMxMjQ2ODgsImV4cCI6MTY4MzIxMTA4OH0.Yhf7DOkgbecePe7ufdpTePBREtpNJ0TjxrSsRCxydqY',
-        },
-      }
+      // {
+      //   headers: {
+      //     Authorization:
+      //       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiQGIiLCJpYXQiOjE2ODMxMjQ2ODgsImV4cCI6MTY4MzIxMTA4OH0.Yhf7DOkgbecePe7ufdpTePBREtpNJ0TjxrSsRCxydqY',
+      //   },
+      // }
     ).then((response) => {
       console.log(response);
       if (response.headers['authorization']) {
