@@ -1,0 +1,14 @@
+@import 'colors', 'mixins';
+
+.modal-answer-content {
+  position: relative;
+  background-color: $white;
+  @include shadow;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  width: 500px;
+  border-radius: 12px;
+  gap: 16px;
+}

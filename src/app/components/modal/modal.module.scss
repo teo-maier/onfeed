@@ -12,10 +12,6 @@
   width: 600px;
   border-radius: 12px;
   gap: 16px;
-  &--avatar {
-    display: flex;
-    align-self: center;
-  }
 }
 
 .input-modal {
@@ -46,5 +42,3 @@
 .my-custom-select {
   width: 260px;
 }
-
-

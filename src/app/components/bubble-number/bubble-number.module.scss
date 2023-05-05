@@ -1,0 +1,26 @@
+@import 'colors', 'mixins';
+
+.bubble-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: color($primary-shades, 500);
+  border-radius: 50%;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  align-self: center;
+  color: color($greyscale, 1000);
+  &--grade {
+    background-color: $white;
+    outline: 2px solid color($greyscale, 500);
+    color: color($greyscale, 500);
+  }
+}
+
+.bubble-number-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px;
+}

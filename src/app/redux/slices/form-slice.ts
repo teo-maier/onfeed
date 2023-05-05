@@ -6,6 +6,7 @@ export interface FormSliceState {
   formQuestions: FormQuestion[];
   question: FormQuestion | null;
   questionNumber: number;
+  isBubbleClicked: boolean;
 }
 
 const initialState: FormSliceState = {
@@ -13,12 +14,13 @@ const initialState: FormSliceState = {
   formQuestions: [
     {
       id: 1,
-      question: 'Write your question here...',
+      questionText: 'Write your question here...',
       answerType: '',
     },
   ],
   question: null,
   questionNumber: 1,
+  isBubbleClicked: false,
 };
 
 export const formSlice = createSlice({
@@ -55,7 +57,7 @@ export const formSlice = createSlice({
         ...state.formQuestions,
         {
           id: state.questionNumber,
-          question: 'Write your question here...',
+          questionText: 'Write your question here...',
           answerType: '',
         },
       ];
@@ -68,6 +70,9 @@ export const formSlice = createSlice({
         state.formQuestions.splice(index, 1);
       }
     },
+    setIsBubbleClicked: (state, { payload }: PayloadAction<boolean>) => {
+      state.isBubbleClicked = payload;
+    },
   },
 });
 
@@ -79,6 +84,7 @@ export const {
   setQuestionNumber,
   setDefaultFormQuestion,
   removeQuestion,
+  setIsBubbleClicked,
 } = formSlice.actions;
 
 export default formSlice.reducer;

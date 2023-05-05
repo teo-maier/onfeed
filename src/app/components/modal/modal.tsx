@@ -6,24 +6,14 @@ import {
   Flex,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import {
-  OptionType,
-  OptionTypeLabel,
-} from 'src/helpers/constants/option-type.enum';
+import { OptionTypeLabel } from 'src/helpers/constants/option-type.enum';
 import { Input as CustomInput } from '../input/input';
 import { SelectOption } from '../option/select/select-option';
-import classnames from 'classnames';
-import styles from './modal.module.scss';
-import {
-  FormSliceState,
-  removeQuestion,
-  RootState,
-  setFormQuestions,
-} from '@onfeed/redux';
-import { useDispatch, useSelector } from 'react-redux';
 import { FormQuestion } from 'src/app/models/form/form-question';
 import { useDisclosure } from '@mantine/hooks';
-import { QuestionNumberComponent } from '../question-number/question-number';
+import { BubbleNumberComponent } from '../bubble-number/bubble-number';
+import classnames from 'classnames';
+import styles from './modal.module.scss';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -66,14 +56,14 @@ const ModalFormTemplate: React.FC<ModalProps> = ({
         ? options.length > 0 &&
           handleSave({
             id: questionNumber,
-            question: question,
+            questionText: question,
             answerType: selectedValue,
             options: options,
           })
         : selectedValue &&
           handleSave({
             id: questionNumber,
-            question: question,
+            questionText: question,
             answerType: selectedValue,
           });
     }
@@ -88,7 +78,7 @@ const ModalFormTemplate: React.FC<ModalProps> = ({
       />
       {/* this should probably be a textarea */}
       <Flex direction={'row'} w="100%">
-        <QuestionNumberComponent value={questionIndex} />
+        <BubbleNumberComponent value={questionIndex} bubbleType="number" />
         <CustomInput
           className={classnames('body--secondary', styles['input-modal'])}
           placeholder={inputPlaceholder}

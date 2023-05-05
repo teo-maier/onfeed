@@ -1,0 +1,9 @@
+@import 'colors', 'mixins';
+
+.mantine-Chip-iconWrapper {
+  color: color($primary-shades, 500);
+}
+
+.mantine-Group-root {
+  width: 100%;
+}

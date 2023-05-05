@@ -1,7 +1,8 @@
 
 export interface FormQuestion {
   id: number;
-  question: string;
+  questionText: string;
   answerType: string;
   options?: Array<string>;
+  maxGradeOrStars?: number;
 }
