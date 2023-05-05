@@ -8,6 +8,7 @@ import { AuthService } from '../app/services/auth/authentication.service';
 import { Dashboard } from 'src/app/modules/dashboard/dashboard';
 import { PrivateRoute } from './private.route';
 import { AppLayout, FeedbackPage, FormPage } from '@onfeed/modules';
+import { DemoAccordion } from 'src/app/modules/form/demo-accordion';
 
 export const OnfeedRoutes = () => {
   const { isAuthenticated, role } = useSelector<RootState, AuthSliceState>(

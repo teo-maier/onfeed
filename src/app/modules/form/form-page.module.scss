@@ -1,0 +1,34 @@
+.form-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-button-container {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+  gap: 8px;
+
+  &--edit {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.form-title {
+  display: flex;
+  justify-content: center;
+  margin: 0px 0px 56px 0px;
+}

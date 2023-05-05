@@ -9,12 +9,13 @@ import {
 import { ButtonSize, ButtonVariant } from '../../../helpers/constants/enums';
 import { Button, ButtonProps } from '../button/button';
 import { Input, InputProps } from '../input/input';
+import { SelectProps } from '../select/select';
 import styles from './form.module.scss';
 
-type FormField = ({ type: HTMLInputTypeAttribute } & Omit<
-  InputProps,
-  'type'
->) & { config: RegisterOptions };
+export type FormField = (
+  | ({ type: HTMLInputTypeAttribute } & Omit<InputProps, 'type'>)
+  | ({ type: 'select'; value?: string } & SelectProps)
+) & { config: RegisterOptions };
 
 interface FormProps {
   loading?: boolean;

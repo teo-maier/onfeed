@@ -9,110 +9,119 @@ $inputBottomSpacing: 16px;
 $iconOffset: 12px;
 
 .input {
-	flex-grow: 1;
-	min-height: 32px;
-	border-radius: 12px;
-	padding: $inputVerticalPadding $inputHorizontalPadding;
-	margin-bottom: $inputBottomSpacing;
-	border: 1px solid color($greyscale, 500);
-	line-height: 100%;
-	transition: border-color 150ms;
+  flex-grow: 1;
+  min-height: 32px;
+  border-radius: 12px;
+  padding: $inputVerticalPadding $inputHorizontalPadding;
+  margin-bottom: $inputBottomSpacing;
+  border: 1px solid color($greyscale, 500);
+//   border: none;
+  line-height: 100%;
+  transition: border-color 150ms;
 
-	&::placeholder {
-		color: color($greyscale, 400);
-	}
+  &::placeholder {
+    color: color($greyscale, 400);
+  }
 
-	&:hover {
-		border: 1px solid color($greyscale, 300);
-	}
+  &:hover {
+    border: 1px solid color($greyscale, 300);
+  }
 
-	&:active {
-		border: 1px solid $primary;
-	}
+  &:active {
+    border: 1px solid $primary;
+  }
 
-	&:focus {
-		border: 1px solid $primary;
-		outline: 0px;
-	}
+  &:focus {
+    border: 1px solid $primary;
+    outline: 0px;
+  }
 
-	&__wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 4px;
-		position: relative;
-		width: 100%;
+  &:focus-visible {
+    border: none;
+    outline: 0px;
+  }
 
-		&--disabled {
-			.input {
-				border: 1px solid color($greyscale, 500);
-				background-color: $white;
-				color: color($greyscale, 400);
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    width: 100%;
 
-				&:hover {
-					border: 1px solid color($greyscale, 500);
-				}
+    &--disabled {
+      .input {
+        border: 1px solid color($greyscale, 500);
+        background-color: $white;
+        color: color($greyscale, 400);
 
-				&::placeholder {
-					color: $white;
-				}
-			}
-		}
+        &:hover {
+          border: 1px solid color($greyscale, 500);
+        }
 
-		&--error {
-			.input {
-				border: 1px solid color($red-shades, 500);
-			}
+        &::placeholder {
+          color: $white;
+        }
+      }
+    }
 
-			label {
-				color: color($red-shades, 500) !important;
-			}
-		}
+    &--error {
+      .input {
+        border: 1px solid color($red-shades, 500);
+      }
 
-		label {
-			color: color($greyscale, 300);
-		}
-	}
+      label {
+        color: color($red-shades, 500) !important;
+      }
+    }
 
-	&__container {
-		position: relative;
-		display: flex;
-		flex-grow: 1;
-	}
+    label {
+      color: color($greyscale, 300);
+    }
+  }
 
-	&__icon {
-		position: absolute;
-		display: flex;
-		align-items: center;
-		top: 1px;
-		height: calc(100% - #{$inputVerticalPadding} * 2 - 1px * 2);
+  &__container {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+  }
 
-		&--leading {
-			left: $iconOffset;
+  &__icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 1px;
+    height: calc(100% - #{$inputVerticalPadding} * 2 - 1px * 2);
 
-			~ .input {
-				padding-left: calc(#{$inputVerticalPadding} + #{$iconOffset} * 2);
-			}
-		}
+    &--leading {
+      left: $iconOffset;
 
-		&--trailing {
-			right: 12px;
+      ~ .input {
+        padding-left: calc(#{$inputVerticalPadding} + #{$iconOffset} * 2);
+      }
+    }
 
-			~ .input {
-				padding-right: calc(#{$inputVerticalPadding} + #{$iconOffset} * 2);
-			}
-		}
-	}
+    // edited for modal
+    &--trailing {
+      // right: 12px;
+      right: 8px;
+      margin-top: 8px;
 
-	&__error {
-		position: absolute;
-		bottom: 0;
-		color: color($red-shades, 500);
-	}
+      ~ .input {
+        padding-right: calc(#{$inputVerticalPadding} + #{$iconOffset} * 2);
+      }
+    }
+  }
+
+  &__error {
+    position: absolute;
+    bottom: 0;
+    color: color($red-shades, 500);
+  }
 }
 
 input[type='search']::-webkit-search-decoration,
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-results-button,
 input[type='search']::-webkit-search-results-decoration {
-	-webkit-appearance: none;
+  -webkit-appearance: none;
 }

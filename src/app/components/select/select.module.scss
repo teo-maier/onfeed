@@ -1,0 +1,65 @@
+@import 'colors', 'mixins';
+
+$optionPanelHeight: 200px;
+
+.select {
+  padding: 8px 16px;
+  border: 1px solid color($greyscale, 500);
+  border-radius: 12px;
+
+  &__wrapper {
+    position: relative;
+    // border: 1px solid color($greyscale, 500);
+    border-radius: 12px;
+    margin: none;
+  }
+
+  &__options {
+    @include shadow;
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    padding: 8px;
+    background-color: $white;
+    border-radius: 12px;
+    max-height: $optionPanelHeight;
+    overflow: auto;
+
+    &--top {
+      bottom: 100%;
+    }
+
+    &--bottom {
+      top: 100%;
+    }
+  }
+
+  &__icon {
+    transition: transform 300ms;
+    transform: rotate(0);
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.select-item {
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 4px;
+  user-select: none;
+  transition: all 300ms;
+
+  &__icon {
+    margin: 0.5rem;
+  }
+
+  &:hover {
+    background-color: color($greyscale, 600);
+  }
+}
+
+:export {
+  optionPanelHeight: $optionPanelHeight;
+}

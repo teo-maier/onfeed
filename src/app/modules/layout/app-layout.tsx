@@ -34,7 +34,7 @@ const AppLayout: React.FC = () => {
         maw="none"
         mx={0}
         p={0}
-        style={{ overflow: 'auto' }}
+        style={{ overflow: 'auto', marginTop: '54px' }}
       >
         {/* <LoadingOverlay visible={loading} loader={<Loader variant="dots" />} /> */}
         {/* {!loading && <Outlet />} */}

@@ -7,6 +7,7 @@ import styles from './input.module.scss';
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;
+  placeholder?: string;
   error?: React.ReactNode;
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = React.forwardRef(
   (
     {
       label,
+      placeholder,
       name,
       disabled,
       error,
@@ -83,6 +85,7 @@ const Input: React.FC<InputProps> = React.forwardRef(
             ref={ref}
             name={name}
             disabled={disabled}
+            placeholder={placeholder}
             className={classnames(styles['input'], className, {
               [styles['input--error']]: !!error,
             })}
