@@ -1,4 +1,4 @@
-import { Button } from '@onfeed/components';
+import { BubbleButton, Button } from '@onfeed/components';
 import { ButtonVariant } from '@onfeed/helpers';
 import {
   FormSliceState,
@@ -73,6 +73,7 @@ const FormPage = () => {
             {'Add question'}
           </Button>
         </div>
+        <BubbleButton position="right" />
       </div>
     </div>
   );

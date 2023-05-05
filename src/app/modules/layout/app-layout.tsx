@@ -24,7 +24,7 @@ const AppLayout: React.FC = () => {
       // navbar={<SideNav routesTop={routes.top} routesBottom={routes.bottom} />}
       header={<DashboardHeader />}
       styles={() => ({
-        main: { maxHeight: 'calc(100vh - 54px)', overflow: 'hidden' },
+        main: { overflow: 'hidden', maxHeight: 'calc(100vh - 74px)', minHeight: 'calc(100vh - 74px)' },
       })}
     >
       <Container

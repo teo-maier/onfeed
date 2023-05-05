@@ -1,5 +1,5 @@
 .form-wrapper {
-  height: 100vh;
+  height: calc(100vh - 54px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -31,4 +31,11 @@
   display: flex;
   justify-content: center;
   margin: 0px 0px 56px 0px;
+}
+
+.bubble {
+  position: absolute;
+  top: 50%;
+  right: -23px;
+  transform: translate(-50%, -50%);
 }

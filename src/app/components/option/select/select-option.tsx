@@ -1,15 +1,10 @@
-import { ActionIcon, Badge, CloseButton, Flex, Grid } from '@mantine/core';
+import { Flex, Grid } from '@mantine/core';
 import { Input as CustomInput } from '../../input/input';
 import classnames from 'classnames';
 import { IoChevronForwardOutline } from 'react-icons/io5';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './select-option.module.scss';
-import {
-  FormSliceState,
-  removeOption,
-  RootState,
-  setOptions,
-} from '@onfeed/redux';
+import { FormSliceState, RootState, setOptions } from '@onfeed/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomBadge } from '../badge/badge';
 
@@ -45,9 +40,6 @@ const SelectOption: React.FC<SelectOptionProps> = ({ getOptions }) => {
 
   return (
     <div className={classnames(styles['options-content'])}>
-      {/* <div className={classnames('body--secondary', styles['options-title'])}>
-        Please add options
-      </div> */}
       <Flex direction="column" justify="space-between" gap={'md'}>
         <Flex w="40%" p="8px 16px">
           <CustomInput
