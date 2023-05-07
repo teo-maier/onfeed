@@ -7,8 +7,7 @@ import { RootState } from '../app/redux/store';
 import { AuthService } from '../app/services/auth/authentication.service';
 import { Dashboard } from 'src/app/modules/dashboard/dashboard';
 import { PrivateRoute } from './private.route';
-import { AppLayout, FeedbackPage, FormPage } from '@onfeed/modules';
-import { DemoAccordion } from 'src/app/modules/form/demo-accordion';
+import { AppLayout, FeedbackPage, CreateForm, ViewForm } from '@onfeed/modules';
 
 export const OnfeedRoutes = () => {
   const { isAuthenticated, role } = useSelector<RootState, AuthSliceState>(
@@ -47,7 +46,19 @@ export const OnfeedRoutes = () => {
             path={`${ONFEED_ROUTES.DASHBOARD}/*`}
             element={<Dashboard />}
           />
-          <Route path={`${ONFEED_ROUTES.FORM}/*`} element={<FormPage />} />
+          <Route
+            path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.NEW}`}
+            element={<CreateForm />}
+          />
+          <Route
+            path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
+            element={<>Edit form</>}
+          />
+          <Route
+            path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+            element={<ViewForm/>}
+          />
+
           <Route
             path={`${ONFEED_ROUTES.FEEDBACK}/*`}
             element={<FeedbackPage />}

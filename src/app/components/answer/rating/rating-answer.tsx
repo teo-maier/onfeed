@@ -1,6 +1,5 @@
 import { Flex, Rating, rem } from '@mantine/core';
 import { useState } from 'react';
-import { OptionTypeLabel } from 'src/helpers/constants/option-type.enum';
 import { BubbleNumberComponent } from '../../bubble-number/bubble-number';
 import {
   EmojiFrown,
@@ -9,21 +8,16 @@ import {
   EmojiHeartEyes,
   EmojiSmile,
 } from 'react-bootstrap-icons';
+import { OptionTypeLabel } from '@onfeed/helpers';
 
 interface RatingAnswerProps {
   ratingType: string;
-  maxNumber: number;
 }
 
 // when a number is clicked, itself and the prev numbers will be colored blue
 // indicating the desired grade given
-const RatingAnswer: React.FC<RatingAnswerProps> = ({
-  maxNumber,
-  ratingType,
-}) => {
+const RatingAnswer: React.FC<RatingAnswerProps> = ({ ratingType }) => {
   const [value, setValue] = useState(0);
-
-  const sizeArray = [...Array(maxNumber).keys()];
 
   const getEmptyIcon = (value: number) => {
     const defaultProps = { size: rem(24), color: 'gray' };
@@ -44,10 +38,6 @@ const RatingAnswer: React.FC<RatingAnswerProps> = ({
   console.log(ratingType);
   return (
     <Flex direction="row" gap="4px" style={{ alignSelf: 'center' }}>
-      {ratingType === OptionTypeLabel.GRADE &&
-        sizeArray.map((_, index) => (
-          <BubbleNumberComponent value={index} bubbleType="grade" />
-        ))}
       {ratingType === OptionTypeLabel.STAR && (
         // color on stars & they should be disabled !!!
         <Rating defaultValue={3} count={5} />

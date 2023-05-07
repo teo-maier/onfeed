@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FormQuestion } from 'src/app/models/form/form-question';
+import { Form, Question } from 'src/app/models/form/form';
+import { v4 as uuid } from 'uuid';
 
 export interface FormSliceState {
   options: Array<string>;
-  formQuestions: FormQuestion[];
-  question: FormQuestion | null;
-  questionNumber: number;
-  isBubbleClicked: boolean;
+  form: Form | null;
+  questions: Question[];
 }
 
 const initialState: FormSliceState = {
   options: [],
-  formQuestions: [
+  form: null,
+  questions: [
     {
-      id: 1,
-      questionText: 'Write your question here...',
-      answerType: '',
+      id: uuid(),
+      value: 'Write your question here...',
+      answer: {
+        options: [],
+        type: '',
+      },
     },
   ],
-  question: null,
-  questionNumber: 1,
-  isBubbleClicked: false,
 };
 
 export const formSlice = createSlice({
@@ -34,44 +34,39 @@ export const formSlice = createSlice({
       const index = state.options.indexOf(payload);
       state.options.splice(index, 1);
     },
-    setQuestion: (state, { payload }: PayloadAction<FormQuestion>) => {
-      state.question = payload;
+    setForm: (state, { payload }: PayloadAction<Form>) => {
+      state.form = payload;
     },
-    setQuestionNumber: (state, { payload }: PayloadAction<number>) => {
-      state.questionNumber = payload;
-    },
-    setFormQuestions: (state, { payload }: PayloadAction<FormQuestion>) => {
-      if (state.formQuestions.filter((q) => q.id === payload.id)) {
-        const found = state.formQuestions.find((q) => q.id === payload.id);
+    setQuestions: (state, { payload }: PayloadAction<Question>) => {
+      if (state.questions.filter((q) => q.id === payload.id)) {
+        const found = state.questions.find((q) => q.id === payload.id);
         if (found) {
-          const index = state.formQuestions.indexOf(found);
-          state.formQuestions[index] = payload;
+          const index = state.questions.indexOf(found);
+          state.questions[index] = payload;
         }
       } else {
-        state.formQuestions = [...state.formQuestions, payload];
+        state.questions = [...state.questions, payload];
       }
     },
-    setDefaultFormQuestion: (state) => {
-      state.questionNumber = state.questionNumber + 1;
-      state.formQuestions = [
-        ...state.formQuestions,
+    setDefaultQuestion: (state) => {
+      state.questions = [
+        ...state.questions,
         {
-          id: state.questionNumber,
-          questionText: 'Write your question here...',
-          answerType: '',
+          id: uuid(),
+          value: 'Write your question here...',
+          answer: {
+            options: [],
+            type: '',
+          },
         },
       ];
     },
-    removeQuestion: (state, { payload }: PayloadAction<number>) => {
-      state.questionNumber = state.questionNumber - 1;
-      const question = state.formQuestions.find((q) => q.id === payload);
+    removeQuestion: (state, { payload }: PayloadAction<Question>) => {
+      const question = state.questions.find((q) => q.id === payload.id);
       if (question) {
-        const index = state.formQuestions.indexOf(question);
-        state.formQuestions.splice(index, 1);
+        const index = state.questions.indexOf(question);
+        state.questions.splice(index, 1);
       }
-    },
-    setIsBubbleClicked: (state, { payload }: PayloadAction<boolean>) => {
-      state.isBubbleClicked = payload;
     },
   },
 });
@@ -79,12 +74,10 @@ export const formSlice = createSlice({
 export const {
   setOptions,
   removeOption,
-  setFormQuestions,
-  setQuestion,
-  setQuestionNumber,
-  setDefaultFormQuestion,
+  setQuestions,
+  setDefaultQuestion,
   removeQuestion,
-  setIsBubbleClicked,
+  setForm,
 } = formSlice.actions;
 
 export default formSlice.reducer;

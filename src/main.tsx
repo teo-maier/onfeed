@@ -15,11 +15,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter basename={environment.baseHref}>
-      {/* <MantineProvider theme={themeOverrides} withNormalizeCSS withGlobalStyles> */}
+      <MantineProvider theme={themeOverrides} withNormalizeCSS withGlobalStyles>
         <StrictMode>
           <App />
         </StrictMode>
-      {/* </MantineProvider> */}
+      </MantineProvider>
     </BrowserRouter>
   </Provider>
 );

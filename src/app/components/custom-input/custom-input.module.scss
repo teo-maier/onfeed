@@ -37,7 +37,8 @@ $iconOffset: 12px;
   }
 
   &:focus-visible {
-    border: none;
+    border: 1px solid $primary;
+    // border: none;
     outline: 0px;
   }
 

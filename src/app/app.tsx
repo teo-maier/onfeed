@@ -15,9 +15,9 @@ export function App() {
   }, []);
 
   return (
-    <div className={styles['app-wrapper']}>
+    // <div className={styles['app-wrapper']}>
       <OnfeedRoutes />
-    </div>
+    // </div>
   );
 }
 

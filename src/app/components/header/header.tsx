@@ -1,15 +1,11 @@
 import { createStyles, Popover } from '@mantine/core';
-import { ReactComponent as Logo } from './../../../assets/onfeed-logo.svg';
+import { OnfeedLogo } from '@onfeed/assets';
 import { useNavigate } from 'react-router-dom';
-import {
-  ButtonSize,
-  ButtonVariant,
-  ONFEED_ROUTES,
-} from 'src/helpers/constants';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import styles from './header.module.scss';
 import { Button, ProfileButton } from '@onfeed/components';
+import { ButtonSize, ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
 
 const useStyles = createStyles((theme) => ({
   dropdown: {
@@ -59,11 +55,12 @@ const DashboardHeader: React.FC = () => {
   return (
     <div className={styles['header-container']}>
       <div className={styles['actions-container']}>
-        <Logo />
+        <OnfeedLogo />
         <Button
           variant={ButtonVariant.GHOST}
           size={ButtonSize.COMPACT}
-          onClick={() => navigate(ONFEED_ROUTES.FORM)}
+          // change to navigate to view after view component id done 
+          onClick={() => navigate(`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.NEW}`)}
         >
           Forms
         </Button>

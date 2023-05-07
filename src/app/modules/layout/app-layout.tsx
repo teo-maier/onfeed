@@ -24,17 +24,16 @@ const AppLayout: React.FC = () => {
       // navbar={<SideNav routesTop={routes.top} routesBottom={routes.bottom} />}
       header={<DashboardHeader />}
       styles={() => ({
-        main: { overflow: 'hidden', maxHeight: 'calc(100vh - 74px)', minHeight: 'calc(100vh - 74px)' },
+        main: { overflow: 'auto', maxHeight: 'calc(100vh - 74px)', minHeight: 'calc(100vh - 74px)' },
       })}
     >
       <Container
-        bg="appBackground.0"
         mt="64px"
         mah={'calc(100vh - 54px)'}
         maw="none"
         mx={0}
         p={0}
-        style={{ overflow: 'auto', marginTop: '54px' }}
+        style={{ marginTop: '54px' }}
       >
         {/* <LoadingOverlay visible={loading} loader={<Loader variant="dots" />} /> */}
         {/* {!loading && <Outlet />} */}

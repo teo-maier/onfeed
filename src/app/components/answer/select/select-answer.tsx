@@ -1,19 +1,5 @@
-import styles from './select-answer.module.scss';
 import { Chip, createStyles, Flex, Group } from '@mantine/core';
-import classnames from 'classnames';
 import { useState } from 'react';
-
-const useStyles = createStyles((theme) => ({
-  iconWrapper: {
-    // color: '#2351sd4',
-  },
-  label: {
-    fontFamily: 'Montserrat',
-    fontSize: '12px',
-  },
-  // dunno how to set color for border
-  // deselect on single chip does not work
-}));
 
 interface MultipleAnswerProps {
   values: string[];
@@ -26,7 +12,6 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
   isMultiple,
   onChange,
 }) => {
-  const { classes } = useStyles();
   const [multipleValues, setMultipleValues] = useState<string[]>(['']);
   const [singleValue, setSingleValue] = useState('');
   const [checked, setChecked] = useState(false);
@@ -42,7 +27,7 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
         >
           <Group position="center" mt="md" w={'100%'}>
             {values.map((value, index) => (
-              <Chip classNames={classes} variant={'light'} value={value}>
+              <Chip variant={'light'} value={value}>
                 {value}
               </Chip>
             ))}
@@ -57,7 +42,6 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
           <Group position="center" mt="md" w={'100%'}>
             {values.map((value, index) => (
               <Chip
-                classNames={classes}
                 variant={'light'}
                 value={value}
                 checked={checked}

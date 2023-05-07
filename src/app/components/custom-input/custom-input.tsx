@@ -1,8 +1,7 @@
 import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import { FieldError } from 'react-hook-form/dist/types';
 import { IoClose, IoSearch } from 'react-icons/io5';
-import styles from './input.module.scss';
+import styles from './custom-input.module.scss';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

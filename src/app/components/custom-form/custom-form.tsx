@@ -1,3 +1,4 @@
+import { ButtonSize, ButtonVariant } from '@onfeed/helpers';
 import classnames from 'classnames';
 import React, { HTMLInputTypeAttribute, useEffect } from 'react';
 import {
@@ -6,11 +7,10 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { ButtonSize, ButtonVariant } from '../../../helpers/constants/enums';
 import { Button, ButtonProps } from '../button/button';
-import { Input, InputProps } from '../input/input';
-import { SelectProps } from '../select/select';
-import styles from './form.module.scss';
+import { Input, InputProps } from '../custom-input/custom-input';
+import { SelectProps } from '../custom-select/custom-select';
+import styles from './custom-form.module.scss';
 
 export type FormField = (
   | ({ type: HTMLInputTypeAttribute } & Omit<InputProps, 'type'>)

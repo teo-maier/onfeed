@@ -2,8 +2,8 @@ import { useClickOutside, useMergedRef } from '@mantine/hooks';
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
-import { Input } from '../input/input';
-import styles from './select.module.scss';
+import { Input } from '../custom-input/custom-input';
+import styles from './custom-select.module.scss';
 
 export interface OptionProps
   extends Omit<React.OptionHTMLAttributes<HTMLDivElement>, 'label' | 'value'> {

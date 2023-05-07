@@ -1,19 +1,19 @@
 import { Flex, Grid } from '@mantine/core';
-import { Input as CustomInput } from '../../input/input';
+import { Input as CustomInput } from '../../custom-input/custom-input';
 import classnames from 'classnames';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { useEffect, useState } from 'react';
-import styles from './select-option.module.scss';
 import { FormSliceState, RootState, setOptions } from '@onfeed/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomBadge } from '../badge/badge';
+import styles from './add-option-input.module.scss';
 
 interface SelectOptionProps {
   text?: string;
   getOptions: (options: Array<string>) => void;
 }
 
-const SelectOption: React.FC<SelectOptionProps> = ({ getOptions }) => {
+const AddOptionInput: React.FC<SelectOptionProps> = ({ getOptions }) => {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState('');
@@ -66,4 +66,4 @@ const SelectOption: React.FC<SelectOptionProps> = ({ getOptions }) => {
   );
 };
 
-export { SelectOption };
+export { AddOptionInput };

@@ -1,7 +1,7 @@
 import { MantineThemeOverride } from '@mantine/core';
 
 export const themeOverrides: MantineThemeOverride = {
-  // fontFamily: 'Montserrat',
+  fontFamily: 'Montserrat',
   fontSizes: {
     xs: '12px',
     sm: '14px',
@@ -22,16 +22,13 @@ export const themeOverrides: MantineThemeOverride = {
   defaultRadius: 0,
   colors: {
     primary: [
-      '#e4f3ff',
-      '#c0daf1',
-      '#9cc0e3',
-      '#76a6d4',
-      '#3b79b6',
-      '#3873ad',
-      '#2a5a88',
-      '#1b4062',
-      '#0c263e',
-      '#000e1b',
+      '#eff3fd',
+      '#dde6ff',
+      '#c6d5ff',
+      '#4672ee',
+      '#2351d4',
+      '#143fbc',
+      '#0a308b',
     ],
     secondary: [
       '#fff0dc',
@@ -45,17 +42,15 @@ export const themeOverrides: MantineThemeOverride = {
       '#4d2500',
       '#1f0b00',
     ],
-    grayscale: [
+    greyscale: [
       '#ffffff',
-      '#d9d9d9',
-      '#bfbfbf',
-      '#a6a6a6',
-      '#8c8c8c',
-      '#737373',
-      '#595959',
-      '#404040',
-      '#262626',
-      '#0d0d0d',
+      '#f9f9f9',
+      '#f4f4f4',
+      '#e9e9e9',
+      '#d8d8d8',
+      '#b8b8b8',
+      '#909090',
+      '#303136',
     ],
     notFound: ['#e9ecef', '#868e96'],
     success: ['#40c057'],
@@ -64,7 +59,57 @@ export const themeOverrides: MantineThemeOverride = {
 
   primaryColor: 'primary',
   primaryShade: 4,
-  components: {},
+  components: {
+    Textarea: {
+      styles: (theme) => ({
+        root: {},
+        label: {
+          color: `${theme.colors.greyscale[6]}`,
+          fontSize: '12px',
+          fontWeight: 600,
+        },
+        input: {
+          fontWeight: 500,
+          borderRadius: '12px',
+          margin: '0 0 16px 0',
+          // color does not work
+          // color: `${theme.colors.greyscale[4]}`,
+          border: `0.0625rem solid ${theme.colors.greyscale[4]}`,
+          '&:hover': {
+            border: `1px solid ${theme.colors.greyscale[6]}`
+          },
+          '&:focus-visible': {
+            border: `1px solid ${theme.colors.primary[4]}`
+          },
+          '::placeholder': {
+            color: `${theme.colors.greyscale[5]}`,
+          }
+        },
+      }),
+    },
+    Chip: {
+      styles: (theme) => ({
+        iconWrapper: {
+          color: `${theme.colors.primary[3]}`,
+        },
+        label: {
+          '&[data-checked]:not([data-disabled])': {
+            color: `${theme.colors.primary[3]}`,
+          },
+          '&:hover, &[data-checked]:not([data-disabled])': {
+            backgroundColor: `${theme.colors.primary[0]}`,
+          },
+          '&[data-checked]:not([data-disabled]):hover': {
+            backgroundColor: `${theme.colors.primary[0]}`,
+            opacity: 0.8,
+          },
+          backgroundColor: `${theme.colors.greyscale[1]}`,
+          fontFamily: 'Montserrat',
+          fontSize: '12px',
+        },
+      }),
+    },
+  },
 
   globalStyles: (theme) => ({
     '.default-container': {

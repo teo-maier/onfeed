@@ -2,5 +2,9 @@
 @import 'colors';
 
 .log-in-page {
-	place-self: center center;
+  display: grid;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow: auto;
+  align-content: center;
 }

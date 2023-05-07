@@ -1,6 +1,6 @@
+import { ButtonSize, ButtonVariant } from '@onfeed/helpers';
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
-import { ButtonSize, ButtonVariant } from '../../../helpers/constants/enums';
 import styles from './button.module.scss';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

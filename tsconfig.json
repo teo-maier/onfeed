@@ -24,7 +24,9 @@
 			"@onfeed/modules": ["src/app/modules/index.ts"],
 			"@onfeed/redux": ["src/app/redux/index.ts"],
 			"@onfeed/services": ["src/app/services/index.ts"],
+			"@onfeed/models": ["src/app/models/index.ts"],
 			"@onfeed/helpers": ["src/helpers/index.ts"],
+			"@onfeed/assets": ["src/assets/index.ts"],
 		}
   },
   "files": [],
