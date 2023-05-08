@@ -15,8 +15,8 @@ const AnswerModal: React.FC = () => {
         <div className={styles['modal-answer-content']} key={index}>
           <div className={classnames('body--secondary')}>{question.value}</div>
           <CustomAnswer
-            type={question.answer.type}
-            options={question.answer.options}
+            type={question.answerType.type}
+            options={question.answerType.options}
           />
         </div>
       ))}

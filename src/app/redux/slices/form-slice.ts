@@ -15,7 +15,7 @@ const initialState: FormSliceState = {
     {
       id: uuid(),
       value: 'Write your question here...',
-      answer: {
+      answerType: {
         options: [],
         type: '',
       },
@@ -54,7 +54,7 @@ export const formSlice = createSlice({
         {
           id: uuid(),
           value: 'Write your question here...',
-          answer: {
+          answerType: {
             options: [],
             type: '',
           },

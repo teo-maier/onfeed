@@ -12,7 +12,7 @@ import { IoAddOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateFormModal } from 'src/app/components/create-form-modal/create-form-modal';
 import { Question } from 'src/app/models/form/form';
-import { PreviewForm } from './preview-form-page';
+import { PreviewForm } from './../preview/preview-form';
 import styles from './create-form.module.scss';
 import { useState } from 'react';
 
@@ -26,7 +26,7 @@ const CreateForm = () => {
   const [changePage, setChangePage] = useState<boolean>(false);
 
   const handleSaveQuestion = (question: Question) => {
-    if (question.answer.type !== '') {
+    if (question.answerType.type !== '') {
       dispatch(setQuestions(question));
     }
   };

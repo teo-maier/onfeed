@@ -1,2 +1,3 @@
-export * from './create-form';
+export * from './create/create-form';
+export * from './preview/preview-form';
 export * from './view/view-form';

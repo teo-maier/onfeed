@@ -9,10 +9,10 @@ export interface Form {
 export interface Question {
   id?: string;
   value: string;
-  answer: Answer;
+  answerType: AnswerType;
 }
 
-export interface Answer {
+export interface AnswerType {
   id?: string;
   type: string;
   options?: Array<string>;

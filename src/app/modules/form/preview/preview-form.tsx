@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import classnames from 'classnames';
+import styles from './preview-form.module.scss';
 
 interface PreviewFormProps {
   value?: string;
@@ -43,6 +45,7 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
 
   const handleConfirm = () => {
     if (infoValues) {
+      // [DB save]
       dispatch(
         setForm({
           id: uuid(),
@@ -78,15 +81,37 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
       </Flex>
       <BubbleButton position="right" onClick={handleBubbleClickRight} />
       <BubbleButton position="left" onClick={handleBubbleClickLeft} />
+      {/* the infoValues are rendered only if all fields from info modal are completed */}
       <NotificationModal
         visible={nextClick}
         question="A template is going to be saved with the following information:"
-        description="You won’t be able to undo this action!"
+        // description="You won’t be able to undo this action!"
         buttonText="Save"
         buttonType={ButtonVariant.PRIMARY}
         handleCancel={() => setNextClick(false)}
         handleConfirm={handleConfirm}
-      />
+      >
+        <Flex direction="column" gap="lg">
+          <Flex direction="column" gap="xs">
+            <div className="caption">Title</div>
+            <div className={classnames('caption', styles['info-values'])}>
+              {infoValues?.title}
+            </div>
+          </Flex>
+          <Flex direction="column" gap="xs">
+            <div className="caption">Description</div>
+            <div className={classnames('caption', styles['info-values'])}>
+              {infoValues?.description}
+            </div>
+          </Flex>
+          <Flex direction="column" gap="xs">
+            <div className="caption">Tags</div>
+            <div className={classnames('caption', styles['info-values'])}>
+              {infoValues?.tags}
+            </div>
+          </Flex>
+        </Flex>
+      </NotificationModal>
     </>
   );
 };

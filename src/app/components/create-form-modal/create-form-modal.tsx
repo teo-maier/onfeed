@@ -59,7 +59,7 @@ const CreateFormModal: React.FC<ModalProps> = ({
           handleSave({
             id: q.id,
             value: inputValue,
-            answer: {
+            answerType: {
               type: selectedAnswerType,
               options: options,
             },
@@ -68,7 +68,7 @@ const CreateFormModal: React.FC<ModalProps> = ({
           handleSave({
             id: q.id,
             value: inputValue,
-            answer: {
+            answerType: {
               type: selectedAnswerType,
             },
           });
