@@ -7,7 +7,13 @@ import { RootState } from '../app/redux/store';
 import { AuthService } from '../app/services/auth/authentication.service';
 import { Dashboard } from 'src/app/modules/dashboard/dashboard';
 import { PrivateRoute } from './private.route';
-import { AppLayout, FeedbackPage, CreateForm, ViewForm } from '@onfeed/modules';
+import {
+  AppLayout,
+  FeedbackPage,
+  CreateForm,
+  ViewForm,
+  ViewFormDetails,
+} from '@onfeed/modules';
 
 export const OnfeedRoutes = () => {
   const { isAuthenticated, role } = useSelector<RootState, AuthSliceState>(
@@ -42,21 +48,21 @@ export const OnfeedRoutes = () => {
             index
             element={<Navigate to={ONFEED_ROUTES.DASHBOARD} replace />}
           />
-          <Route
-            path={`${ONFEED_ROUTES.DASHBOARD}/*`}
-            element={<Dashboard />}
-          />
+          <Route path={`${ONFEED_ROUTES.DASHBOARD}`} element={<Dashboard />} />
+
+          <Route path={`${ONFEED_ROUTES.FORM}`} element={<ViewForm />}>
+            <Route
+              path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
+              element={<CreateForm />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+              element={<ViewFormDetails />}
+            />
+          </Route>
           <Route
             path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.NEW}`}
             element={<CreateForm />}
-          />
-          <Route
-            path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
-            element={<>Edit form</>}
-          />
-          <Route
-            path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
-            element={<ViewForm/>}
           />
 
           <Route

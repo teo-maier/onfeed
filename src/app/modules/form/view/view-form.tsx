@@ -1,23 +1,21 @@
 import { SLUG_KEY } from '@onfeed/helpers';
 import { FormSliceState, RootState } from '@onfeed/redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { TemplatesSideMenu } from 'src/app/components/templates-side-menu/templates-side-menu';
+import styles from './view-form.module.scss';
 
 interface ViewFormProps {
   value?: string;
 }
 
 const ViewForm: React.FC<ViewFormProps> = () => {
-  const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { form } = useSelector<RootState, FormSliceState>(
-    (state) => state.form
+  return (
+    <div className={styles['view-form-container']}>
+      <TemplatesSideMenu />
+      <Outlet />
+    </div>
   );
-
-  return <>{formId}</>;
 };
 
 export { ViewForm };

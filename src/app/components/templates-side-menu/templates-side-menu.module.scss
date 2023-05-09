@@ -1,0 +1,11 @@
+@import 'colors', 'mixins';
+
+.side-menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-icon {
+  color: color($greyscale, 300);
+}

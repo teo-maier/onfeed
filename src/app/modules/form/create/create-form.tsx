@@ -1,5 +1,10 @@
 import { BubbleButton, Button } from '@onfeed/components';
-import { ButtonVariant } from '@onfeed/helpers';
+import {
+  AnswerTypeEnum,
+  AnswerTypeEnumLabel,
+  ButtonVariant,
+  SLUG_KEY,
+} from '@onfeed/helpers';
 import {
   FormSliceState,
   removeQuestion,
@@ -14,10 +19,15 @@ import { CreateFormModal } from 'src/app/components/create-form-modal/create-for
 import { Question } from 'src/app/models/form/form';
 import { PreviewForm } from './../preview/preview-form';
 import styles from './create-form.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { EditForm } from '../edit/edit-form';
 
 const CreateForm = () => {
   const dispatch = useDispatch();
+
+  const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
+  const editMode = !!formId;
 
   const { form, questions } = useSelector<RootState, FormSliceState>(
     (state) => state.form
@@ -26,7 +36,7 @@ const CreateForm = () => {
   const [changePage, setChangePage] = useState<boolean>(false);
 
   const handleSaveQuestion = (question: Question) => {
-    if (question.answerType.type !== '') {
+    if (question.answerType.type !== AnswerTypeEnumLabel.NONE) {
       dispatch(setQuestions(question));
     }
   };
@@ -53,9 +63,36 @@ const CreateForm = () => {
     setChangePage(value);
   };
 
+  useEffect(() => {
+    if (!editMode) {
+      // get formById
+    }
+  }, []);
+
+  const questionsMock: Question[] = [
+    {
+      id: '1',
+      value: 'How was your day?',
+      answerType: {
+        id: '1',
+        type: AnswerTypeEnum.TEXTAREA,
+      },
+    },
+    {
+      id: '1',
+      value: 'How was your day?',
+      answerType: {
+        id: '1',
+        type: AnswerTypeEnum.TEXTAREA,
+      },
+    },
+  ];
+
   return (
     <div className={styles['form-wrapper']}>
-      <h6 className={styles['form-title']}>Create template</h6>
+      <h6 className={styles['form-title']}>
+        {editMode ? 'Edit template ' : 'Create template'}
+      </h6>
       {changePage ? (
         <PreviewForm goBack={handleGoBack} />
       ) : (
@@ -69,19 +106,18 @@ const CreateForm = () => {
               questionIndex={index + 1}
             />
           ))}
-          <div className={styles['form-button-container']}>
-            <Button
-              fullWidth
-              variant={ButtonVariant.GHOST}
-              onClick={handleAddQuestion}
-              icon={<IoAddOutline size={'18px'} />}
-            >
-              Add question
-            </Button>
-          </div>
-          <BubbleButton position="right" onClick={handleBubbleClick} />
+          <Button
+            className="button--secondary"
+            fullWidth
+            variant={ButtonVariant.GHOST}
+            onClick={handleAddQuestion}
+            icon={<IoAddOutline size={'18px'} />}
+          >
+            Add question
+          </Button>
         </div>
       )}
+      <BubbleButton position="right" onClick={handleBubbleClick} />
     </div>
   );
 };

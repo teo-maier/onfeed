@@ -7,9 +7,9 @@ import { FormSliceState, RootState, setOptions } from '@onfeed/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomBadge } from '../badge/badge';
 import styles from './add-option-input.module.scss';
+import { Question } from '@onfeed/models';
 
 interface SelectOptionProps {
-  text?: string;
   getOptions: (options: Array<string>) => void;
 }
 

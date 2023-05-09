@@ -2,30 +2,17 @@
   // height: calc(100vh - 54px);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
 }
 
-.form-button-container {
-  display: flex;
-  flex-direction: row;
-  width: 500px;
-  gap: 8px;
-
-  &--edit {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-  }
-}
 .form-container {
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 16px;
+  gap: 36px;
 }
 
 .form-title {
@@ -40,4 +27,3 @@
   right: -23px;
   transform: translate(-50%, -50%);
 }
-

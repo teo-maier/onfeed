@@ -65,7 +65,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
     }
   }, [form]);
 
-  console.log(form);
 
   return (
     <>

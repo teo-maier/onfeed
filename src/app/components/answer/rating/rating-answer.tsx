@@ -8,7 +8,7 @@ import {
   EmojiHeartEyes,
   EmojiSmile,
 } from 'react-bootstrap-icons';
-import { OptionTypeLabel } from '@onfeed/helpers';
+import { AnswerTypeEnumLabel } from '@onfeed/helpers';
 
 interface RatingAnswerProps {
   ratingType: string;
@@ -37,12 +37,12 @@ const RatingAnswer: React.FC<RatingAnswerProps> = ({ ratingType }) => {
 
   console.log(ratingType);
   return (
-    <Flex direction="row" gap="4px" style={{ alignSelf: 'center' }}>
-      {ratingType === OptionTypeLabel.STAR && (
+    <Flex direction="row" gap="4px" mb="16px" style={{ alignSelf: 'center' }}>
+      {ratingType === AnswerTypeEnumLabel.STAR && (
         // color on stars & they should be disabled !!!
         <Rating defaultValue={3} count={5} />
       )}
-      {ratingType === OptionTypeLabel.EMOJI && (
+      {ratingType === AnswerTypeEnumLabel.EMOJI && (
         <Rating
           emptySymbol={getEmptyIcon}
           // fullSymbol={getFullIcon}

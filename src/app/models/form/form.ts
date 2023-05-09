@@ -1,3 +1,5 @@
+import { AnswerTypeEnum } from "@onfeed/helpers";
+
 export interface Form {
   id?: string;
   title: string;
@@ -14,6 +16,6 @@ export interface Question {
 
 export interface AnswerType {
   id?: string;
-  type: string;
+  type: AnswerTypeEnum;
   options?: Array<string>;
 }

@@ -1,4 +1,4 @@
 export * from './routes';
 export * from './enums';
 export * from './globals';
-export * from './option-type.enum';
+export * from './aanswer-type.enum';

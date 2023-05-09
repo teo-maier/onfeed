@@ -14,3 +14,5 @@ export * from './create-form-modal/create-form-modal';
 export * from './header/header';
 export * from './option/index';
 export * from './custom-select/custom-select';
+export * from './tab/tab';
+export * from './header-popover/header-popover';

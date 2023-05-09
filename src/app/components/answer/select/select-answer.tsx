@@ -16,9 +16,8 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
   const [singleValue, setSingleValue] = useState('');
   const [checked, setChecked] = useState(false);
 
-  console.log(checked);
   return (
-    <Flex w={'100%'}>
+    <Flex w={'100%'} mb="16px">
       {isMultiple ? (
         <Chip.Group
           multiple={isMultiple}
@@ -46,7 +45,6 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
                 value={value}
                 checked={checked}
                 onChange={() => {
-                  console.log('a');
                   // setChecked(!a);
                 }}
               >
