@@ -3,31 +3,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Form, Question } from 'src/app/models/form/form';
 import { v4 as uuid } from 'uuid';
 
-interface Options {
-  questionId: string;
-  values: Array<string>;
-}
-
 export interface FormSliceState {
-  options: Options;
   form: Form | null;
   questions: Question[];
 }
 
 const initialState: FormSliceState = {
-  options: {
-    questionId: '',
-    values: [],
-  },
   form: null,
   questions: [
     {
       id: uuid(),
       value: '',
-      answerType: {
-        options: [],
-        type: AnswerTypeEnum.NONE,
-      },
+      answerType: AnswerTypeEnum.NONE,
+      options: [],
     },
   ],
 };
@@ -36,25 +24,6 @@ export const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    // addOpions: (state, { payload }: PayloadAction<string>) => {
-    //   state.options.values.push(payload);
-    // },
-    // setOptions: (state, { payload }: PayloadAction<Options>) => {
-    //   const found = state.questions.find((q) => q.id === payload.questionId);
-    //   if (found && found.answerType.type === AnswerTypeEnum.NONE) {
-    //     found.answerType.options = payload.values;
-    //   }
-    //   console.log(state.questions)
-    // },
-    // resetOptions: (state) => {
-    //   state.options.values = [];
-    // },
-    removeOption: (state, { payload }: PayloadAction<string>) => {
-      if (state.options) {
-        const index = state.options.values.indexOf(payload);
-        state.options.values.splice(index, 1);
-      }
-    },
     setForm: (state, { payload }: PayloadAction<Form>) => {
       state.form = payload;
     },
@@ -69,7 +38,7 @@ export const formSlice = createSlice({
         state.questions = [...state.questions, payload];
       }
     },
-    setQuestionsArray: (state, { payload }: PayloadAction<Question[]>) => {
+    setQuestionsOnEditMode: (state, { payload }: PayloadAction<Question[]>) => {
       state.questions = payload;
     },
     setDefaultQuestion: (state) => {
@@ -78,10 +47,8 @@ export const formSlice = createSlice({
         {
           id: uuid(),
           value: '',
-          answerType: {
-            options: [],
-            type: AnswerTypeEnum.NONE,
-          },
+          answerType: AnswerTypeEnum.NONE,
+          options: [],
         },
       ];
     },
@@ -92,19 +59,19 @@ export const formSlice = createSlice({
         state.questions.splice(index, 1);
       }
     },
+    removeIdFromQuestions: (state) => {
+      state.questions.map((question) => delete question['id']);
+    },
   },
 });
 
 export const {
-  // addOpions,
-  // setOptions,
-  // resetOptions,
-  removeOption,
   setQuestions,
-  setQuestionsArray,
   setDefaultQuestion,
   removeQuestion,
   setForm,
+  removeIdFromQuestions,
+  setQuestionsOnEditMode,
 } = formSlice.actions;
 
 export default formSlice.reducer;

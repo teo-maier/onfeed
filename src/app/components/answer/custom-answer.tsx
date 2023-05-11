@@ -1,26 +1,27 @@
-import { AnswerTypeEnumLabel } from '@onfeed/helpers';
+import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
+import { Option } from '@onfeed/models';
 import { RatingAnswer } from './rating/rating-answer';
 import { SelectAnswer } from './select/select-answer';
 import { TextareAnswer } from './textarea/textarea-answer';
 
 interface CustomAnswerProps {
   type: string;
-  options: string[] | undefined;
+  options: Option[] | undefined;
 }
 
 const CustomAnswer: React.FC<CustomAnswerProps> = ({ type, options }) => {
   return (
     <>
-      {options && (
+      {options && options?.length > 0 && (
         <SelectAnswer
           values={options}
-          isMultiple={type === AnswerTypeEnumLabel.MULTIPLE_SELECT ? true : false}
+          isMultiple={type === AnswerTypeEnum.MULTIPLE_SELECT ? true : false}
         />
       )}
-      {(type === AnswerTypeEnumLabel.GRADE ||
-        type === AnswerTypeEnumLabel.STAR ||
-        type === AnswerTypeEnumLabel.EMOJI) && <RatingAnswer ratingType={type} />}
-      {type === AnswerTypeEnumLabel.TEXTAREA && (
+      {(type === AnswerTypeEnum.GRADE ||
+        type === AnswerTypeEnum.STAR ||
+        type === AnswerTypeEnum.EMOJI) && <RatingAnswer ratingType={type} />}
+      {type === AnswerTypeEnum.TEXTAREA && (
         <TextareAnswer placeholder="Type your answer..." />
       )}
     </>

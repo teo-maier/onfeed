@@ -1,5 +1,7 @@
 import { Accordion } from '@mantine/core';
+import { setDefaultQuestion, setQuestionsOnEditMode } from '@onfeed/redux';
 import classnames from 'classnames';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styles from './tab.module.scss';
 
@@ -11,6 +13,8 @@ interface TabField extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Tab: React.FC<TabField> = ({ title, path, icon, description }) => {
+  const dispatch = useDispatch();
+
   return (
     <NavLink
       to={path}
@@ -24,6 +28,10 @@ const Tab: React.FC<TabField> = ({ title, path, icon, description }) => {
           ['button--secondary']
         )
       }
+      onClick={() => {
+        dispatch(setQuestionsOnEditMode([]));
+        dispatch(setDefaultQuestion());
+      }}
     >
       {title}
       {icon}

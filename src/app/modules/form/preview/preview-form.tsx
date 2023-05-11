@@ -6,14 +6,20 @@ import {
   NotificationModal,
   InformationValues,
 } from '@onfeed/components';
-import { ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
-import { FormSliceState, RootState, setForm } from '@onfeed/redux';
+import { ButtonVariant, ONFEED_ROUTES, SLUG_KEY } from '@onfeed/helpers';
+import {
+  FormSliceState,
+  removeIdFromQuestions,
+  RootState,
+  setForm,
+} from '@onfeed/redux';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
+import { useNavigate, useParams } from 'react-router-dom';
+import { formAPI } from '@onfeed/services';
 import classnames from 'classnames';
 import styles from './preview-form.module.scss';
+import { v4 as uuid } from 'uuid';
 
 interface PreviewFormProps {
   value?: string;
@@ -23,6 +29,9 @@ interface PreviewFormProps {
 const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
+  const editMode = !!formId;
 
   const { form, questions } = useSelector<RootState, FormSliceState>(
     (state) => state.form
@@ -44,33 +53,47 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
   };
 
   const handleConfirm = () => {
-    if (infoValues) {
-      // [DB save]
-      dispatch(
-        setForm({
-          id: uuid(),
-          title: infoValues?.title,
-          description: infoValues.description,
-          tags: infoValues.tags,
-          questions: questions,
-        })
-      );
-    }
+    dispatch(removeIdFromQuestions());
   };
 
   useEffect(() => {
-    // this is just for testing
-    if (form) {
-      navigate(`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${form.id}`);
+    if (infoValues) {
+      if (editMode) {
+        formAPI
+          .edit(formId, {
+            title: infoValues?.title,
+            description: infoValues.description,
+            questions: questions,
+          })
+          .then((updatedForm) => {
+            console.log(updatedForm)
+            navigate(
+              `${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${updatedForm.id}`
+            );
+          });
+      } else {
+        formAPI
+          .create({
+            title: infoValues?.title,
+            description: infoValues.description,
+            questions: questions,
+          })
+          .then((newForm) => {
+            console.log(newForm)
+            navigate(
+              `${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${newForm.id}`
+            );
+          });
+      }
     }
-  }, [form]);
+  }, [questions, editMode]);
 
   return (
     <>
       <Flex direction={'row'} gap="160px" justify={'center'}>
-        <AnswerModal />
+        <AnswerModal isEditMode={editMode} />
         <InfoModal
-          questions={questions}
+          form={editMode ? form : null}
           labelTitle="Form title"
           labelTextarea="Description"
           labelTags="Tags"
@@ -93,13 +116,13 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
           <Flex direction="column" gap="xs">
             <div className="caption">Title</div>
             <div className={classnames('caption', styles['info-values'])}>
-              {infoValues?.title}
+              {editMode && form ? form.title : infoValues?.title}
             </div>
           </Flex>
           <Flex direction="column" gap="xs">
             <div className="caption">Description</div>
             <div className={classnames('caption', styles['info-values'])}>
-              {infoValues?.description}
+              {editMode && form ? form.description : infoValues?.description}
             </div>
           </Flex>
           <Flex direction="column" gap="xs">

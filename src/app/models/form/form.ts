@@ -1,21 +1,23 @@
-import { AnswerTypeEnum } from "@onfeed/helpers";
+import { AnswerTypeEnum } from '@onfeed/helpers';
 
 export interface Form {
   id?: string;
   title: string;
   description: string;
-  tags: Array<string>;
+  tags?: Array<string>;
   questions: Question[];
 }
 
 export interface Question {
   id?: string;
   value: string;
-  answerType: AnswerType;
+  answerType: AnswerTypeEnum;
+  options?: Option[];
 }
 
-export interface AnswerType {
+export interface Option {
   id?: string;
-  type: AnswerTypeEnum;
-  options?: Array<string>;
+  value: string;
 }
+
+export type OptionValues = Pick<Option, 'value'>;

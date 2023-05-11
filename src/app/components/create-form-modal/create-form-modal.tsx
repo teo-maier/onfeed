@@ -12,16 +12,10 @@ import { useDisclosure } from '@mantine/hooks';
 import { BubbleNumberComponent } from '../bubble-number/bubble-number';
 import classnames from 'classnames';
 import styles from './create-form-modal.module.scss';
-import { AnswerType, Question } from '@onfeed/models';
-import {
-  AnswerTypeEnum,
-  AnswerTypeEnumLabel,
-  ButtonVariant,
-} from '@onfeed/helpers';
-import { FormSliceState, RootState } from '@onfeed/redux';
+import { Question } from '@onfeed/models';
+import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { DoneIcon } from '@onfeed/assets';
-import { Button } from '../button/button';
+import { FormSliceState, RootState } from '@onfeed/redux';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -37,6 +31,7 @@ interface ModalProps {
   handleRemove: (question: Question) => void;
   question: Question;
   questionIndex: number;
+  mode: boolean;
 }
 
 const CreateFormModal: React.FC<ModalProps> = ({
@@ -45,39 +40,28 @@ const CreateFormModal: React.FC<ModalProps> = ({
   handleRemove,
   question,
   questionIndex,
+  mode,
 }) => {
   const { classes } = useStyles();
-  const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = useState<string>(question.value);
-  const [selectedAnswerType, setSelectedAnswerType] = useState<string>(
-    question.answerType.type
+  const [selectedAnswerType, setSelectedAnswerType] = useState<AnswerTypeEnum>(
+    question.answerType
   );
-  const [options, setOptions] = useState<string[]>([]);
-
   const [opened, { toggle }] = useDisclosure(false);
 
-  const handleOptions = (values: string[]) => {
-    console.log(values);
-  };
-
   useEffect(() => {
-    if (inputValue) {
+    if (inputValue || inputValue !== question.value) {
       if (
-        selectedAnswerType === AnswerTypeEnumLabel.MULTIPLE_SELECT ||
-        selectedAnswerType === AnswerTypeEnumLabel.SINGLE_SELECT
+        selectedAnswerType === AnswerTypeEnum.MULTIPLE_SELECT ||
+        selectedAnswerType === AnswerTypeEnum.SINGLE_SELECT
       ) {
-        if (
-          question.answerType.options &&
-          question.answerType.options?.length > 0
-        ) {
+        if (question.options && question.options?.length > 0) {
           handleSave({
             id: question.id,
             value: inputValue,
-            answerType: {
-              type: selectedAnswerType as AnswerTypeEnum,
-              options: question.answerType.options,
-            },
+            answerType: selectedAnswerType,
+            options: question.options,
           });
         }
       } else {
@@ -85,13 +69,16 @@ const CreateFormModal: React.FC<ModalProps> = ({
           handleSave({
             id: question.id,
             value: inputValue,
-            answerType: {
-              type: selectedAnswerType as AnswerTypeEnum,
-            },
+            answerType: selectedAnswerType,
+            options: [],
           });
       }
     }
-  }, [selectedAnswerType, question.answerType.options]);
+  }, [selectedAnswerType, question.options?.length, inputValue]);
+
+  // useEffect(() => {
+  //   setInputValue(inputValue);
+  // }, [q.value]);
 
   return (
     <div className={styles['modal-content']}>
@@ -116,12 +103,20 @@ const CreateFormModal: React.FC<ModalProps> = ({
           classNames={classes}
           value={selectedAnswerType}
           data={[
-            AnswerTypeEnumLabel.TEXTAREA,
-            AnswerTypeEnumLabel.MULTIPLE_SELECT,
-            AnswerTypeEnumLabel.SINGLE_SELECT,
-            AnswerTypeEnumLabel.STAR,
-            AnswerTypeEnumLabel.GRADE,
-            AnswerTypeEnumLabel.EMOJI,
+            {
+              value: AnswerTypeEnum.TEXTAREA,
+              label: AnswerTypeEnumLabel.TEXTAREA,
+            },
+            {
+              value: AnswerTypeEnum.MULTIPLE_SELECT,
+              label: AnswerTypeEnumLabel.MULTIPLE_SELECT,
+            },
+            {
+              value: AnswerTypeEnum.SINGLE_SELECT,
+              label: AnswerTypeEnumLabel.SINGLE_SELECT,
+            },
+            { value: AnswerTypeEnum.STAR, label: AnswerTypeEnumLabel.STAR },
+            { value: AnswerTypeEnum.EMOJI, label: AnswerTypeEnumLabel.EMOJI },
           ]}
           onChange={(value: AnswerTypeEnum) => {
             setSelectedAnswerType(value);
@@ -132,9 +127,9 @@ const CreateFormModal: React.FC<ModalProps> = ({
           w={'40%'}
           p={'8px 16px'}
         />
-        {(selectedAnswerType === AnswerTypeEnumLabel.MULTIPLE_SELECT ||
-          selectedAnswerType === AnswerTypeEnumLabel.SINGLE_SELECT) && (
-          <AddOptionInput question={question} getOptions={handleOptions} />
+        {(selectedAnswerType === AnswerTypeEnum.MULTIPLE_SELECT ||
+          selectedAnswerType === AnswerTypeEnum.SINGLE_SELECT) && (
+          <AddOptionInput question={question} />
         )}
       </Collapse>
     </div>

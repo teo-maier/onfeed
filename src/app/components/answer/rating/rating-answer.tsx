@@ -8,10 +8,10 @@ import {
   EmojiHeartEyes,
   EmojiSmile,
 } from 'react-bootstrap-icons';
-import { AnswerTypeEnumLabel } from '@onfeed/helpers';
+import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
 
 interface RatingAnswerProps {
-  ratingType: string;
+  ratingType: AnswerTypeEnum;
 }
 
 // when a number is clicked, itself and the prev numbers will be colored blue
@@ -37,11 +37,11 @@ const RatingAnswer: React.FC<RatingAnswerProps> = ({ ratingType }) => {
 
   return (
     <Flex direction="row" gap="4px" mb="16px" style={{ alignSelf: 'center' }}>
-      {ratingType === AnswerTypeEnumLabel.STAR && (
+      {ratingType === AnswerTypeEnum.STAR && (
         // color on stars & they should be disabled !!!
         <Rating defaultValue={3} count={5} />
       )}
-      {ratingType === AnswerTypeEnumLabel.EMOJI && (
+      {ratingType === AnswerTypeEnum.EMOJI && (
         <Rating
           emptySymbol={getEmptyIcon}
           // fullSymbol={getFullIcon}

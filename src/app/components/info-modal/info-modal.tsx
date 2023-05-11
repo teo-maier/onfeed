@@ -3,7 +3,7 @@ import { Input as CustomInput } from '../custom-input/custom-input';
 import { InfoIcon } from '@onfeed/assets';
 import classnames from 'classnames';
 import { Textarea } from '@mantine/core';
-import { Question } from '@onfeed/models';
+import { Form, Question } from '@onfeed/models';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setForm } from '@onfeed/redux';
@@ -15,7 +15,7 @@ export interface InformationValues {
 }
 
 interface InfoModalProps {
-  questions: Question[];
+  form: Form | null;
   labelTitle: string;
   labelTextarea: string;
   labelTags: string;
@@ -23,14 +23,16 @@ interface InfoModalProps {
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({
-  questions,
+  form,
   labelTitle,
   labelTextarea,
   labelTags,
   sendInfo,
 }) => {
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const [title, setTitle] = useState<string>(form ? form.title : '');
+  const [description, setDescription] = useState<string>(
+    form ? form.description : ''
+  );
   const [tags, setTags] = useState<string>('');
 
   const tagsArray = tags.split(' ');
@@ -64,12 +66,14 @@ const InfoModal: React.FC<InfoModalProps> = ({
         <CustomInput
           className={classnames('button--secondary', styles['input-modal'])}
           placeholder={'Write your title here...'}
+          value={form?.title}
           label={labelTitle}
           onChange={(event) => setTitle(event.target.value)}
         />
         <Textarea
           w={'100%'}
           placeholder={'Write your description here...'}
+          value={form?.description}
           label={labelTextarea}
           onChange={(event: any) => setDescription(event.target.value)}
         />

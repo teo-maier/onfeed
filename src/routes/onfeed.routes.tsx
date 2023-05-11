@@ -14,7 +14,6 @@ import {
   ViewForm,
   ViewFormDetails,
 } from '@onfeed/modules';
-import { A } from 'src/app/components/test/A';
 
 export const OnfeedRoutes = () => {
   const { isAuthenticated, role } = useSelector<RootState, AuthSliceState>(

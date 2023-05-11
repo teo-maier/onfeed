@@ -7,24 +7,20 @@ import { setQuestions } from '@onfeed/redux';
 import { useDispatch } from 'react-redux';
 import { CustomBadge } from '../badge/badge';
 import styles from './add-option-input.module.scss';
-import { Question } from '@onfeed/models';
+import { Question, Option, OptionValues } from '@onfeed/models';
 
 interface SelectOptionProps {
   question: Question;
-  getOptions: (values: string[]) => void;
 }
 
-const AddOptionInput: React.FC<SelectOptionProps> = ({
-  question,
-  getOptions,
-}) => {
+const AddOptionInput: React.FC<SelectOptionProps> = ({ question }) => {
   const dispatch = useDispatch();
 
-  const { options: questionOptions } = question.answerType;
+  const { options: questionOptions } = question;
 
   const [message, setMessage] = useState('');
-  const [options, setOptions] = useState<string[]>(
-    question.answerType.options ? question.answerType.options : []
+  const [options, setOptions] = useState<Option[]>(
+    question.options ? question.options : []
   );
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,30 +30,26 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && message !== '') {
-      setOptions((q) => [...q, message]);
+      setOptions((q) => [...q, { value: message }]);
       setMessage('');
     }
   };
 
   const handleRemoveValue = (value: string) => {
-    setOptions(options.filter((o) => o !== value));
+    setOptions(options.filter((o) => o.value !== value));
   };
 
-  // remove !!!
   useEffect(() => {
     if (question.id) {
       dispatch(
         setQuestions({
           id: question.id,
           value: question.value,
-          answerType: {
-            type: question.answerType.type,
-            options: options,
-          },
+          answerType: question.answerType,
+          options: options,
         })
       );
     }
-    // getOptions(options);
   }, [options]);
 
   return (
@@ -75,7 +67,8 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({
                 color="#909090"
                 cursor="pointer"
                 onClick={() => {
-                  message !== '' && setOptions((q) => [...q, message]);
+                  message !== '' &&
+                    setOptions((q) => [...q, { value: message }]);
                   setMessage('');
                 }}
               />
@@ -85,7 +78,10 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({
         <Grid justify={'center'}>
           {questionOptions &&
             questionOptions.map((option) => (
-              <CustomBadge value={option} removeValue={handleRemoveValue} />
+              <CustomBadge
+                value={option.value}
+                removeValue={handleRemoveValue}
+              />
             ))}
         </Grid>
       </Flex>

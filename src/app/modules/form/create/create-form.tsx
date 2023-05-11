@@ -1,17 +1,11 @@
 import { BubbleButton, Button } from '@onfeed/components';
-import {
-  AnswerTypeEnum,
-  AnswerTypeEnumLabel,
-  ButtonVariant,
-  SLUG_KEY,
-} from '@onfeed/helpers';
+import { AnswerTypeEnum, ButtonVariant, SLUG_KEY } from '@onfeed/helpers';
 import {
   FormSliceState,
   removeQuestion,
   RootState,
   setDefaultQuestion,
   setQuestions,
-  setQuestionsArray,
 } from '@onfeed/redux';
 import { IoAddOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +15,6 @@ import { PreviewForm } from './../preview/preview-form';
 import styles from './create-form.module.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { EditForm } from '../edit/edit-form';
 import classnames from 'classnames';
 
 const CreateForm = () => {
@@ -30,15 +23,14 @@ const CreateForm = () => {
   const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
   const editMode = !!formId;
 
-  const { form, questions } = useSelector<RootState, FormSliceState>(
+  const { questions } = useSelector<RootState, FormSliceState>(
     (state) => state.form
   );
 
   const [changePage, setChangePage] = useState<boolean>(false);
 
   const handleSaveQuestion = (question: Question) => {
-    console.log('SET', question);
-    if (question.answerType.type !== AnswerTypeEnumLabel.NONE) {
+    if (question.answerType !== AnswerTypeEnum.NONE) {
       dispatch(setQuestions(question));
     }
   };
@@ -54,40 +46,12 @@ const CreateForm = () => {
   };
 
   const handleBubbleClick = () => {
-    // dispatch(setQuestionsArray(questions));
     setChangePage(true);
   };
 
   const handleGoBack = (value: boolean) => {
     setChangePage(value);
   };
-
-  useEffect(() => {
-    if (!editMode) {
-      // get formById
-    }
-  }, []);
-
-  console.log(questions);
-
-  const questionsMock: Question[] = [
-    {
-      id: '1',
-      value: 'How was your day?',
-      answerType: {
-        id: '1',
-        type: AnswerTypeEnum.TEXTAREA,
-      },
-    },
-    {
-      id: '1',
-      value: 'How was your day?',
-      answerType: {
-        id: '1',
-        type: AnswerTypeEnum.TEXTAREA,
-      },
-    },
-  ];
 
   return (
     <div className={styles['form-wrapper']}>
@@ -105,6 +69,7 @@ const CreateForm = () => {
               handleRemove={handleRemoveQuestion}
               question={question}
               questionIndex={index + 1}
+              mode={editMode}
             />
           ))}
           <Button

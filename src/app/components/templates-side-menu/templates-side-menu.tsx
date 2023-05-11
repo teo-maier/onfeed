@@ -1,28 +1,18 @@
-import { Accordion } from '@mantine/core';
 import { ONFEED_ROUTES } from '@onfeed/helpers';
+import { Form } from '@onfeed/models';
+import { formAPI } from '@onfeed/services';
 import classnames from 'classnames';
-import { IoAdd, IoAddOutline } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
+import { IoAdd } from 'react-icons/io5';
 import { Tab } from '../tab/tab';
 import styles from './templates-side-menu.module.scss';
 
 const TemplatesSideMenu: React.FC = () => {
-  const mockData = [
-    {
-      id: '1',
-      title: 'Organizational Relfection',
-      description: 'ksejbfksbfosejnf weojndowejnf weofnweojfn',
-    },
-    {
-      id: '2',
-      title: 'Individul Relfection',
-      description: 'ksejbfksbfosejnf weojndowejnf weofnweojfn',
-    },
-    {
-      id: '3',
-      title: 'Satisfaction Relfection',
-      description: 'ksejbfksbfosejnf weojndowejnf weofnweojfn',
-    },
-  ];
+  const [allForms, setAllForms] = useState<Form[]>([]);
+
+  useEffect(() => {
+    formAPI.getAll().then((forms) => setAllForms(forms));
+  }, []);
 
   return (
     <div className={styles['side-menu-container']}>
@@ -32,14 +22,14 @@ const TemplatesSideMenu: React.FC = () => {
         icon={<IoAdd size="18px" className={styles['add-icon']} />}
       />
       <div className={'horizontal-bar'}></div>
-      {mockData.length > 0 ? (
-          mockData.map(({ title, id, description }) => (
-            <Tab
-              path={`${ONFEED_ROUTES.VIEW}/${id}`}
-              title={title}
-              description={description}
-            />
-          ))
+      {allForms.length > 0 ? (
+        allForms.map(({ title, id, description }) => (
+          <Tab
+            path={`${ONFEED_ROUTES.VIEW}/${id}`}
+            title={title}
+            description={description}
+          />
+        ))
       ) : (
         <div
           className={classnames(['button--secondary'], styles['empty-state'])}

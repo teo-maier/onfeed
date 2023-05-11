@@ -1,8 +1,9 @@
-import { Chip, createStyles, Flex, Group } from '@mantine/core';
+import { Chip, Flex, Group } from '@mantine/core';
+import { Option } from '@onfeed/models';
 import { useState } from 'react';
 
 interface MultipleAnswerProps {
-  values: string[];
+  values: Option[];
   isMultiple: boolean;
   onChange?: (value: string[] | string) => void;
 }
@@ -25,7 +26,7 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
           onChange={setMultipleValues}
         >
           <Group position="center" mt="md" w={'100%'}>
-            {values.map((value, index) => (
+            {values.map(({ value }) => (
               <Chip variant={'light'} value={value}>
                 {value}
               </Chip>
@@ -39,7 +40,7 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
           onChange={setSingleValue}
         >
           <Group position="center" mt="md" w={'100%'}>
-            {values.map((value, index) => (
+            {values.map(({ value }) => (
               <Chip
                 variant={'light'}
                 value={value}
