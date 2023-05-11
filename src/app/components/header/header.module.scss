@@ -38,3 +38,9 @@
     background-color: color($greyscale, 600);
   }
 }
+
+.button-active {
+  background-color: color($greyscale, 900);
+  border: none;
+  text-decoration: none;
+}

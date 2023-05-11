@@ -14,6 +14,7 @@ import {
   ViewForm,
   ViewFormDetails,
 } from '@onfeed/modules';
+import { A } from 'src/app/components/test/A';
 
 export const OnfeedRoutes = () => {
   const { isAuthenticated, role } = useSelector<RootState, AuthSliceState>(
@@ -51,15 +52,24 @@ export const OnfeedRoutes = () => {
           <Route path={`${ONFEED_ROUTES.DASHBOARD}`} element={<Dashboard />} />
 
           <Route path={`${ONFEED_ROUTES.FORM}`} element={<ViewForm />}>
+            {/* <Route
+              index
+              element={
+                <Navigate
+                  to={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+                  replace
+                />
+              }
+            /> */}
             <Route
-              path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
-              element={<CreateForm />}
-            />
-            <Route
-              path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+              path={`${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
               element={<ViewFormDetails />}
             />
           </Route>
+          <Route
+            path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
+            element={<CreateForm />}
+          />
           <Route
             path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.NEW}`}
             element={<CreateForm />}

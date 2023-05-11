@@ -9,3 +9,16 @@
 .add-icon {
   color: color($greyscale, 300);
 }
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 8px;
+  width: 238px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: 1px solid transparent;
+  justify-content: space-between;
+}

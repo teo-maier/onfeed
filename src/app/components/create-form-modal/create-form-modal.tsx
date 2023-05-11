@@ -13,9 +13,15 @@ import { BubbleNumberComponent } from '../bubble-number/bubble-number';
 import classnames from 'classnames';
 import styles from './create-form-modal.module.scss';
 import { AnswerType, Question } from '@onfeed/models';
-import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
-import { FormSliceState, RootState, setOptions } from '@onfeed/redux';
-import { useSelector } from 'react-redux';
+import {
+  AnswerTypeEnum,
+  AnswerTypeEnumLabel,
+  ButtonVariant,
+} from '@onfeed/helpers';
+import { FormSliceState, RootState } from '@onfeed/redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { DoneIcon } from '@onfeed/assets';
+import { Button } from '../button/button';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -26,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface ModalProps {
-  inputPlaceholder?: string;
+  inputPlaceholder: string;
   handleSave: (question: Question) => void;
   handleRemove: (question: Question) => void;
   question: Question;
@@ -41,35 +47,41 @@ const CreateFormModal: React.FC<ModalProps> = ({
   questionIndex,
 }) => {
   const { classes } = useStyles();
+  const dispatch = useDispatch();
 
-  const [inputValue, setInputValue] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState<string>(question.value);
   const [selectedAnswerType, setSelectedAnswerType] = useState<string>(
-    AnswerTypeEnumLabel[question.answerType.type]
+    question.answerType.type
   );
-  const [options, setOptions] = useState<Array<string>>([]);
+  const [options, setOptions] = useState<string[]>([]);
 
   const [opened, { toggle }] = useDisclosure(false);
 
-  const saveOptions = (options: Array<string>) => {
-    setOptions(options);
+  const handleOptions = (values: string[]) => {
+    console.log(values);
   };
-
-  // !! save questions[] after hitting next bubble button
 
   useEffect(() => {
     if (inputValue) {
-      selectedAnswerType === AnswerTypeEnumLabel.MULTIPLE_SELECT ||
-      selectedAnswerType === AnswerTypeEnumLabel.SINGLE_SELECT
-        ? options.length > 0 &&
+      if (
+        selectedAnswerType === AnswerTypeEnumLabel.MULTIPLE_SELECT ||
+        selectedAnswerType === AnswerTypeEnumLabel.SINGLE_SELECT
+      ) {
+        if (
+          question.answerType.options &&
+          question.answerType.options?.length > 0
+        ) {
           handleSave({
             id: question.id,
             value: inputValue,
             answerType: {
               type: selectedAnswerType as AnswerTypeEnum,
-              options: options,
+              options: question.answerType.options,
             },
-          })
-        : selectedAnswerType &&
+          });
+        }
+      } else {
+        selectedAnswerType &&
           handleSave({
             id: question.id,
             value: inputValue,
@@ -77,22 +89,24 @@ const CreateFormModal: React.FC<ModalProps> = ({
               type: selectedAnswerType as AnswerTypeEnum,
             },
           });
+      }
     }
-  }, [selectedAnswerType, options]);
+  }, [selectedAnswerType, question.answerType.options]);
 
   return (
     <div className={styles['modal-content']}>
+      {/* this should probably be a textarea */}
       <CloseButton
         aria-label="Close modal"
         className={styles['cancel-modal-icon']}
         onClick={() => handleRemove(question)}
       />
-      {/* this should probably be a textarea */}
       <Flex direction={'row'} w="100%">
         <BubbleNumberComponent value={questionIndex} bubbleType="number" />
         <CustomInput
           className={classnames('button--secondary', styles['input-modal'])}
           placeholder={inputPlaceholder}
+          value={inputValue}
           onChange={(event) => setInputValue(event?.target.value)}
           onClick={toggle}
         />
@@ -107,6 +121,7 @@ const CreateFormModal: React.FC<ModalProps> = ({
             AnswerTypeEnumLabel.SINGLE_SELECT,
             AnswerTypeEnumLabel.STAR,
             AnswerTypeEnumLabel.GRADE,
+            AnswerTypeEnumLabel.EMOJI,
           ]}
           onChange={(value: AnswerTypeEnum) => {
             setSelectedAnswerType(value);
@@ -119,7 +134,7 @@ const CreateFormModal: React.FC<ModalProps> = ({
         />
         {(selectedAnswerType === AnswerTypeEnumLabel.MULTIPLE_SELECT ||
           selectedAnswerType === AnswerTypeEnumLabel.SINGLE_SELECT) && (
-          <AddOptionInput getOptions={saveOptions} />
+          <AddOptionInput question={question} getOptions={handleOptions} />
         )}
       </Collapse>
     </div>

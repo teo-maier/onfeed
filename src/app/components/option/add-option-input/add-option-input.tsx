@@ -3,23 +3,28 @@ import { Input as CustomInput } from '../../custom-input/custom-input';
 import classnames from 'classnames';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { useEffect, useState } from 'react';
-import { FormSliceState, RootState, setOptions } from '@onfeed/redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { setQuestions } from '@onfeed/redux';
+import { useDispatch } from 'react-redux';
 import { CustomBadge } from '../badge/badge';
 import styles from './add-option-input.module.scss';
 import { Question } from '@onfeed/models';
 
 interface SelectOptionProps {
-  getOptions: (options: Array<string>) => void;
+  question: Question;
+  getOptions: (values: string[]) => void;
 }
 
-const AddOptionInput: React.FC<SelectOptionProps> = ({ getOptions }) => {
+const AddOptionInput: React.FC<SelectOptionProps> = ({
+  question,
+  getOptions,
+}) => {
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState('');
+  const { options: questionOptions } = question.answerType;
 
-  const { options } = useSelector<RootState, FormSliceState>(
-    (state) => state.form
+  const [message, setMessage] = useState('');
+  const [options, setOptions] = useState<string[]>(
+    question.answerType.options ? question.answerType.options : []
   );
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,14 +34,31 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({ getOptions }) => {
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && message !== '') {
-      dispatch(setOptions(message));
+      setOptions((q) => [...q, message]);
       setMessage('');
     }
   };
 
+  const handleRemoveValue = (value: string) => {
+    setOptions(options.filter((o) => o !== value));
+  };
+
+  // remove !!!
   useEffect(() => {
-    getOptions(options);
-  }, [options.length]);
+    if (question.id) {
+      dispatch(
+        setQuestions({
+          id: question.id,
+          value: question.value,
+          answerType: {
+            type: question.answerType.type,
+            options: options,
+          },
+        })
+      );
+    }
+    // getOptions(options);
+  }, [options]);
 
   return (
     <div className={classnames(styles['options-content'])}>
@@ -52,14 +74,19 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({ getOptions }) => {
               <IoChevronForwardOutline
                 color="#909090"
                 cursor="pointer"
-                onClick={() => message !== '' && dispatch(setOptions(message))}
+                onClick={() => {
+                  message !== '' && setOptions((q) => [...q, message]);
+                  setMessage('');
+                }}
               />
             }
           />
         </Flex>
         <Grid justify={'center'}>
-          {options.length > 0 &&
-            options.map((option) => <CustomBadge value={option} />)}
+          {questionOptions &&
+            questionOptions.map((option) => (
+              <CustomBadge value={option} removeValue={handleRemoveValue} />
+            ))}
         </Grid>
       </Flex>
     </div>

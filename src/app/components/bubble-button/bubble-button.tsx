@@ -5,7 +5,7 @@ import styles from './bubble-button.module.scss';
 
 interface BubbleButtonProps {
   position: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const BubbleButton: React.FC<BubbleButtonProps> = ({ position, onClick }) => {

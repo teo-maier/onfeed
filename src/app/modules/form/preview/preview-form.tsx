@@ -65,7 +65,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
     }
   }, [form]);
 
-
   return (
     <>
       <Flex direction={'row'} gap="160px" justify={'center'}>
@@ -84,7 +83,7 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
       <NotificationModal
         visible={nextClick}
         question="A template is going to be saved with the following information:"
-        // description="You won’t be able to undo this action!"
+        description="Please make sure the informations are correct."
         buttonText="Save"
         buttonType={ButtonVariant.PRIMARY}
         handleCancel={() => setNextClick(false)}

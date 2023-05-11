@@ -31,7 +31,7 @@
   z-index: 2;
   right: 0;
   top: 0;
-  margin: 8px;
+  margin: 4px;
 }
 
 .mantine-Input-input {
@@ -40,4 +40,9 @@
 
 .my-custom-select {
   width: 260px;
+}
+
+.save-button {
+  display: flex;
+  justify-content: flex-end;
 }

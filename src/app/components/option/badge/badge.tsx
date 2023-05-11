@@ -1,21 +1,20 @@
 import { ActionIcon, Badge, CloseButton, Grid } from '@mantine/core';
 import { removeOption } from '@onfeed/redux';
 import { useDispatch } from 'react-redux';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styles from './badge.module.scss';
 
 interface BadgeProps {
   value: string;
+  removeValue: (value: string) => void;
 }
 
-const CustomBadge: React.FC<BadgeProps> = ({ value }) => {
-  const dispatch = useDispatch();
-
+const CustomBadge: React.FC<BadgeProps> = ({ value, removeValue }) => {
   const ref = useRef<HTMLButtonElement>(null);
 
   const handleOnClick = () => {
     if (ref.current) {
-      dispatch(removeOption(ref?.current.title));
+      removeValue(value);
     }
   };
 

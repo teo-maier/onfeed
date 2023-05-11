@@ -10,8 +10,8 @@ import {
   removeQuestion,
   RootState,
   setDefaultQuestion,
-  setForm,
   setQuestions,
+  setQuestionsArray,
 } from '@onfeed/redux';
 import { IoAddOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +22,7 @@ import styles from './create-form.module.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { EditForm } from '../edit/edit-form';
+import classnames from 'classnames';
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const CreateForm = () => {
   const [changePage, setChangePage] = useState<boolean>(false);
 
   const handleSaveQuestion = (question: Question) => {
+    console.log('SET', question);
     if (question.answerType.type !== AnswerTypeEnumLabel.NONE) {
       dispatch(setQuestions(question));
     }
@@ -52,10 +54,7 @@ const CreateForm = () => {
   };
 
   const handleBubbleClick = () => {
-    // set questions
-    // dispatch(setForm({
-
-    // }))
+    // dispatch(setQuestionsArray(questions));
     setChangePage(true);
   };
 
@@ -68,6 +67,8 @@ const CreateForm = () => {
       // get formById
     }
   }, []);
+
+  console.log(questions);
 
   const questionsMock: Question[] = [
     {
@@ -107,7 +108,8 @@ const CreateForm = () => {
             />
           ))}
           <Button
-            className="button--secondary"
+            className={classnames('button--secondary')}
+            style={{ height: '36px' }}
             fullWidth
             variant={ButtonVariant.GHOST}
             onClick={handleAddQuestion}
@@ -115,9 +117,9 @@ const CreateForm = () => {
           >
             Add question
           </Button>
+          <BubbleButton position="right" onClick={handleBubbleClick} />
         </div>
       )}
-      <BubbleButton position="right" onClick={handleBubbleClick} />
     </div>
   );
 };

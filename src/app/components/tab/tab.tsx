@@ -1,14 +1,16 @@
+import { Accordion } from '@mantine/core';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import styles from './tab.module.scss';
 
 interface TabField extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   path: string;
-  text: string;
+  title: string;
+  description?: string;
   icon?: React.ReactNode;
 }
 
-const Tab: React.FC<TabField> = ({ text, path, icon }) => {
+const Tab: React.FC<TabField> = ({ title, path, icon, description }) => {
   return (
     <NavLink
       to={path}
@@ -23,7 +25,7 @@ const Tab: React.FC<TabField> = ({ text, path, icon }) => {
         )
       }
     >
-      {text}
+      {title}
       {icon}
     </NavLink>
   );

@@ -1,23 +1,32 @@
+import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Form, Question } from 'src/app/models/form/form';
 import { v4 as uuid } from 'uuid';
 
+interface Options {
+  questionId: string;
+  values: Array<string>;
+}
+
 export interface FormSliceState {
-  options: Array<string>;
+  options: Options;
   form: Form | null;
   questions: Question[];
 }
 
 const initialState: FormSliceState = {
-  options: [],
+  options: {
+    questionId: '',
+    values: [],
+  },
   form: null,
   questions: [
     {
       id: uuid(),
-      value: 'Write your question here...',
+      value: '',
       answerType: {
         options: [],
-        type: '',
+        type: AnswerTypeEnum.NONE,
       },
     },
   ],
@@ -27,12 +36,24 @@ export const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    setOptions: (state, { payload }: PayloadAction<string>) => {
-      state.options.push(payload);
-    },
+    // addOpions: (state, { payload }: PayloadAction<string>) => {
+    //   state.options.values.push(payload);
+    // },
+    // setOptions: (state, { payload }: PayloadAction<Options>) => {
+    //   const found = state.questions.find((q) => q.id === payload.questionId);
+    //   if (found && found.answerType.type === AnswerTypeEnum.NONE) {
+    //     found.answerType.options = payload.values;
+    //   }
+    //   console.log(state.questions)
+    // },
+    // resetOptions: (state) => {
+    //   state.options.values = [];
+    // },
     removeOption: (state, { payload }: PayloadAction<string>) => {
-      const index = state.options.indexOf(payload);
-      state.options.splice(index, 1);
+      if (state.options) {
+        const index = state.options.values.indexOf(payload);
+        state.options.values.splice(index, 1);
+      }
     },
     setForm: (state, { payload }: PayloadAction<Form>) => {
       state.form = payload;
@@ -48,15 +69,18 @@ export const formSlice = createSlice({
         state.questions = [...state.questions, payload];
       }
     },
+    setQuestionsArray: (state, { payload }: PayloadAction<Question[]>) => {
+      state.questions = payload;
+    },
     setDefaultQuestion: (state) => {
       state.questions = [
         ...state.questions,
         {
           id: uuid(),
-          value: 'Write your question here...',
+          value: '',
           answerType: {
             options: [],
-            type: '',
+            type: AnswerTypeEnum.NONE,
           },
         },
       ];
@@ -72,9 +96,12 @@ export const formSlice = createSlice({
 });
 
 export const {
-  setOptions,
+  // addOpions,
+  // setOptions,
+  // resetOptions,
   removeOption,
   setQuestions,
+  setQuestionsArray,
   setDefaultQuestion,
   removeQuestion,
   setForm,

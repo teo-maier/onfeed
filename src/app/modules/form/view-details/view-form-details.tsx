@@ -20,6 +20,7 @@ interface ViewFormDetailsProps {
 
 const ViewFormDetails: React.FC<ViewFormDetailsProps> = () => {
   const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
+  console.log(formId)
   const questionsMock = [
     {
       id: '1',

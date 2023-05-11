@@ -35,7 +35,6 @@ const RatingAnswer: React.FC<RatingAnswerProps> = ({ ratingType }) => {
     }
   };
 
-  console.log(ratingType);
   return (
     <Flex direction="row" gap="4px" mb="16px" style={{ alignSelf: 'center' }}>
       {ratingType === AnswerTypeEnumLabel.STAR && (
