@@ -2,7 +2,7 @@ import styles from './info-modal.module.scss';
 import { Input as CustomInput } from '../custom-input/custom-input';
 import { InfoIcon } from '@onfeed/assets';
 import classnames from 'classnames';
-import { Textarea } from '@mantine/core';
+import { Flex, Switch, Textarea } from '@mantine/core';
 import { Form, Question } from '@onfeed/models';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,14 +11,16 @@ import { setForm } from '@onfeed/redux';
 export interface InformationValues {
   title: string;
   description: string;
-  tags: Array<string>;
+  tags?: Array<string>;
+  anonChecked?: boolean;
+  suggestionChecked?: boolean;
 }
 
 interface InfoModalProps {
   form: Form | null;
   labelTitle: string;
   labelTextarea: string;
-  labelTags: string;
+  labelTags: string | null;
   sendInfo: (values: InformationValues) => void;
 }
 
@@ -34,24 +36,35 @@ const InfoModal: React.FC<InfoModalProps> = ({
     form ? form.description : ''
   );
   const [tags, setTags] = useState<string>('');
+  const [anonChecked, setAnonChecked] = useState<boolean>(false);
+  const [suggestionChecked, setSuggestionChecked] = useState<boolean>(false);
 
   const tagsArray = tags.split(' ');
 
   useEffect(() => {
-    if (title && description && tags.length > 0) {
+    if (form && title && description && tags.length > 0) {
       sendInfo({
         title: title,
         description: description,
         tags: tagsArray,
       });
     }
-  }, [title, description, tags]);
+    if (!form && title && description) {
+      sendInfo({
+        title: title,
+        description: description,
+        anonChecked: anonChecked,
+        suggestionChecked: suggestionChecked,
+      });
+    }
+  }, [title, description, tags, anonChecked, suggestionChecked]);
 
   return (
     <div
       className={classnames(
         'button--secondary',
-        styles['info-modal-container']
+        styles['info-modal-container'],
+        { [styles['info-modal-container--feedback']]: !form }
       )}
     >
       <div
@@ -77,12 +90,27 @@ const InfoModal: React.FC<InfoModalProps> = ({
           label={labelTextarea}
           onChange={(event: any) => setDescription(event.target.value)}
         />
-        <CustomInput
-          className={classnames('button--secondary', styles['input-modal'])}
-          placeholder={'Add tags...'}
-          label={labelTags}
-          onChange={(event) => setTags(event.target.value)}
-        />
+        {!form ? (
+          <Flex direction={'column'} gap="16px">
+            <Switch
+              label="Anonymous feedback"
+              onChange={(event) => setAnonChecked(event.currentTarget.checked)}
+            />
+            <Switch
+              label="Ask for suggestions"
+              onChange={(event) =>
+                setSuggestionChecked(event.currentTarget.checked)
+              }
+            />
+          </Flex>
+        ) : (
+          <CustomInput
+            className={classnames('button--secondary', styles['input-modal'])}
+            placeholder={'Add tags...'}
+            label={labelTags}
+            onChange={(event) => setTags(event.target.value)}
+          />
+        )}
       </div>
     </div>
   );

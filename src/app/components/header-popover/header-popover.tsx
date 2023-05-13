@@ -1,7 +1,8 @@
 import { createStyles, Flex, Popover } from '@mantine/core';
 import { useClickOutside, useDisclosure } from '@mantine/hooks';
-import { ButtonSize, ButtonVariant } from '@onfeed/helpers';
+import { ButtonSize, ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
 import { IoAdd } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../button/button';
 import styles from './header-popover.module.scss';
 
@@ -20,6 +21,8 @@ interface HeaderPopoverProps {
 }
 const HeaderPopover: React.FC<HeaderPopoverProps> = ({ children }) => {
   const { classes } = useStyles();
+
+  const navigate = useNavigate();
 
   const [opened, { close, open }] = useDisclosure(false);
   const ref = useClickOutside(() => close());
@@ -67,7 +70,9 @@ const HeaderPopover: React.FC<HeaderPopoverProps> = ({ children }) => {
             variant={ButtonVariant.SECONDARY}
             size={ButtonSize.COMPACT}
             // change to navigate to create feedback teams first step
-            onClick={() => console.log('new')}
+            onClick={() =>
+              navigate(`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}`)
+            }
             icon={<IoAdd />}
           >
             New feedback

@@ -18,13 +18,7 @@ const useStyles = createStyles((theme) => ({
 const DashboardHeader: React.FC = () => {
   const { classes } = useStyles();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [opened, setOpened] = useState(false);
-  const [openedFeedbackButton, setOpenedFeedbackButton] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-
 
   return (
     <Flex align="center" justify="space-between" gap="88px" p="12px 36px">

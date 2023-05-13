@@ -1,0 +1,39 @@
+@import 'colors', 'mixins';
+
+.table-badge {
+  width: 88px;
+  height: 24px;
+  padding: 6px;
+  border-radius: 12px;
+  text-transform: inherit;
+
+  &--completed {
+    color: color($green-shades, 300);
+    background-color: color($green-shades, 800);
+  }
+
+  &--in-progress {
+    color: color($greyscale, 300);
+    background-color: color($greyscale, 700);
+  }
+}
+
+.table-badge::first-letter {
+  text-transform: capitalize;
+}
+
+.table-container {
+  width: calc(100% - 468px);
+  padding: 36px 0 0 0;
+}
+
+.table-anon {
+  height: 8px;
+  width: 8px;
+  background-color: color($green-shades, 500);
+  border-radius: 50%;
+  display: inline-block;
+  &--isAnon {
+    background-color: color($red-shades, 500);
+  }
+}

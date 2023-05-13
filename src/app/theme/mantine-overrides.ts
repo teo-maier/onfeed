@@ -64,7 +64,7 @@ export const themeOverrides: MantineThemeOverride = {
       styles: (theme) => ({
         root: {},
         label: {
-          color: `${theme.colors.greyscale[6]}`,
+          color: `${theme.colors.greyscale[7]}`,
           fontSize: '12px',
           fontWeight: 600,
         },
@@ -76,14 +76,14 @@ export const themeOverrides: MantineThemeOverride = {
           // color: `${theme.colors.greyscale[4]}`,
           border: `0.0625rem solid ${theme.colors.greyscale[4]}`,
           '&:hover': {
-            border: `1px solid ${theme.colors.greyscale[6]}`
+            border: `1px solid ${theme.colors.greyscale[6]}`,
           },
           '&:focus-visible': {
-            border: `1px solid ${theme.colors.primary[4]}`
+            border: `1px solid ${theme.colors.primary[4]}`,
           },
           '::placeholder': {
             color: `${theme.colors.greyscale[5]}`,
-          }
+          },
         },
       }),
     },
@@ -106,6 +106,89 @@ export const themeOverrides: MantineThemeOverride = {
           backgroundColor: `${theme.colors.greyscale[1]}`,
           fontFamily: 'Montserrat',
           fontSize: '12px',
+        },
+      }),
+    },
+    Stepper: {
+      styles: (theme) => ({
+        stepLabel: {
+          fontFamily: 'Montserrat',
+          fontSize: '12px',
+          fontWeight: 600,
+          lineHeight: '16px',
+        },
+        stepDescription: {
+          fontFamily: 'Montserrat',
+          fontSize: '10px',
+          fontWeight: 600,
+          lineHeight: '12px',
+          color: `${theme.colors.greyscale[6]}`,
+        },
+        stepIcon: {
+          '&[data-progress]': {
+            borderColor: `${theme.colors.primary[4]}`,
+          },
+          '&[data-completed]': {
+            borderColor: `${theme.colors.primary[4]}`,
+            backgroundColor: `${theme.colors.primary[4]}`,
+          },
+          backgroundColor: `${theme.colors.primary[0]}`,
+          border: `0.125rem solid ${theme.colors.primary[0]}`,
+        },
+        separatorActive: {
+          backgroundColor: `${theme.colors.primary[4]}`,
+        },
+        separator: {
+          backgroundColor: `${theme.colors.primary[2]}`,
+          marginLeft: '60px',
+          marginRight: '60px',
+        },
+      }),
+    },
+    ScrollArea: {
+      styles: (theme) => ({
+        thumb: {
+          backgroundColor: `${theme.colors.greyscale[4]}`,
+        },
+        scrollbar: {
+          '&:hover .___ref-thumb': {
+            backgroundColor: `${theme.colors.greyscale[5]}`,
+          },
+        },
+      }),
+    },
+    Switch: {
+      styles: (theme) => ({
+        label: {
+          fontSize: '12px',
+          clor: `${theme.colors.greyscale[7]}`,
+        },
+        track: {
+          backgroundColor: `${theme.colors.greyscale[2]}`,
+          borderColor: `${theme.colors.greyscale[3]}`,
+          '&input:checked': {
+            backgroundColor: `${theme.colors.primary[4]}`,
+            borderColor: `${theme.colors.primary[4]}`,
+          },
+        },
+        thumb: {
+          border: `0.0625rem solid ${theme.colors.greyscale[3]}`,
+        },
+      }),
+    },
+    Table: {
+      styles: (theme) => ({
+        root: {
+          'thead tr th': {
+            fontWeight: 500,
+            fontSize: '12px',
+            textAlign: 'center',
+          },
+          'tbody tr td': {
+            fontWeight: 500,
+            fontSize: '12px',
+            textAlign: 'center',
+          },
         },
       }),
     },

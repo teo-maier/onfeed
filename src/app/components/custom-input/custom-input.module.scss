@@ -15,7 +15,7 @@ $iconOffset: 12px;
   padding: $inputVerticalPadding $inputHorizontalPadding;
   margin-bottom: $inputBottomSpacing;
   border: 1px solid color($greyscale, 500);
-//   border: none;
+  //   border: none;
   line-height: 100%;
   transition: border-color 150ms;
 
@@ -76,7 +76,7 @@ $iconOffset: 12px;
     }
 
     label {
-      color: color($greyscale, 300);
+      color: color($greyscale, 000);
     }
   }
 
@@ -103,7 +103,10 @@ $iconOffset: 12px;
 
     // edited for modal
     &--trailing {
-      // right: 12px;
+      &--search {
+        right: 12px;
+        margin-top: 0;
+      }
       right: 8px;
       margin-top: 8px;
 

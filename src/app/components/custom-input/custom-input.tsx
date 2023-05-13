@@ -34,8 +34,8 @@ const Input: React.FC<InputProps> = React.forwardRef(
 
     useEffect(() => {
       if (inputProps.type === 'search') {
-        setForceLeadingIcon(<IoSearch />);
-        setForceTrailingIcon(<IoClose />);
+        setForceLeadingIcon(<IoSearch color="#909090" />);
+        setForceTrailingIcon(<IoClose color="#909090" />);
       }
     }, [inputProps.type]);
 
@@ -72,7 +72,11 @@ const Input: React.FC<InputProps> = React.forwardRef(
             <div
               className={classnames(
                 styles['input__icon'],
-                styles['input__icon--trailing']
+                styles['input__icon--trailing'],
+                {
+                  [styles['input__icon--trailing--search']]:
+                    inputProps.type === 'search',
+                }
               )}
             >
               {trailingIcon || forceTrailingIcon}

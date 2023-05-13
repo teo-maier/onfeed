@@ -1,0 +1,34 @@
+@import 'mixins', 'colors';
+
+.step-one-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 36px;
+  height: 400px;
+}
+
+.vertical-bar-team {
+  display: flex;
+  align-items: flex-end;
+}
+
+.empty-state {
+  width: 360px;
+  color: color($greyscale, 400);
+  padding: 6px 0px;
+}
+
+.team-title {
+    padding: 4px;
+    margin-bottom: 16px;
+}
+
+.member-title {
+  margin-top: 46.6px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

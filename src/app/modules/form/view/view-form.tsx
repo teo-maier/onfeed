@@ -12,7 +12,7 @@ interface ViewFormProps {
 const ViewForm: React.FC<ViewFormProps> = () => {
   return (
     <div className={styles['view-form-container']}>
-      <TemplatesSideMenu />
+      <TemplatesSideMenu isForFeedback={false} />
       <Outlet />
     </div>
   );

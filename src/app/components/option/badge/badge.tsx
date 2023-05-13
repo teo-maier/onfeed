@@ -5,10 +5,14 @@ import styles from './badge.module.scss';
 interface BadgeProps {
   value: string;
   removeValue: (value: string) => void;
+  canRemove: boolean;
 }
 
-const CustomBadge: React.FC<BadgeProps> = ({ value, removeValue }) => {
-  console.log(value)
+const CustomBadge: React.FC<BadgeProps> = ({
+  value,
+  removeValue,
+  canRemove,
+}) => {
   const ref = useRef<HTMLButtonElement>(null);
 
   const handleOnClick = () => {
@@ -26,17 +30,19 @@ const CustomBadge: React.FC<BadgeProps> = ({ value, removeValue }) => {
         radius={4}
         pr={4}
         rightSection={
-          <ActionIcon
-            ref={ref}
-            title={value}
-            size="xs"
-            color="blue"
-            radius="xl"
-            variant="transparent"
-            onClick={handleOnClick}
-          >
-            <CloseButton iconSize={'12px'} variant="transparent" />
-          </ActionIcon>
+          canRemove && (
+            <ActionIcon
+              ref={ref}
+              title={value}
+              size="xs"
+              color="blue"
+              radius="xl"
+              variant="transparent"
+              onClick={handleOnClick}
+            >
+              <CloseButton iconSize={'12px'} variant="transparent" />
+            </ActionIcon>
+          )
         }
       >
         {value.toLocaleLowerCase()}

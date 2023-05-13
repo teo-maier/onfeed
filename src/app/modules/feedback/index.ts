@@ -1,1 +1,2 @@
-export * from './feedback-page';
+export * from './view/feedback-table';
+export * from './create/create-feedback';

@@ -1,4 +1,11 @@
-import { AppShell, Container, Loader, LoadingOverlay } from '@mantine/core';
+import {
+  AppShell,
+  Aside,
+  Container,
+  Loader,
+  LoadingOverlay,
+  ScrollArea,
+} from '@mantine/core';
 import { AppDispatch, AuthSliceState, RootState } from '@onfeed/redux';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,10 +28,14 @@ const AppLayout: React.FC = () => {
   return (
     <AppShell
       padding={5}
-      // navbar={<SideNav routesTop={routes.top} routesBottom={routes.bottom} />}
       header={<DashboardHeader />}
+      // aside={<Aside.Section component={ScrollArea}  mx="-xs" px="xs">mda</Aside.Section>}
       styles={() => ({
-        main: { overflow: 'auto', maxHeight: 'calc(100vh - 74px)', minHeight: 'calc(100vh - 74px)' },
+        main: {
+          overflow: 'auto',
+          maxHeight: 'calc(100vh - 74px)',
+          minHeight: 'calc(100vh - 74px)',
+        },
       })}
     >
       <Container
@@ -33,7 +44,7 @@ const AppLayout: React.FC = () => {
         maw="none"
         mx={0}
         p={0}
-        style={{ marginTop: '54px' }}
+        style={{ marginTop: '24px' }}
       >
         {/* <LoadingOverlay visible={loading} loader={<Loader variant="dots" />} /> */}
         {/* {!loading && <Outlet />} */}

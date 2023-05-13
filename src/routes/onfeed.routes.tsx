@@ -13,6 +13,7 @@ import {
   CreateForm,
   ViewForm,
   ViewFormDetails,
+  CreateFeedback,
 } from '@onfeed/modules';
 
 export const OnfeedRoutes = () => {
@@ -77,6 +78,10 @@ export const OnfeedRoutes = () => {
           <Route
             path={`${ONFEED_ROUTES.FEEDBACK}/*`}
             element={<FeedbackPage />}
+          />
+          <Route
+            path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}`}
+            element={<CreateFeedback />}
           />
           <Route
             path={`${ONFEED_ROUTES.SETTINGS}/*`}

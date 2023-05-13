@@ -6,9 +6,20 @@ import { useEffect, useState } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import { Tab } from '../tab/tab';
 import styles from './templates-side-menu.module.scss';
+import tabStyle from './../tab/tab.module.scss';
 
-const TemplatesSideMenu: React.FC = () => {
+interface TemplatesSideMenuProps {
+  isForFeedback: boolean;
+  getFormId?: (id: string | undefined) => void;
+}
+
+const TemplatesSideMenu: React.FC<TemplatesSideMenuProps> = ({
+  isForFeedback,
+  getFormId,
+}) => {
   const [allForms, setAllForms] = useState<Form[]>([]);
+  const [divValue, setDivValue] = useState<string>('');
+  const [formId, setFormId] = useState<string>();
 
   useEffect(() => {
     formAPI.getAll().then((forms) => setAllForms(forms));
@@ -23,13 +34,29 @@ const TemplatesSideMenu: React.FC = () => {
       />
       <div className={'horizontal-bar'}></div>
       {allForms.length > 0 ? (
-        allForms.map(({ title, id, description }) => (
-          <Tab
-            path={`${ONFEED_ROUTES.VIEW}/${id}`}
-            title={title}
-            description={description}
-          />
-        ))
+        allForms.map(({ title, id, description }) =>
+          isForFeedback && getFormId ? (
+            <div
+              className={classnames(
+                tabStyle['button'],
+                { [tabStyle['button--active']]: divValue === title },
+                ['button--secondary']
+              )}
+              onClick={(value) => {
+                setDivValue(value.currentTarget.innerHTML);
+                getFormId(id);
+              }}
+            >
+              {title}
+            </div>
+          ) : (
+            <Tab
+              path={`${ONFEED_ROUTES.VIEW}/${id}`}
+              title={title}
+              description={description}
+            />
+          )
+        )
       ) : (
         <div
           className={classnames(['button--secondary'], styles['empty-state'])}

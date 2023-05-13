@@ -1,0 +1,59 @@
+@import 'mixins', 'colors';
+
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.members-footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 31px 0;
+}
+
+.members-footer-content {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.members-footer-title {
+  color: color($greyscale, 300);
+}
+
+.empty-state {
+  padding-top: 8px;
+  color: color($greyscale, 400);
+}
+
+.members-footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 12px;
+
+  &:hover,
+  &:focus {
+    background-color: color($greyscale, 700);
+  }
+
+  &:active {
+    background-color: color($greyscale, 600);
+  }
+  &--name {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  &--avatar {
+    background-color: color($greyscale, 300);
+  }
+}
+
+.info-values {
+  color: color($greyscale, 300);
+}

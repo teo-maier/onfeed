@@ -7,6 +7,7 @@ import {
   ONFEED_ROUTES,
   SLUG_KEY,
 } from '@onfeed/helpers';
+import { Form } from '@onfeed/models';
 import {
   FormSliceState,
   RootState,
@@ -22,10 +23,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './view-form-details.module.scss';
 
 interface ViewFormDetailsProps {
-  value?: string;
+  selectForm?: Form;
 }
 
-const ViewFormDetails: React.FC<ViewFormDetailsProps> = () => {
+const ViewFormDetails: React.FC<ViewFormDetailsProps> = ({ selectForm }) => {
   const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
 
   const dispatch = useDispatch();
