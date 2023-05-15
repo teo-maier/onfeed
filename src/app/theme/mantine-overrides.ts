@@ -172,7 +172,7 @@ export const themeOverrides: MantineThemeOverride = {
           },
         },
         thumb: {
-          border: `0.0625rem solid ${theme.colors.greyscale[3]}`,
+          border: `0.0625rem solid ${theme.colors.greyscale[4]}`,
         },
       }),
     },
@@ -188,6 +188,10 @@ export const themeOverrides: MantineThemeOverride = {
             fontWeight: 500,
             fontSize: '12px',
             textAlign: 'center',
+          },
+          '&[data-hover] tbody tr:hover': {
+            cursor: 'pointer',
+            backgroundColor: `${theme.colors.greyscale[1]}`,
           },
         },
       }),

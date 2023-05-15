@@ -7,6 +7,8 @@ import { ReactComponent as OnfeedLogo } from './onfeed-logo.svg';
 import { ReactComponent as DoneIcon } from './done-icon.svg';
 import { ReactComponent as UsersIcon } from './users-icon.svg';
 import { ReactComponent as ListIcon } from './list-icon.svg';
+import { ReactComponent as BigBubbleLeft } from './big-bubble-left.svg';
+import { ReactComponent as SmallBubbleLeft } from './small-bubble-left.svg';
 
 export {
   BubbleButtonLeft,
@@ -18,4 +20,6 @@ export {
   DoneIcon,
   UsersIcon,
   ListIcon,
+  BigBubbleLeft,
+  SmallBubbleLeft,
 };

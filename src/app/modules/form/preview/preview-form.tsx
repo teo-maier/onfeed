@@ -6,7 +6,12 @@ import {
   NotificationModal,
   InformationValues,
 } from '@onfeed/components';
-import { ButtonVariant, ONFEED_ROUTES, SLUG_KEY } from '@onfeed/helpers';
+import {
+  ButtonVariant,
+  ONFEED_ROUTES,
+  showWarningNotification,
+  SLUG_KEY,
+} from '@onfeed/helpers';
 import {
   FormSliceState,
   removeIdFromQuestions,
@@ -41,7 +46,11 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
   const [infoValues, setInfoValues] = useState<InformationValues>();
 
   const handleBubbleClickRight = () => {
-    setNextClick(true);
+    if (infoValues) {
+      setNextClick(true);
+    } else {
+      showWarningNotification('Please add information !');
+    }
   };
 
   const handleBubbleClickLeft = () => {
@@ -66,7 +75,7 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
             questions: questions,
           })
           .then((updatedForm) => {
-            console.log(updatedForm)
+            console.log(updatedForm);
             navigate(
               `${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${updatedForm.id}`
             );
@@ -79,7 +88,7 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
             questions: questions,
           })
           .then((newForm) => {
-            console.log(newForm)
+            console.log(newForm);
             navigate(
               `${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${newForm.id}`
             );

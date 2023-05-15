@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -17,7 +18,8 @@ root.render(
     <BrowserRouter basename={environment.baseHref}>
       <MantineProvider theme={themeOverrides} withNormalizeCSS withGlobalStyles>
         <StrictMode>
-          <App />
+          <Notifications/>
+            <App />
         </StrictMode>
       </MantineProvider>
     </BrowserRouter>

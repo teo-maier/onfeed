@@ -1,3 +1,4 @@
 export * from './form/form.service';
 export * from './question/question.service';
 export * from './team/team.service';
+export * from './employee/employee.service';

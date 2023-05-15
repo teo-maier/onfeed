@@ -19,7 +19,9 @@ export const teamSlice = createSlice({
       state.selectedTeam = payload;
     },
     setSelectedTeamMember: (state, { payload }: PayloadAction<TeamMember>) => {
-      state.selectedTeamMembers.push(payload);
+      if (!state.selectedTeamMembers.some((m) => m.id === payload.id)) {
+        state.selectedTeamMembers = [...state.selectedTeamMembers, payload];
+      }
     },
     setAllMembers: (state, { payload }: PayloadAction<TeamMember[]>) => {
       state.selectedTeamMembers = payload;

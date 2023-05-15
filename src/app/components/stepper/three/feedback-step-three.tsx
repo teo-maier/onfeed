@@ -24,7 +24,6 @@ const FeedbackStepThree: React.FC<FeedbackStepThreeProps> = ({
   return (
     <div className={styles['step-three-container']}>
       <InfoModal
-        form={null}
         labelTitle="Session title"
         labelTextarea="Description"
         labelTags={null}

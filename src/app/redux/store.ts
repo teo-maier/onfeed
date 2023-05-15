@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { formSlice } from './slices';
 import { apiSlice } from './slices/api-slice';
 import { authSlice } from './slices/auth-slice';
+import { sessionSlice } from './slices/session-slice';
 import { teamSlice } from './slices/team-slice';
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [formSlice.name]: formSlice.reducer,
     [teamSlice.name]: teamSlice.reducer,
+    [sessionSlice.name]: sessionSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(

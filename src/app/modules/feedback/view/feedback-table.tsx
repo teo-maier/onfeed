@@ -126,7 +126,7 @@ const FeedbackPage = () => {
   return (
     <Flex justify={'center'}>
       <div className={classnames(styles['table-container'])}>
-        <Table highlightOnHover verticalSpacing={'12px'}>
+        <Table highlightOnHover verticalSpacing="12px">
           <thead>
             <tr>
               <th>Session title</th>

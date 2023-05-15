@@ -5,8 +5,8 @@ import classnames from 'classnames';
 import { Flex, Switch, Textarea } from '@mantine/core';
 import { Form, Question } from '@onfeed/models';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setForm } from '@onfeed/redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, SessionSliceState, setForm } from '@onfeed/redux';
 
 export interface InformationValues {
   title: string;
@@ -17,7 +17,7 @@ export interface InformationValues {
 }
 
 interface InfoModalProps {
-  form: Form | null;
+  form?: Form | null;
   labelTitle: string;
   labelTextarea: string;
   labelTags: string | null;
@@ -31,6 +31,10 @@ const InfoModal: React.FC<InfoModalProps> = ({
   labelTags,
   sendInfo,
 }) => {
+  const { sessionTitle } = useSelector<RootState, SessionSliceState>(
+    (state) => state.session
+  );
+
   const [title, setTitle] = useState<string>(form ? form.title : '');
   const [description, setDescription] = useState<string>(
     form ? form.description : ''
@@ -49,9 +53,9 @@ const InfoModal: React.FC<InfoModalProps> = ({
         tags: tagsArray,
       });
     }
-    if (!form && title && description) {
+    if (!form && (sessionTitle || title) && description) {
       sendInfo({
-        title: title,
+        title: sessionTitle || title,
         description: description,
         anonChecked: anonChecked,
         suggestionChecked: suggestionChecked,
@@ -79,7 +83,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
         <CustomInput
           className={classnames('button--secondary', styles['input-modal'])}
           placeholder={'Write your title here...'}
-          value={form?.title}
+          value={sessionTitle ? sessionTitle : form?.title}
           label={labelTitle}
           onChange={(event) => setTitle(event.target.value)}
         />
