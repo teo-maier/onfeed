@@ -1,21 +1,32 @@
 import { Chip, Flex, Group } from '@mantine/core';
 import { Option } from '@onfeed/models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface MultipleAnswerProps {
   values: Option[];
   isMultiple: boolean;
-  onChange?: (value: string[] | string) => void;
+  onChangeSingle?: (value: string) => void;
+  onChangeMultiple?: (value: string[]) => void;
 }
 
 const SelectAnswer: React.FC<MultipleAnswerProps> = ({
   values,
   isMultiple,
-  onChange,
+  onChangeSingle,
+  onChangeMultiple,
 }) => {
-  const [multipleValues, setMultipleValues] = useState<string[]>(['']);
+  const [multipleValues, setMultipleValues] = useState<string[]>([]);
   const [singleValue, setSingleValue] = useState('');
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (onChangeSingle) {
+      onChangeSingle(singleValue);
+    }
+    if (onChangeMultiple) {
+      onChangeMultiple(multipleValues);
+    }
+  }, [singleValue, multipleValues]);
 
   return (
     <Flex w={'100%'} mb="16px">
@@ -25,7 +36,7 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
           value={multipleValues}
           onChange={setMultipleValues}
         >
-          <Group position="center" mt="md" w={'100%'}>
+          <Group position="center" w={'100%'}>
             {values.map(({ value }) => (
               <Chip variant={'light'} value={value}>
                 {value}

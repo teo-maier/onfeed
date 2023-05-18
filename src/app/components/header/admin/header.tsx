@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const DashboardHeader: React.FC = () => {
+const AdminHeader: React.FC = () => {
   const { classes } = useStyles();
 
   const navigate = useNavigate();
@@ -59,4 +59,4 @@ const DashboardHeader: React.FC = () => {
   );
 };
 
-export { DashboardHeader };
+export { AdminHeader };

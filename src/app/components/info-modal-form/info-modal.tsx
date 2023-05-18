@@ -7,6 +7,8 @@ import { Form, Question } from '@onfeed/models';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, SessionSliceState, setForm } from '@onfeed/redux';
+import { SLUG_KEY } from '@onfeed/helpers';
+import { useParams } from 'react-router-dom';
 
 export interface InformationValues {
   title: string;
@@ -31,6 +33,8 @@ const InfoModal: React.FC<InfoModalProps> = ({
   labelTags,
   sendInfo,
 }) => {
+  const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
+
   const { sessionTitle } = useSelector<RootState, SessionSliceState>(
     (state) => state.session
   );
@@ -46,7 +50,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
   const tagsArray = tags.split(' ');
 
   useEffect(() => {
-    if (form && title && description && tags.length > 0) {
+    if (title && description && tags.length > 0) {
       sendInfo({
         title: title,
         description: description,
@@ -62,6 +66,11 @@ const InfoModal: React.FC<InfoModalProps> = ({
       });
     }
   }, [title, description, tags, anonChecked, suggestionChecked]);
+
+  useEffect(() => {
+    setAnonChecked(anonChecked);
+    setSuggestionChecked(suggestionChecked);
+  }, [anonChecked, suggestionChecked]);
 
   return (
     <div
@@ -83,7 +92,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
         <CustomInput
           className={classnames('button--secondary', styles['input-modal'])}
           placeholder={'Write your title here...'}
-          value={sessionTitle ? sessionTitle : form?.title}
+          value={sessionTitle ? title : form?.title}
           label={labelTitle}
           onChange={(event) => setTitle(event.target.value)}
         />
@@ -94,7 +103,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
           label={labelTextarea}
           onChange={(event: any) => setDescription(event.target.value)}
         />
-        {!form ? (
+        {form !== null ? (
           <Flex direction={'column'} gap="16px">
             <Switch
               label="Anonymous feedback"

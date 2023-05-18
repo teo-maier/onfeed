@@ -1,7 +1,9 @@
 import { createStyles, Flex, Popover } from '@mantine/core';
 import { useClickOutside, useDisclosure } from '@mantine/hooks';
 import { ButtonSize, ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
+import { setAllMembers, setSelectedTeamMember, setSessionRecipients } from '@onfeed/redux';
 import { IoAdd } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../button/button';
 import styles from './header-popover.module.scss';
@@ -21,6 +23,8 @@ interface HeaderPopoverProps {
 }
 const HeaderPopover: React.FC<HeaderPopoverProps> = ({ children }) => {
   const { classes } = useStyles();
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -57,6 +61,7 @@ const HeaderPopover: React.FC<HeaderPopoverProps> = ({ children }) => {
               className="button--secondary"
               variant={ButtonVariant.GHOST}
               size={ButtonSize.COMPACT}
+              // DRAFT
               // change to navigate to create feedback teams first step
               onClick={() => console.log(session.title)}
               style={{ justifyContent: 'flex-start' }}
@@ -70,9 +75,11 @@ const HeaderPopover: React.FC<HeaderPopoverProps> = ({ children }) => {
             variant={ButtonVariant.SECONDARY}
             size={ButtonSize.COMPACT}
             // change to navigate to create feedback teams first step
-            onClick={() =>
-              navigate(`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}`)
-            }
+            onClick={() => {
+              dispatch(setAllMembers([]));
+              dispatch(setSessionRecipients([]));
+              navigate(`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}`);
+            }}
             icon={<IoAdd />}
           >
             New feedback

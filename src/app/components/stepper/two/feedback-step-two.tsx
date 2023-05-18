@@ -11,7 +11,6 @@ const FeedbackStepTwo = () => {
   const { form } = useSelector<RootState, FormSliceState>(
     (state) => state.form
   );
-  console.log(form);
 
   const handleFormId = (formId: string | undefined) => {
     if (formId) {

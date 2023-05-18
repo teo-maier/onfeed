@@ -9,19 +9,27 @@ import {
   InformationValues,
   NotificationModal,
 } from '@onfeed/components';
-import { ButtonVariant, getUserInitials, useCheckPath } from '@onfeed/helpers';
+import {
+  ButtonVariant,
+  getUserInitials,
+  ONFEED_ROUTES,
+  SLUG_KEY,
+  useCheckPath,
+} from '@onfeed/helpers';
 import { Employee, Team, TeamMember } from '@onfeed/models';
 import {
   FormSliceState,
   removeTeamMember,
   RootState,
   SessionSliceState,
+  setSessionRecipients,
   TeamSliceState,
 } from '@onfeed/redux';
-import { employeeAPI, teamAPI } from '@onfeed/services';
+import { employeeAPI, sessionAPI, teamAPI } from '@onfeed/services';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FeedbackFooter } from '../footer/feedback-footer';
 import styles from './feedback-stepper.module.scss';
 
@@ -30,6 +38,9 @@ interface FeedbackStepperProps {
 }
 
 const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
+  const { [SLUG_KEY]: sessionId } = useParams<{ [SLUG_KEY]: string }>();
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { selectedTeamMembers } = useSelector<RootState, TeamSliceState>(
@@ -40,9 +51,10 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
     (state) => state.form
   );
 
-  const { sessionTitle } = useSelector<RootState, SessionSliceState>(
-    (state) => state.session
-  );
+  const { sessionTitle, sessionRecipients } = useSelector<
+    RootState,
+    SessionSliceState
+  >((state) => state.session);
 
   const [infoValues, setInfoValues] = useState<InformationValues>();
   const [allTeams, setAllTeams] = useState<Team[]>([]);
@@ -54,13 +66,6 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
-  useEffect(() => {
-    teamAPI.getAll().then((teams) => setAllTeams(teams));
-    employeeAPI
-      .getLoggedInUser()
-      .then((loggedInUser) => setLoggedInUser(loggedInUser));
-  }, []);
-
   const handleBubbleRightClick = () => {
     nextStep();
   };
@@ -69,18 +74,37 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
     prevStep();
   };
 
-  const handleConfirm = () => {
-    console.log('confirm');
-  };
-
   const handleInfoValues = (info: InformationValues) => {
     setInfoValues(info);
   };
 
-  console.log(sessionTitle);
-  console.log(selectedTeamMembers);
-  console.log(form);
-  console.log(infoValues);
+  const handleConfirm = () => {
+    if (infoValues && sessionId) {
+      sessionAPI
+        .edit(sessionId, {
+          title: sessionTitle || infoValues?.title,
+          description: infoValues?.description,
+          form: form,
+          creator: loggedInUser ? loggedInUser : null,
+          sessionRecipients: sessionRecipients,
+          anonymous: infoValues.anonChecked!,
+          suggestion: infoValues.suggestionChecked!,
+          draft: false,
+        })
+        .then(() => navigate(`${ONFEED_ROUTES.FEEDBACK}`));
+    }
+  };
+
+  useEffect(() => {
+    teamAPI.getAll().then((teams) => setAllTeams(teams));
+    employeeAPI.getLoggedInUser().then((loggedInUser) => {
+      setLoggedInUser(loggedInUser);
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(setSessionRecipients(selectedTeamMembers));
+  }, [selectedTeamMembers]);
 
   return (
     <div>
@@ -114,7 +138,7 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
             <FeedbackStepThree getInfoModalValues={handleInfoValues} />
           </Stepper.Step>
           <Stepper.Completed>
-            <FeedbackStepThree getInfoModalValues={handleInfoValues} />
+            <FeedbackStepThree />
             <NotificationModal
               visible={active === 3}
               question="A feeedback is going to be sent with the following information:"

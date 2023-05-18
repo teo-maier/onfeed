@@ -29,15 +29,15 @@ const LogInForm = () => {
     setLoading(true);
 
     AuthService.login(email, password)
-      .then((token) => {
-        const userRole = AuthService.getRoleFromToken(token);
-        // if (userRole) {
+      .then((response) => {
+        const userRole = response.authorities[0].authority;
+        if (userRole) {
           dispatch(login({ isAuthenticated: true, role: userRole }));
-          navigate(ONFEED_ROUTES.DASHBOARD);
-        // } else {
-        //   setMessage('Invalid credentials or role');
-        //   setLoading(false);
-        // }
+          navigate(ONFEED_ROUTES.FEEDBACK);
+        } else {
+          setMessage('Invalid credentials or role');
+          setLoading(false);
+        }
       })
       .catch(({ response }) => {
         let errorMsg = response?.data?.error || response?.data || response;

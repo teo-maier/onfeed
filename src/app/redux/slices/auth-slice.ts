@@ -1,5 +1,5 @@
+import { UserRole } from '@onfeed/helpers';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserRole } from 'src/app/services/auth/authentication.service';
 
 export interface AuthSliceState {
   isAuthenticated: boolean;

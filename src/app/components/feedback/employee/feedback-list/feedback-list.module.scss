@@ -1,0 +1,21 @@
+@import 'mixins', 'colors';
+
+.feedback-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 375px;
+  @include shadow;
+  border: 1px solid color($primary-shades, 500);
+  border-radius: 12px;
+  padding: 12px 16px;
+  &--completed {
+    border: 1px solid color($green-shades, 500);
+  }
+}
+
+.feedback-creator-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

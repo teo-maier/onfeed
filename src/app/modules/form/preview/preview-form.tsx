@@ -75,7 +75,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
             questions: questions,
           })
           .then((updatedForm) => {
-            console.log(updatedForm);
             navigate(
               `${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${updatedForm.id}`
             );
@@ -88,7 +87,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
             questions: questions,
           })
           .then((newForm) => {
-            console.log(newForm);
             navigate(
               `${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${newForm.id}`
             );

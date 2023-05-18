@@ -1,2 +1,2 @@
-export * from './view/feedback-table';
-export * from './create/create-feedback';
+export * from './admin';
+export * from './employee';

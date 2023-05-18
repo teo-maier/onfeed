@@ -1,4 +1,4 @@
-import { Employee, TeamMember } from '@onfeed/models';
+import { Employee, SessionRecipients, TeamMember } from '@onfeed/models';
 
 type UserInitialsType = Pick<Employee | TeamMember, 'firstName' | 'lastName'>;
 

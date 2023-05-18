@@ -1,0 +1,6 @@
+@import 'mixins', 'colors';
+
+.view-feedback-container {
+  width: calc(100% - 200px);
+  padding: 16px 0 0 0;
+}

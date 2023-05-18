@@ -3,3 +3,4 @@ export * from './feedback';
 export * from './form';
 export * from './layout';
 export * from './login';
+export * from './logout/logout';

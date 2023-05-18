@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { CustomBadge } from '../badge/badge';
 import styles from './add-option-input.module.scss';
 import { Question, Option, OptionValues } from '@onfeed/models';
+import { showWarningNotification } from '@onfeed/helpers';
 
 interface SelectOptionProps {
   question: Question;
@@ -30,8 +31,12 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({ question }) => {
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && message !== '') {
-      setOptions((q) => [...q, { value: message }]);
-      setMessage('');
+      if (options.some((option) => option.value !== message)) {
+        setOptions((q) => [...q, { value: message }]);
+        setMessage('');
+      } else {
+        showWarningNotification('Cannot add option with the same value !');
+      }
     }
   };
 
@@ -81,6 +86,7 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({ question }) => {
               <CustomBadge
                 value={option.value}
                 removeValue={handleRemoveValue}
+                canRemove
               />
             ))}
         </Grid>

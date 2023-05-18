@@ -6,7 +6,7 @@ import { InfoModal, InformationValues } from '../../info-modal-form/info-modal';
 import styles from './feedback-step-three.module.scss';
 
 interface FeedbackStepThreeProps {
-  getInfoModalValues: (info: InformationValues) => void;
+  getInfoModalValues?: (info: InformationValues) => void;
 }
 
 const FeedbackStepThree: React.FC<FeedbackStepThreeProps> = ({
@@ -18,7 +18,9 @@ const FeedbackStepThree: React.FC<FeedbackStepThreeProps> = ({
   );
 
   const handleSaveInfo = (info: InformationValues) => {
-    getInfoModalValues(info);
+    if (getInfoModalValues) {
+      getInfoModalValues(info);
+    }
   };
 
   return (

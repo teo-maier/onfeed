@@ -1,16 +1,12 @@
 import {
   AppShell,
-  Aside,
   Container,
-  Loader,
-  LoadingOverlay,
-  ScrollArea,
 } from '@mantine/core';
+import { AdminHeader, EmployeeHeader } from '@onfeed/components';
+import { UserRole } from '@onfeed/helpers';
 import { AppDispatch, AuthSliceState, RootState } from '@onfeed/redux';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import { DashboardHeader } from '../../components/header/header';
 
 const AppLayout: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +24,7 @@ const AppLayout: React.FC = () => {
   return (
     <AppShell
       padding={5}
-      header={<DashboardHeader />}
+      header={role === UserRole.ADMIN ? <AdminHeader /> : <EmployeeHeader/>}
       // aside={<Aside.Section component={ScrollArea}  mx="-xs" px="xs">mda</Aside.Section>}
       styles={() => ({
         main: {

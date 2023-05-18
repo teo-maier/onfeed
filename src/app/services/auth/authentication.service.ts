@@ -1,10 +1,6 @@
+import { UserRole } from '@onfeed/helpers';
 import jwt_decode from 'jwt-decode';
 import { HttpClient } from '../config/http-client.service';
-
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  EMPLOYEE = 'EMPLOYEE',
-}
 
 export const AuthService = {
   /**
@@ -19,32 +15,23 @@ export const AuthService = {
    * @param password User password
    */
   login: (email: string, password: string): Promise<any> => {
-    return HttpClient.post(
-      '/auth/authenticate',
-      {
-        email,
-        password,
-      },
-      // {
-      //   headers: {
-      //     Authorization:
-      //       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiQGIiLCJpYXQiOjE2ODMxMjQ2ODgsImV4cCI6MTY4MzIxMTA4OH0.Yhf7DOkgbecePe7ufdpTePBREtpNJ0TjxrSsRCxydqY',
-      //   },
-      // }
-    ).then((response) => {
-      console.log(response);
+    return HttpClient.post('/auth/signin', {
+      email,
+      password,
+    }).then((response) => {
       if (response.headers['authorization']) {
-        console.log(response.headers['authorization']);
         sessionStorage.setItem('token', response.headers['authorization']);
       }
+      return response.data;
     });
   },
 
   /**
    * Logout handler
    */
-  logout: (): void => {
+  logout: (): Promise<any> => {
     sessionStorage.removeItem('token');
+    return HttpClient.post('/auth/signout');
   },
 
   decodeJWT: (token?: string): Record<string, unknown> | null => {

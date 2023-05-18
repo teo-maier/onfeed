@@ -52,6 +52,10 @@ export const themeOverrides: MantineThemeOverride = {
       '#909090',
       '#303136',
     ],
+    red: ['#fdefec', '#faded8', '#f8beb1', '#fc6c4d', '#f14f2b', '#d9340e'],
+    orange: ['#fef9f1', '#faa422'],
+    yellow: ['#fffdf3', '#f5d52c', '#ffeb7a'],
+    green: ['#f1f9e9', '#e4fbcd', '#caf79e', '#8edb42', '#72c221', '#5ba90d'],
     notFound: ['#e9ecef', '#868e96'],
     success: ['#40c057'],
     error: ['#fa5252'],
@@ -193,6 +197,15 @@ export const themeOverrides: MantineThemeOverride = {
             cursor: 'pointer',
             backgroundColor: `${theme.colors.greyscale[1]}`,
           },
+        },
+      }),
+    },
+    Rating: {
+      styles: (theme) => ({
+        root: {
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '6px',
         },
       }),
     },

@@ -1,10 +1,5 @@
 @import 'colors', 'mixins';
 
-.table-container {
-  width: calc(100% - 468px);
-  padding: 36px 0 0 0;
-}
-
 .table-badge {
   width: 88px;
   height: 24px;
@@ -25,15 +20,4 @@
 
 .table-badge::first-letter {
   text-transform: capitalize;
-}
-
-.table-anon {
-  height: 8px;
-  width: 8px;
-  background-color: color($green-shades, 500);
-  border-radius: 50%;
-  display: inline-block;
-  &--isAnon {
-    background-color: color($red-shades, 500);
-  }
 }
