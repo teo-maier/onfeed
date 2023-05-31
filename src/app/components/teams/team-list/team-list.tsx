@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { ButtonVariant } from '@onfeed/helpers';
+import { ButtonVariant, showWarningNotification } from '@onfeed/helpers';
 import { Team } from '@onfeed/models';
-import { setSelectedTeam } from '@onfeed/redux';
+import { RootState, resetAlreadySelected, setSelectedTeam, TeamSliceState } from '@onfeed/redux';
 import classnames from 'classnames';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '../../avatar/avatar';
 import { Button } from '../../button/button';
 import styles from './team-list.module.scss';
@@ -14,6 +15,7 @@ interface TeamListProps {
 
 const TeamList: React.FC<TeamListProps> = ({ teams }) => {
   const dispatch = useDispatch();
+
   return (
     <div className={styles['team-list-container']}>
       {teams?.map((team: Team) => (

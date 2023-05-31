@@ -31,12 +31,13 @@ const AddOptionInput: React.FC<SelectOptionProps> = ({ question }) => {
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && message !== '') {
-      if (options.some((option) => option.value !== message)) {
+      // if (options.some((option) => option.value !== message)) {
         setOptions((q) => [...q, { value: message }]);
         setMessage('');
-      } else {
-        showWarningNotification('Cannot add option with the same value !');
-      }
+      // } 
+      // else {
+      //   showWarningNotification('Cannot add option with the same value !');
+      // }
     }
   };
 

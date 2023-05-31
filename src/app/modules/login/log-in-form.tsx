@@ -33,7 +33,7 @@ const LogInForm = () => {
         const userRole = response.authorities[0].authority;
         if (userRole) {
           dispatch(login({ isAuthenticated: true, role: userRole }));
-          navigate(ONFEED_ROUTES.FEEDBACK);
+          navigate(ONFEED_ROUTES.SESSION);
         } else {
           setMessage('Invalid credentials or role');
           setLoading(false);

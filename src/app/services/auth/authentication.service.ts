@@ -1,4 +1,4 @@
-import { UserRole } from '@onfeed/helpers';
+import { getValueFromCookie, setTokenToCookie, UserRole } from '@onfeed/helpers';
 import jwt_decode from 'jwt-decode';
 import { HttpClient } from '../config/http-client.service';
 
@@ -19,7 +19,10 @@ export const AuthService = {
       email,
       password,
     }).then((response) => {
+      console.log(response.headers['authorization'])
       if (response.headers['authorization']) {
+        setTokenToCookie(response.headers['authorization']);
+        console.log(getValueFromCookie('ILikeCookies'));
         sessionStorage.setItem('token', response.headers['authorization']);
       }
       return response.data;

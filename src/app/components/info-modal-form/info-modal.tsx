@@ -3,10 +3,10 @@ import { Input as CustomInput } from '../custom-input/custom-input';
 import { InfoIcon } from '@onfeed/assets';
 import classnames from 'classnames';
 import { Flex, Switch, Textarea } from '@mantine/core';
-import { Form, Question } from '@onfeed/models';
+import { Form } from '@onfeed/models';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, SessionSliceState, setForm } from '@onfeed/redux';
+import { useSelector } from 'react-redux';
+import { RootState, SessionSliceState } from '@onfeed/redux';
 import { SLUG_KEY } from '@onfeed/helpers';
 import { useParams } from 'react-router-dom';
 

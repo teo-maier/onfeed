@@ -1,29 +1,41 @@
 import { ONFEED_ROUTES } from '@onfeed/helpers';
 import { Form } from '@onfeed/models';
-import { formAPI } from '@onfeed/services';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import { Tab } from '../tab/tab';
 import styles from './templates-side-menu.module.scss';
 import tabStyle from './../tab/tab.module.scss';
+import { useSelector } from 'react-redux';
+import { FormSliceState, RootState } from '@onfeed/redux';
 
 interface TemplatesSideMenuProps {
   isForFeedback: boolean;
+  allForms: Form[];
   getFormId?: (id: string | undefined) => void;
+  form?: Form;
 }
 
 const TemplatesSideMenu: React.FC<TemplatesSideMenuProps> = ({
   isForFeedback,
   getFormId,
+  allForms,
+  // form,
 }) => {
-  const [allForms, setAllForms] = useState<Form[]>([]);
-  const [divValue, setDivValue] = useState<string>('');
-  const [formId, setFormId] = useState<string>();
+  const { form: f } = useSelector<RootState, FormSliceState>(
+    (state) => state.form
+  );
+
+  const [divValue, setDivValue] = useState<string>(f ? f.title : '');
 
   useEffect(() => {
-    formAPI.getAll().then((forms) => setAllForms(forms));
-  }, []);
+    if (f) {
+      setDivValue(f.title);
+    }
+  }, [f]);
+
+  console.log(divValue);
+  console.log(f);
 
   return (
     <div className={styles['side-menu-container']}>
@@ -33,36 +45,28 @@ const TemplatesSideMenu: React.FC<TemplatesSideMenuProps> = ({
         icon={<IoAdd size="18px" className={styles['add-icon']} />}
       />
       <div className={'horizontal-bar'}></div>
-      {allForms.length > 0 ? (
-        allForms.map(({ title, id, description }) =>
-          isForFeedback && getFormId ? (
-            <div
-              className={classnames(
-                tabStyle['button'],
-                { [tabStyle['button--active']]: divValue === title },
-                ['button--secondary']
-              )}
-              onClick={(value) => {
-                setDivValue(value.currentTarget.innerHTML);
-                getFormId(id);
-              }}
-            >
-              {title}
-            </div>
-          ) : (
-            <Tab
-              path={`${ONFEED_ROUTES.VIEW}/${id}`}
-              title={title}
-              description={description}
-            />
-          )
+      {allForms.map(({ title, id, description }) =>
+        isForFeedback && getFormId ? (
+          <div
+            className={classnames(
+              tabStyle['button'],
+              { [tabStyle['button--active']]: divValue === title },
+              ['button--secondary']
+            )}
+            onClick={(value) => {
+              setDivValue(value.currentTarget.innerHTML);
+              getFormId(id);
+            }}
+          >
+            {title}
+          </div>
+        ) : (
+          <Tab
+            path={`${ONFEED_ROUTES.VIEW}/${id}`}
+            title={title}
+            description={description}
+          />
         )
-      ) : (
-        <div
-          className={classnames(['button--secondary'], styles['empty-state'])}
-        >
-          No templates created
-        </div>
       )}
     </div>
   );

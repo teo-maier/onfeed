@@ -1,6 +1,7 @@
 import { ScrollArea } from '@mantine/core';
 import { Team, TeamMember } from '@onfeed/models';
 import {
+  resetAlreadySelected,
   RootState,
   setAllMembers,
   setSelectedTeamMember,
@@ -9,7 +10,7 @@ import {
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './feedback-step-one.module.scss';
-import { ButtonVariant } from '@onfeed/helpers';
+import { ButtonVariant, showWarningNotification } from '@onfeed/helpers';
 import { useEffect, useState } from 'react';
 import { TeamList, TeamMemberList } from '../../teams';
 import { Input as CustomInput } from '../../custom-input/custom-input';
@@ -22,7 +23,7 @@ interface FeedbackStepOneProps {
 const FeedbackStepOne: React.FC<FeedbackStepOneProps> = ({ teams }) => {
   const dispatch = useDispatch();
 
-  const { selectedTeam, selectedTeamMembers } = useSelector<
+  const { selectedTeam } = useSelector<
     RootState,
     TeamSliceState
   >((state) => state.team);

@@ -9,6 +9,8 @@ import {
   EmojiSmile,
 } from 'react-bootstrap-icons';
 import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
+import { getEmptyIcon } from './emoji-empty-icon';
+import { getFullIcon } from './emoji-full-icon';
 
 interface RatingAnswerProps {
   ratingType: AnswerTypeEnum;
@@ -21,7 +23,6 @@ const RatingAnswer: React.FC<RatingAnswerProps> = ({
   ratingType,
   onChange,
 }) => {
-  const theme = useMantineTheme();
   const [starValue, setStarValue] = useState(0);
   const [emojiValue, setEmojiValue] = useState(0);
 
@@ -30,44 +31,6 @@ const RatingAnswer: React.FC<RatingAnswerProps> = ({
       onChange({ starValue: starValue, emojiValue: emojiValue });
     }
   }, [starValue, emojiValue]);
-
-  const getEmptyIcon = (value: number) => {
-    const defaultProps = { size: rem(24), color: 'gray' };
-    switch (value) {
-      case 1:
-        return <EmojiAngry {...defaultProps} />;
-      case 2:
-        return <EmojiFrown {...defaultProps} />;
-      case 3:
-        return <EmojiNeutral {...defaultProps} />;
-      case 4:
-        return <EmojiSmile {...defaultProps} />;
-      case 5:
-        return <EmojiHeartEyes {...defaultProps} />;
-    }
-  };
-
-  const getFullIcon = (value: number) => {
-    const defaultProps = { size: rem(24) };
-
-    switch (value) {
-      case 1:
-        return <EmojiAngry {...defaultProps} color={theme.colors.red[5]} />;
-      case 2:
-        return <EmojiFrown {...defaultProps} color={theme.colors.orange[1]} />;
-      case 3:
-        return (
-          <EmojiNeutral {...defaultProps} color={theme.colors.yellow[1]} />
-        );
-      case 4:
-        return <EmojiSmile {...defaultProps} color={theme.colors.green[3]} />;
-      case 5:
-        return (
-          <EmojiHeartEyes {...defaultProps} color={theme.colors.green[5]} />
-        );
-    }
-  };
-  console.log(ratingType);
 
   return (
     <Flex mb="16px" style={{ alignSelf: 'center' }}>

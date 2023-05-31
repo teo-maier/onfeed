@@ -20,9 +20,10 @@ const ViewFeedbackEmployee: React.FC = () => {
   }, [sessionId]);
 
   return (
-    <Flex justify="center">
+      // eslint-disable-next-line react/jsx-no-useless-fragment
+      <>
       {session && session.form && <RecipientForm form={session?.form} />}
-    </Flex>
+      </>
   );
 };
 

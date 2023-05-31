@@ -12,15 +12,16 @@ const AnswerModal: React.FC<AnswerModalProps> = ({ isEditMode }) => {
   const { form, questions } = useSelector<RootState, FormSliceState>(
     (state) => state.form
   );
+  
   return (
     <div className={styles['modal-answer-container']}>
       {questions.map((question, index) => (
         <div className={styles['modal-answer-content']} key={index}>
           <div className={classnames('body--secondary')}>{question.value}</div>
-          <CustomAnswer type={question.answerType} options={question.options} />
+          <CustomAnswer type={question.answerType} options={question.options} editMode={isEditMode}/>
         </div>
       ))}
-      {/* {isEditMode &&
+      {isEditMode &&
         form &&
         form.questions.map((question, index) => (
           <div className={styles['modal-answer-content']} key={index}>
@@ -32,7 +33,7 @@ const AnswerModal: React.FC<AnswerModalProps> = ({ isEditMode }) => {
               options={question.options}
             />
           </div>
-        ))} */}
+        ))}
     </div>
   );
 };

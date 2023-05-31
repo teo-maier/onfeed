@@ -15,3 +15,17 @@
     background-color: color($green-shades, 500);
   }
 }
+
+.empty-text {
+  color: color($greyscale, 500)
+}
+
+.empty-container {
+  height: calc(50vh + 74px);
+  // min-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  justify-content: center;
+  align-items: center;
+}

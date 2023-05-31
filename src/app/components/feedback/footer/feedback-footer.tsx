@@ -1,29 +1,75 @@
-import { getUserInitials } from '@onfeed/helpers';
-import { TeamMember } from '@onfeed/models';
-import { removeTeamMember, RootState, TeamSliceState } from '@onfeed/redux';
+import { getUserInitials, SLUG_KEY } from '@onfeed/helpers';
+import { Employee, TeamMember } from '@onfeed/models';
+import {
+  removeRecipient,
+  removeTeamMember,
+  RootState,
+  SessionSliceState,
+  setAllMembers,
+  setSelectedTeamMember,
+  setSessionRecipients,
+  setSessionRecipientsOnEditMode,
+  TeamSliceState,
+} from '@onfeed/redux';
+import { sessionRecipientsAPI } from '@onfeed/services';
 import classnames from 'classnames';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Avatar } from '../../avatar/avatar';
 import styles from './feedback-footer.module.scss';
 
 const FeedbackFooter = () => {
+  const { [SLUG_KEY]: sessionId } = useParams<{ [SLUG_KEY]: string }>();
+
   const dispatch = useDispatch();
+
+  const [recipients, setRecipients] = useState<TeamMember[] | Employee[]>();
 
   const { selectedTeamMembers } = useSelector<RootState, TeamSliceState>(
     (state) => state.team
   );
+
+  const { sessionRecipients } = useSelector<RootState, SessionSliceState>(
+    (state) => state.session
+  );
+
+  useEffect(() => {
+    if (sessionRecipients.length > 0) {
+      setRecipients(sessionRecipients.map((r) => r.employee));
+    } else {
+      setRecipients([]);
+    }
+  }, [sessionRecipients]);
+
+  useEffect(() => {
+    if (sessionId) {
+      sessionRecipientsAPI.getAllBySessionId(sessionId).then((recipients) => {
+        dispatch(setSessionRecipientsOnEditMode(recipients));
+        dispatch(setAllMembers([]));
+      });
+    }
+  }, [sessionId]);
+
+  useEffect(() => {
+    dispatch(setSessionRecipients(selectedTeamMembers));
+  }, [selectedTeamMembers]);
+
   return (
     <div className={styles['members-footer-container']}>
       <div className={classnames('caption', styles['members-footer-title'])}>
         Request feedback to
       </div>
       <div className={styles['members-footer-content']}>
-        {selectedTeamMembers.length ? (
-          selectedTeamMembers?.map((member: TeamMember) => (
+        {recipients && recipients.length > 0 ? (
+          recipients?.map((member: TeamMember | Employee) => (
             <div
               key={member.id}
               className={classnames(styles['members-footer-item'])}
-              onClick={() => dispatch(removeTeamMember(member))}
+              onClick={() => {
+                dispatch(removeTeamMember(member));
+                dispatch(removeRecipient(member));
+              }}
             >
               <Avatar
                 size={40}
@@ -48,4 +94,4 @@ const FeedbackFooter = () => {
   );
 };
 
-export {FeedbackFooter}
+export { FeedbackFooter };

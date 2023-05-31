@@ -54,51 +54,47 @@ export const OnfeedRoutes = () => {
           />
         }
       >
-        <Route path="/" element={<AppLayout />}>
-          <Route
-            index
-            element={<Navigate to={ONFEED_ROUTES.FEEDBACK} replace />}
-          />
-          <Route path={`${ONFEED_ROUTES.FEEDBACK}`} element={getDashboard()} />
-          <Route
-            path={`${ONFEED_ROUTES.SETTINGS}/*`}
-            element={<h3>Setting page</h3>}
-          />
-          <Route path="*" element={<h3>Not found page</h3>} />
-          <Route
-            path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
-            element={
-              role === UserRole.EMPLOYEE ? (
-                <AnswerFeedback />
-              ) : (
-                <FeedbackStepper />
-              )
-            }
-          />
-          <Route
-            path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
-            element={
-              role === UserRole.EMPLOYEE ? (
-                <ViewFeedbackEmployee />
-              ) : (
-                <ViewFeedbackAdmin />
-              )
-            }
-          />
-          <Route
-            element={
-              <PrivateRoute
-                guards={[
-                  () => AuthService.checkRolePermission([UserRole.ADMIN]),
-                ]}
-                redirectOnInvalid={ONFEED_ROUTES.SETTINGS}
-              />
-            }
-          >
+        {role === UserRole.ADMIN ? (
+          <Route path="/" element={<AppLayout />}>
             <Route
-              path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}`}
+              index
+              element={<Navigate to={ONFEED_ROUTES.SESSION} replace />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.SESSION}`}
+              element={<FeedbackPageAdmin />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.SETTINGS}/*`}
+              element={<h3>Setting page</h3>}
+            />
+            <Route path="*" element={<h3>Not found page</h3>} />
+            <Route
+              path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}`}
               element={<CreateFeedback />}
             />
+            <Route
+              path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
+              element={<FeedbackStepper />}
+            />
+             <Route
+              path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
+              element={<FeedbackStepper />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+              element={<ViewFeedbackAdmin />}
+            />
+            {/* <Route
+            element={
+              <PrivateRoute
+              guards={[
+                () => AuthService.checkRolePermission([UserRole.ADMIN]),
+              ]}
+              redirectOnInvalid={ONFEED_ROUTES.SETTINGS}
+              />
+            }
+            > */}
             {/* <Route
               path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
               element={<FeedbackStepper />}
@@ -113,8 +109,8 @@ export const OnfeedRoutes = () => {
               index
               element={
                 <Navigate
-                  to={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
-                  replace
+                to={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+                replace
                 />
               }
             /> */}
@@ -124,15 +120,41 @@ export const OnfeedRoutes = () => {
               />
             </Route>
             <Route
-              path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
-              element={<CreateForm />}
-            />
-            <Route
               path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.NEW}`}
               element={<CreateForm />}
             />
+            <Route
+              path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
+              element={<CreateForm />}
+            />
           </Route>
-        </Route>
+        ) : (
+          <Route path="/" element={<AppLayout />}>
+            <Route
+              index
+              element={<Navigate to={ONFEED_ROUTES.FEEDBACK} replace />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.SETTINGS}/*`}
+              element={<h3>Setting page</h3>}
+            />
+            <Route path="*" element={<h3>Not found page</h3>} />
+            <Route
+              path={`${ONFEED_ROUTES.FEEDBACK}`}
+              element={<FeedbackPageEmployee />}
+            >
+              <Route path="*" element={<h3>Not found page</h3>} />
+              <Route
+                path={`${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
+                element={<AnswerFeedback />}
+              />
+              <Route
+                path={`${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+                element={<ViewFeedbackEmployee />}
+              />
+            </Route>
+          </Route>
+        )}
       </Route>
       {/* Public routes */}
       <Route path={`${ONFEED_ROUTES.LOGIN}/*`} element={<LogIn />} />

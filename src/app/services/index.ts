@@ -5,3 +5,4 @@ export * from './employee/employee.service';
 export * from './session/session.service';
 export * from './session/session-recipients.service';
 export * from './auth/authentication.service';
+export * from './answer/answer.service';

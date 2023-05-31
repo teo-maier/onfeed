@@ -12,6 +12,7 @@ export const ONFEED_ROUTES = {
   CHANGE_PASSWORD: '/password',
   FORM: '/form',
   FEEDBACK: '/feedback',
+  SESSION: '/session',
   SLUG: `:${SLUG_KEY}`,
   NEW: 'new',
   VIEW: 'view',

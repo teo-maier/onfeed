@@ -1,16 +1,18 @@
 import { Flex } from '@mantine/core';
 import {
   BigBubbleLeft,
+  BigBubbleRight,
   BubbleButtonRight,
   SmallBubbleLeft,
+  SmallBubbleRight,
 } from '@onfeed/assets';
 import { ONFEED_ROUTES, showWarningNotification } from '@onfeed/helpers';
 import classnames from 'classnames';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BubbleButton } from '../../bubble-button/bubble-button';
 import { FeedbackStepper } from '../stepper/feedback-stepper';
-import { setSessionTitle } from '@onfeed/redux';
+import { AuthSliceState, RootState, setSessionTitle } from '@onfeed/redux';
 import styles from './feedback-prompt.module.scss';
 import { sessionAPI } from '@onfeed/services';
 import { useNavigate } from 'react-router-dom';
@@ -21,17 +23,19 @@ const FeedbackPropmt = () => {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState<string>();
-  // const [canBegin, setCanBegin] = useState<boolean>(false);
+  const { loggedInUser } = useSelector<RootState, AuthSliceState>(
+    (state) => state.auth
+  );
 
   const handleBubbleRightClick = () => {
-    if (title) {
+    if (title && loggedInUser) {
       dispatch(setSessionTitle(title));
       // setCanBegin(true);
       const session: Session = {
         title: title,
         description: null,
         form: null,
-        creator: null,
+        creator: loggedInUser,
         sessionRecipients: [],
         anonymous: false,
         suggestion: false,
@@ -41,7 +45,7 @@ const FeedbackPropmt = () => {
         .create(session)
         .then((session) =>
           navigate(
-            `${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}/${session.id}`
+            `${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}/${session.id}`
           )
         );
     } else {
@@ -57,11 +61,17 @@ const FeedbackPropmt = () => {
       ) : (
         <> */}
       <BubbleButton position="right" onClick={handleBubbleRightClick} />
-      <div className={styles['inner-div']}>
+      <div className={styles['big-bubble-left']}>
         <BigBubbleLeft />
       </div>
-      <div className={styles['inner-div2']}>
+      <div className={styles['small-bubble-left']}>
         <SmallBubbleLeft />
+      </div>
+      <div className={styles['small-bubble-right']}>
+        <SmallBubbleRight />
+      </div>
+      <div className={styles['big-bubble-right']}>
+        <BigBubbleRight />
       </div>
 
       <div className={styles['prompt-container']}>

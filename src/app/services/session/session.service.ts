@@ -8,6 +8,10 @@ export const sessionAPI = {
     return HttpClient.get(`${SESSION_URL}/all`);
   },
 
+  getAllByCreatorId: (creatorId: number | string): Promise<Session[]> => {
+    return HttpClient.get(`${SESSION_URL}/all/${creatorId}`);
+  },
+
   getAllCompletedByEmployeeId: (
     employeeId: number | string
   ): Promise<Session[]> => {
@@ -20,6 +24,12 @@ export const sessionAPI = {
     employeeId: number | string
   ): Promise<Session[]> => {
     return HttpClient.get(`${SESSION_URL}/all/not-completed`, {
+      params: { employeeId: employeeId },
+    });
+  },
+
+  getAllDrafts: (employeeId: number | string): Promise<Session[]> => {
+    return HttpClient.get(`${SESSION_URL}/all/draft`, {
       params: { employeeId: employeeId },
     });
   },

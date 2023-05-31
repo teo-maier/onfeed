@@ -1,0 +1,13 @@
+.drawer {
+  height: 100%;
+  width: 407px;
+  padding: 0px 16px 0px 16px;
+  transition: right 300ms;
+  position: fixed;
+  right: -100%;
+
+  &--opened {
+    right: 0;
+    z-index: 100;
+  }
+}

@@ -1,18 +1,2 @@
 @import 'mixins', 'colors';
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 24px 24px;
-  background-color: $white;
-  border-radius: 12px;
-  @include shadow;
-}
-
-.question-card {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  align-items: flex-start;
-}

@@ -1,4 +1,3 @@
-import { Accordion } from '@mantine/core';
 import { setDefaultQuestion, setQuestionsOnEditMode } from '@onfeed/redux';
 import classnames from 'classnames';
 import { useDispatch } from 'react-redux';

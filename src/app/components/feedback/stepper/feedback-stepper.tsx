@@ -1,7 +1,6 @@
-import { createStyles, Flex, Stepper } from '@mantine/core';
+import { Flex, Stepper } from '@mantine/core';
 import { DoneIcon, ListIcon, UsersIcon } from '@onfeed/assets';
 import {
-  Avatar,
   BubbleButton,
   FeedbackStepOne,
   FeedbackStepThree,
@@ -9,23 +8,18 @@ import {
   InformationValues,
   NotificationModal,
 } from '@onfeed/components';
+import { ButtonVariant, ONFEED_ROUTES, SLUG_KEY } from '@onfeed/helpers';
+import { Team } from '@onfeed/models';
 import {
-  ButtonVariant,
-  getUserInitials,
-  ONFEED_ROUTES,
-  SLUG_KEY,
-  useCheckPath,
-} from '@onfeed/helpers';
-import { Employee, Team, TeamMember } from '@onfeed/models';
-import {
+  AuthSliceState,
   FormSliceState,
-  removeTeamMember,
   RootState,
   SessionSliceState,
-  setSessionRecipients,
+  setForm,
+  setSessionTitle,
   TeamSliceState,
 } from '@onfeed/redux';
-import { employeeAPI, sessionAPI, teamAPI } from '@onfeed/services';
+import { sessionAPI, teamAPI } from '@onfeed/services';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,9 +50,12 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
     SessionSliceState
   >((state) => state.session);
 
+  const { loggedInUser } = useSelector<RootState, AuthSliceState>(
+    (state) => state.auth
+  );
+
   const [infoValues, setInfoValues] = useState<InformationValues>();
   const [allTeams, setAllTeams] = useState<Team[]>([]);
-  const [loggedInUser, setLoggedInUser] = useState<Employee>();
   const [active, setActive] = useState(0);
 
   const nextStep = () =>
@@ -67,7 +64,37 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
     setActive((current) => (current > 0 ? current - 1 : current));
 
   const handleBubbleRightClick = () => {
-    nextStep();
+    console.log(sessionId, sessionTitle, active);
+    if (sessionId && sessionTitle) {
+      switch (active) {
+        case 0:
+          sessionAPI.edit(sessionId, {
+            title: sessionTitle,
+            description: null,
+            form: form ? form : null,
+            creator: loggedInUser ? loggedInUser : null,
+            sessionRecipients: sessionRecipients,
+            anonymous: false,
+            suggestion: false,
+            draft: true,
+          });
+          return nextStep();
+        case 1:
+          sessionAPI.edit(sessionId, {
+            title: sessionTitle,
+            description: null,
+            form: form,
+            creator: loggedInUser ? loggedInUser : null,
+            sessionRecipients: sessionRecipients,
+            anonymous: false,
+            suggestion: false,
+            draft: true,
+          });
+          return nextStep();
+        default:
+          return nextStep();
+      }
+    }
   };
 
   const handleBubbleLeftClick = () => {
@@ -91,23 +118,22 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
           suggestion: infoValues.suggestionChecked!,
           draft: false,
         })
-        .then(() => navigate(`${ONFEED_ROUTES.FEEDBACK}`));
+        .then(() => navigate(`${ONFEED_ROUTES.SESSION}`));
     }
   };
 
   useEffect(() => {
+    if (sessionId) {
+      sessionAPI.getById(sessionId).then((s) => {
+        s.title && dispatch(setSessionTitle(s.title));
+        s.form ? dispatch(setForm(s.form)) : dispatch(setForm(null));
+      });
+    }
     teamAPI.getAll().then((teams) => setAllTeams(teams));
-    employeeAPI.getLoggedInUser().then((loggedInUser) => {
-      setLoggedInUser(loggedInUser);
-    });
-  }, []);
-
-  useEffect(() => {
-    dispatch(setSessionRecipients(selectedTeamMembers));
-  }, [selectedTeamMembers]);
+  }, [sessionId]);
 
   return (
-    <div>
+    <>
       <div className={styles['stepper-container']}>
         <Stepper
           active={active}
@@ -128,7 +154,7 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
             description="Select form"
             icon={<ListIcon />}
           >
-            <FeedbackStepTwo />
+            <FeedbackStepTwo sessionId={sessionId} />
           </Stepper.Step>
           <Stepper.Step
             label="Final step"
@@ -185,7 +211,7 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
       {active > 0 && (
         <BubbleButton position="left" onClick={handleBubbleLeftClick} />
       )}
-    </div>
+    </>
   );
 };
 

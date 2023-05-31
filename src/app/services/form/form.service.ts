@@ -12,6 +12,12 @@ export const formAPI = {
     return HttpClient.get(`${FORM_URL}/${id}`);
   },
 
+  getByRecipientId: (recipientId: string | number): Promise<Form> => {
+    return HttpClient.get(`${FORM_URL}/recipient`, {
+      params: { recipientId: recipientId },
+    });
+  },
+
   create: (form: Form): Promise<Form> => {
     return HttpClient.post(`${FORM_URL}`, form);
   },

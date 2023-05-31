@@ -9,6 +9,8 @@ import { ReactComponent as UsersIcon } from './users-icon.svg';
 import { ReactComponent as ListIcon } from './list-icon.svg';
 import { ReactComponent as BigBubbleLeft } from './big-bubble-left.svg';
 import { ReactComponent as SmallBubbleLeft } from './small-bubble-left.svg';
+import { ReactComponent as SmallBubbleRight } from './small-bubble-right.svg';
+import { ReactComponent as BigBubbleRight } from './big-bubble-right.svg';
 
 export {
   BubbleButtonLeft,
@@ -22,4 +24,6 @@ export {
   ListIcon,
   BigBubbleLeft,
   SmallBubbleLeft,
+  SmallBubbleRight,
+  BigBubbleRight,
 };

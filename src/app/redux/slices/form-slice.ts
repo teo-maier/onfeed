@@ -1,11 +1,14 @@
 import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
+import { Answer } from '@onfeed/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { stat } from 'fs';
 import { Form, Question } from 'src/app/models/form/form';
 import { v4 as uuid } from 'uuid';
 
 export interface FormSliceState {
   form: Form | null;
   questions: Question[];
+  answers: Answer[];
 }
 
 const initialState: FormSliceState = {
@@ -18,13 +21,14 @@ const initialState: FormSliceState = {
       options: [],
     },
   ],
+  answers: [],
 };
 
 export const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    setForm: (state, { payload }: PayloadAction<Form>) => {
+    setForm: (state, { payload }: PayloadAction<Form | null>) => {
       state.form = payload;
     },
     setQuestions: (state, { payload }: PayloadAction<Question>) => {
@@ -62,6 +66,19 @@ export const formSlice = createSlice({
     removeIdFromQuestions: (state) => {
       state.questions.map((question) => delete question['id']);
     },
+    setAnswer: (state, { payload }: PayloadAction<Answer>) => {
+      if (!state.answers.some((q) => q.question.id === payload.question.id)) {
+        state.answers = [...state.answers, payload];
+      } else {
+        const found = state.answers.find(
+          (q) => q.question.id === payload.question.id
+        );
+        if (found) {
+          const index = state.answers.indexOf(found);
+          state.answers[index] = payload;
+        }
+      }
+    },
   },
 });
 
@@ -72,6 +89,7 @@ export const {
   setForm,
   removeIdFromQuestions,
   setQuestionsOnEditMode,
+  setAnswer,
 } = formSlice.actions;
 
 export default formSlice.reducer;

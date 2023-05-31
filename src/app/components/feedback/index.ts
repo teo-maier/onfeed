@@ -5,4 +5,6 @@ export * from './results/feedback-bubble-results';
 export * from './results/feedback-status';
 export * from './recipients-header/recipients-header';
 export * from './recipient-form/recipient-form';
+export * from './recipient-question/recipient-question';
+export * from './recipient-answer/recipient-answer';
 export * from './employee'

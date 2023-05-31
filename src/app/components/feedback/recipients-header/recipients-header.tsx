@@ -7,12 +7,10 @@ import styles from './recipients-header.module.scss';
 
 interface RecipientsHeaderProps {
   recipients: SessionRecipients[];
+  handleOnRecipientClick: (recipient: SessionRecipients) => void
 }
 
-const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({ recipients }) => {
-  const handleOnRecipientClick = () => {
-    console.log('show form');
-  };
+const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({ recipients, handleOnRecipientClick }) => {
 
   return (
     <ScrollArea w="calc(100% - 200px)">
@@ -24,7 +22,7 @@ const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({ recipients }) => {
               [styles['members-header-item--notCompleted']]:
                 !recipient.completed,
             })}
-            onClick={handleOnRecipientClick}
+            onClick={() => handleOnRecipientClick(recipient)}
           >
             <Avatar
               size={40}

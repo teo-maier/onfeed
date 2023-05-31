@@ -16,6 +16,10 @@ export const sessionRecipientsAPI = {
     });
   },
 
+  getById: (recipientId: string | number): Promise<SessionRecipients> => {
+    return HttpClient.get(`${SESSION_RECIPIENTS_URL}/${recipientId}`);
+  },
+
   getSessionResultBySessionId: (
     sessionId: string | number
   ): Promise<SessionResults> => {

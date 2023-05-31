@@ -32,7 +32,7 @@ const ViewFormDetails: React.FC<ViewFormDetailsProps> = ({ selectForm }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { form } = useSelector<RootState, FormSliceState>(
+  const { form, questions } = useSelector<RootState, FormSliceState>(
     (state) => state.form
   );
 
@@ -40,7 +40,7 @@ const ViewFormDetails: React.FC<ViewFormDetailsProps> = ({ selectForm }) => {
     if (formId) {
       formAPI.getById(formId).then((form) => {
         dispatch(setForm(form));
-        dispatch(setQuestionsOnEditMode(form.questions));
+        // dispatch(setQuestionsOnEditMode(form.questions));
       });
     }
   }, [formId]);

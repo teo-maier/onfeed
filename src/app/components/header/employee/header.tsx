@@ -1,11 +1,18 @@
 import { createStyles, Flex } from '@mantine/core';
 import { OnfeedLogo } from '@onfeed/assets';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { Button, HeaderPopover, ProfileButton } from '@onfeed/components';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Button,
+  HeaderPopover,
+  HeaderTab,
+  ProfileButton,
+} from '@onfeed/components';
 import { ButtonSize, ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
 import styles from './header.module.scss';
+import { employeeAPI } from '@onfeed/services';
+import { setLoggedInUser } from '@onfeed/redux';
 
 const useStyles = createStyles((theme) => ({
   dropdown: {
@@ -19,18 +26,22 @@ const EmployeeHeader: React.FC = () => {
   const { classes } = useStyles();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    employeeAPI
+      .getLoggedInUser()
+      .then((employee) => dispatch(setLoggedInUser(employee)));
+  }, []);
 
   return (
     <Flex align="center" justify="space-between" gap="88px" p="12px 36px">
       <OnfeedLogo />
       <Flex justify="space-between" w="100%" p="0 32px 0 16px">
-        <Button
-          className="button--secondary"
-          variant={ButtonVariant.GHOST}
-          onClick={() => navigate(ONFEED_ROUTES.FEEDBACK)}
-        >
-          Feedbacks
-        </Button>
+        <HeaderTab
+          path={ONFEED_ROUTES.FEEDBACK}
+          title="Feedbacks"
+        />
       </Flex>
       <Flex>
         {/* navigate to settings on click */}

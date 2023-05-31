@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface TeamSliceState {
   selectedTeam: Team | null;
   selectedTeamMembers: TeamMember[];
+  alreadySelected: boolean;
 }
 
 const initialState: TeamSliceState = {
   selectedTeam: null,
   selectedTeamMembers: [],
+  alreadySelected: false,
 };
 
 export const teamSlice = createSlice({
@@ -21,7 +23,14 @@ export const teamSlice = createSlice({
     setSelectedTeamMember: (state, { payload }: PayloadAction<TeamMember>) => {
       if (!state.selectedTeamMembers.some((m) => m.id === payload.id)) {
         state.selectedTeamMembers = [...state.selectedTeamMembers, payload];
+        state.alreadySelected = false;
+      } else {
+        console.log('ALO')
+        state.alreadySelected = true;
       }
+    },
+    resetAlreadySelected: (state) => {
+      state.alreadySelected = false;
     },
     setAllMembers: (state, { payload }: PayloadAction<TeamMember[]>) => {
       state.selectedTeamMembers = payload;
@@ -43,6 +52,7 @@ export const {
   setSelectedTeamMember,
   setAllMembers,
   removeTeamMember,
+  resetAlreadySelected,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

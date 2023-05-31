@@ -3,6 +3,7 @@ import { DoneIcon } from '@onfeed/assets';
 import {
   Avatar,
   Button,
+  EmptyState,
   RecipientForm,
   RecipientsHeader,
 } from '@onfeed/components';
@@ -18,7 +19,7 @@ import {
   SessionSliceState,
   setSessionRecipientsBySessionId,
 } from '@onfeed/redux';
-import { sessionAPI, sessionRecipientsAPI } from '@onfeed/services';
+import { formAPI, sessionAPI, sessionRecipientsAPI } from '@onfeed/services';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { MdDone, MdOutlineDone } from 'react-icons/md';
@@ -33,11 +34,11 @@ const ViewFeedbackAdmin = () => {
     RootState,
     SessionSliceState
   >((state) => state.session);
+
   const [form, setForm] = useState<Form>();
 
   useEffect(() => {
     if (sessionId) {
-      sessionAPI.getById(sessionId).then((session) => setForm(session.form!));
       sessionRecipientsAPI
         .getAllBySessionId(sessionId)
         .then((recipients) =>
@@ -46,14 +47,22 @@ const ViewFeedbackAdmin = () => {
     }
   }, [sessionId]);
 
-  const handleOnRecipientClick = () => {
-    console.log('show form with answers');
+  const handleOnRecipientClick = (recipient: SessionRecipients) => {
+    if (recipient.id) {
+      formAPI
+        .getByRecipientId(recipient.id)
+        .then((formByRecipient) => setForm(formByRecipient));
+    }
   };
+
 
   return (
     <Flex justify="center" direction="column" gap="36px" p="0 64px">
       <div className={styles['view-feedback-container']}>
-        <RecipientsHeader recipients={recipients} />
+        <RecipientsHeader
+          recipients={recipients}
+          handleOnRecipientClick={handleOnRecipientClick}
+        />
       </div>
       <Flex justify="flex-start" w="100%" gap="100px">
         <div>
@@ -68,7 +77,8 @@ const ViewFeedbackAdmin = () => {
           </Button>
         </div>
         {/* should render answered form here */}
-        {form && <RecipientForm form={form!} />}
+        {form && <RecipientForm form={form} />}
+        <EmptyState isEmpty={form === undefined}>No one responded</EmptyState>
       </Flex>
     </Flex>
   );

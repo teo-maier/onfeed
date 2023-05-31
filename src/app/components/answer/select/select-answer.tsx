@@ -56,8 +56,8 @@ const SelectAnswer: React.FC<MultipleAnswerProps> = ({
                 variant={'light'}
                 value={value}
                 checked={checked}
-                onChange={() => {
-                  // setChecked(!a);
+                onChange={(c) => {
+                  setChecked((c) => !c);
                 }}
               >
                 {value}

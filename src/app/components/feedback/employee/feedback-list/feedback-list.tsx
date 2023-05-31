@@ -18,9 +18,9 @@ const FeedbackList: React.FC<FeedbackListProps> = ({
 
   const handleOnClick = () => {
     if (isCompleted) {
-      navigate(`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.VIEW}/${session.id}`);
+      navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.VIEW}/${session.id}`);
     } else {
-      navigate(`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}/${session.id}`);
+      navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}/${session.id}`);
     }
   };
 

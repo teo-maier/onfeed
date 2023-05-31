@@ -107,6 +107,9 @@ export const themeOverrides: MantineThemeOverride = {
             backgroundColor: `${theme.colors.primary[0]}`,
             opacity: 0.8,
           },
+          '&hover': {
+            backgroundColor: `${theme.colors.greyscale[2]}`,
+          },
           backgroundColor: `${theme.colors.greyscale[1]}`,
           fontFamily: 'Montserrat',
           fontSize: '12px',
