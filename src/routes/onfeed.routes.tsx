@@ -5,7 +5,6 @@ import { LogIn } from '../app/modules/login/page/log-in';
 import { AuthSliceState } from '../app/redux/slices/auth-slice';
 import { RootState } from '../app/redux/store';
 import { AuthService } from '../app/services/auth/authentication.service';
-import { Dashboard } from 'src/app/modules/dashboard/dashboard';
 import { PrivateRoute } from './private.route';
 import {
   AppLayout,
@@ -20,27 +19,18 @@ import {
   AnswerFeedback,
   ViewFeedbackAdmin,
 } from '@onfeed/modules';
-import { FeedbackStepper } from '@onfeed/components';
+import {
+  ChangePassword,
+  FeedbackStepper,
+  MyProfile,
+  SettingsContainer,
+} from '@onfeed/components';
 import { UserRole } from '@onfeed/helpers';
 
 export const OnfeedRoutes = () => {
   const { isAuthenticated, role } = useSelector<RootState, AuthSliceState>(
     (state) => state.auth
   );
-
-  const getDashboard = () => {
-    switch (role) {
-      case UserRole.EMPLOYEE: {
-        return <FeedbackPageEmployee />;
-      }
-      case UserRole.ADMIN: {
-        return <FeedbackPageAdmin />;
-      }
-      default: {
-        return null;
-      }
-    }
-  };
 
   return (
     <Routes>
@@ -77,7 +67,7 @@ export const OnfeedRoutes = () => {
               path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
               element={<FeedbackStepper />}
             />
-             <Route
+            <Route
               path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
               element={<FeedbackStepper />}
             />
@@ -85,35 +75,7 @@ export const OnfeedRoutes = () => {
               path={`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
               element={<ViewFeedbackAdmin />}
             />
-            {/* <Route
-            element={
-              <PrivateRoute
-              guards={[
-                () => AuthService.checkRolePermission([UserRole.ADMIN]),
-              ]}
-              redirectOnInvalid={ONFEED_ROUTES.SETTINGS}
-              />
-            }
-            > */}
-            {/* <Route
-              path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
-              element={<FeedbackStepper />}
-            /> */}
-            {/* <Route
-              path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
-              element={<ViewFeedbackAdmin />}
-            /> */}
-
             <Route path={`${ONFEED_ROUTES.FORM}`} element={<ViewForm />}>
-              {/* <Route
-              index
-              element={
-                <Navigate
-                to={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
-                replace
-                />
-              }
-            /> */}
               <Route
                 path={`${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
                 element={<ViewFormDetails />}
@@ -127,6 +89,19 @@ export const OnfeedRoutes = () => {
               path={`${ONFEED_ROUTES.FORM}/${ONFEED_ROUTES.EDIT}/${ONFEED_ROUTES.SLUG}`}
               element={<CreateForm />}
             />
+            <Route
+              path={ONFEED_ROUTES.SETTINGS}
+              element={<SettingsContainer />}
+            >
+              <Route
+                path={`${ONFEED_ROUTES.PROFILE}`}
+                element={<MyProfile />}
+              />
+              <Route
+                path={`${ONFEED_ROUTES.SECURITY}`}
+                element={<ChangePassword />}
+              />
+            </Route>
           </Route>
         ) : (
           <Route path="/" element={<AppLayout />}>
@@ -142,15 +117,26 @@ export const OnfeedRoutes = () => {
             <Route
               path={`${ONFEED_ROUTES.FEEDBACK}`}
               element={<FeedbackPageEmployee />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
+              element={<AnswerFeedback />}
+            />
+            <Route
+              path={`${ONFEED_ROUTES.FEEDBACK}/${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
+              element={<ViewFeedbackEmployee />}
+            />
+            <Route
+              path={ONFEED_ROUTES.SETTINGS}
+              element={<SettingsContainer />}
             >
-              <Route path="*" element={<h3>Not found page</h3>} />
               <Route
-                path={`${ONFEED_ROUTES.NEW}/${ONFEED_ROUTES.SLUG}`}
-                element={<AnswerFeedback />}
+                path={`${ONFEED_ROUTES.PROFILE}`}
+                element={<MyProfile />}
               />
               <Route
-                path={`${ONFEED_ROUTES.VIEW}/${ONFEED_ROUTES.SLUG}`}
-                element={<ViewFeedbackEmployee />}
+                path={`${ONFEED_ROUTES.SECURITY}`}
+                element={<ChangePassword />}
               />
             </Route>
           </Route>

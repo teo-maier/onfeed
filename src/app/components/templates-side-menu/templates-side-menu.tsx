@@ -34,9 +34,6 @@ const TemplatesSideMenu: React.FC<TemplatesSideMenuProps> = ({
     }
   }, [f]);
 
-  console.log(divValue);
-  console.log(f);
-
   return (
     <div className={styles['side-menu-container']}>
       <Tab

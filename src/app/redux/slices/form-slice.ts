@@ -1,7 +1,6 @@
-import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
+import { AnswerTypeEnum } from '@onfeed/helpers';
 import { Answer } from '@onfeed/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { stat } from 'fs';
 import { Form, Question } from 'src/app/models/form/form';
 import { v4 as uuid } from 'uuid';
 
@@ -9,6 +8,7 @@ export interface FormSliceState {
   form: Form | null;
   questions: Question[];
   answers: Answer[];
+  employeeAnswerId: string | number | null;
 }
 
 const initialState: FormSliceState = {
@@ -22,6 +22,7 @@ const initialState: FormSliceState = {
     },
   ],
   answers: [],
+  employeeAnswerId: null,
 };
 
 export const formSlice = createSlice({
@@ -79,6 +80,12 @@ export const formSlice = createSlice({
         }
       }
     },
+    setEmployeeAnswerId: (
+      state,
+      { payload }: PayloadAction<string | number>
+    ) => {
+      state.employeeAnswerId = payload;
+    },
   },
 });
 
@@ -90,6 +97,7 @@ export const {
   removeIdFromQuestions,
   setQuestionsOnEditMode,
   setAnswer,
+  setEmployeeAnswerId,
 } = formSlice.actions;
 
 export default formSlice.reducer;

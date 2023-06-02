@@ -19,9 +19,12 @@ export interface Session {
 
 export interface SessionRecipients {
   id?: string;
-  sessionId?: string;
+  session?: Session;
   employee: SessionRecipientEmployee;
   completed: boolean;
+  reviewed?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type SessionRecipientEmployee = Pick<

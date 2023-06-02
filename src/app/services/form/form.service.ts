@@ -1,4 +1,4 @@
-import { Form, Response } from '@onfeed/models';
+import { Form } from '@onfeed/models';
 import { HttpClient } from '../config/http-client.service';
 
 export const FORM_URL = '/form';
@@ -24,5 +24,9 @@ export const formAPI = {
 
   edit: (id: number | string, updatedForm: Form): Promise<Form> => {
     return HttpClient.put(`${FORM_URL}/${id}`, updatedForm);
+  },
+
+  delete: (id: number | string): Promise<any> => {
+    return HttpClient.delete(`${FORM_URL}/${id}`);
   },
 };

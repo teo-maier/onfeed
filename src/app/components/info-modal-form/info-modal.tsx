@@ -5,8 +5,8 @@ import classnames from 'classnames';
 import { Flex, Switch, Textarea } from '@mantine/core';
 import { Form } from '@onfeed/models';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, SessionSliceState } from '@onfeed/redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, SessionSliceState, setSessionTitle } from '@onfeed/redux';
 import { SLUG_KEY } from '@onfeed/helpers';
 import { useParams } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
   labelTags,
   sendInfo,
 }) => {
-  const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
+  const dispatch = useDispatch();
 
   const { sessionTitle } = useSelector<RootState, SessionSliceState>(
     (state) => state.session
@@ -51,6 +51,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
 
   useEffect(() => {
     if (title && description && tags.length > 0) {
+      console.log(description);
       sendInfo({
         title: title,
         description: description,
@@ -59,11 +60,12 @@ const InfoModal: React.FC<InfoModalProps> = ({
     }
     if (!form && (sessionTitle || title) && description) {
       sendInfo({
-        title: sessionTitle || title,
+        title: sessionTitle === title ? sessionTitle : title,
         description: description,
         anonChecked: anonChecked,
         suggestionChecked: suggestionChecked,
       });
+      dispatch(setSessionTitle(title));
     }
   }, [title, description, tags, anonChecked, suggestionChecked]);
 
@@ -71,6 +73,13 @@ const InfoModal: React.FC<InfoModalProps> = ({
     setAnonChecked(anonChecked);
     setSuggestionChecked(suggestionChecked);
   }, [anonChecked, suggestionChecked]);
+
+  useEffect(() => {
+    if (form === undefined && sessionTitle) {
+      setTitle(sessionTitle);
+    }
+  }, [sessionTitle]);
+
 
   return (
     <div
@@ -99,11 +108,11 @@ const InfoModal: React.FC<InfoModalProps> = ({
         <Textarea
           w={'100%'}
           placeholder={'Write your description here...'}
-          value={form?.description}
+          value={form?.description === description ? form.description : description}
           label={labelTextarea}
-          onChange={(event: any) => setDescription(event.target.value)}
+          onChange={(event) => setDescription(event.target.value)}
         />
-        {form !== null ? (
+        {form === undefined ? (
           <Flex direction={'column'} gap="16px">
             <Switch
               label="Anonymous feedback"
@@ -120,6 +129,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
           <CustomInput
             className={classnames('button--secondary', styles['input-modal'])}
             placeholder={'Add tags...'}
+            value={form?.tags}
             label={labelTags}
             onChange={(event) => setTags(event.target.value)}
           />

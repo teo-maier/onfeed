@@ -6,6 +6,7 @@ import {
   RootState,
   setDefaultQuestion,
   setQuestions,
+  setQuestionsOnEditMode,
 } from '@onfeed/redux';
 import { IoAddOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ import styles from './create-form.module.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import classnames from 'classnames';
+import { questionAPI } from '@onfeed/services';
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const CreateForm = () => {
   const { [SLUG_KEY]: formId } = useParams<{ [SLUG_KEY]: string }>();
   const editMode = !!formId;
 
-  const { questions } = useSelector<RootState, FormSliceState>(
+  const { questions, form } = useSelector<RootState, FormSliceState>(
     (state) => state.form
   );
 
@@ -53,6 +55,15 @@ const CreateForm = () => {
     setChangePage(value);
   };
 
+  useEffect(() => {
+    if (editMode && form && form.id) {
+      questionAPI
+        .getAllByFormId(form.id)
+        .then((questions) => dispatch(setQuestionsOnEditMode(questions)));
+    }
+  }, [editMode]);
+
+  console.log(questions)
   return (
     <div className={styles['form-wrapper']}>
       <h6 className={styles['form-title']}>

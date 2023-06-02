@@ -20,23 +20,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './feedback-table.module.scss';
 
-const useStyles = createStyles(() => ({
-  input: {
-    color: '#909090',
-    fontFamily: 'Montserrat',
-    fontSize: '12px',
-  },
-}));
-
 const FeedbackPageAdmin = () => {
-  const { classes } = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { allSessions, sessionRecipientsBySessionId } = useSelector<
-    RootState,
-    SessionSliceState
-  >((state) => state.session);
+  const { allSessions } = useSelector<RootState, SessionSliceState>(
+    (state) => state.session
+  );
 
   const { loggedInUser } = useSelector<RootState, AuthSliceState>(
     (state) => state.auth
@@ -48,7 +38,7 @@ const FeedbackPageAdmin = () => {
         .getAllByCreatorId(loggedInUser.id)
         .then((allSessions) => dispatch(setAllSessions(allSessions)));
     }
-  }, []);
+  }, [loggedInUser]);
 
   const handleOnRowClick = (id: string) => {
     navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.VIEW}/${id}`);
@@ -105,10 +95,7 @@ const FeedbackPageAdmin = () => {
             className="button--secondary"
             variant={ButtonVariant.SECONDARY}
             size={ButtonSize.COMPACT}
-            // change to navigate to create feedback teams first step
             onClick={() => {
-              // dispatch(setAllMembers([]));
-              // dispatch(setSessionRecipients([]));
               navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}`);
             }}
             icon={<IoAdd />}

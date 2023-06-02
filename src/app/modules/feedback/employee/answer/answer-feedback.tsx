@@ -8,7 +8,6 @@ import { ButtonVariant, SLUG_KEY } from '@onfeed/helpers';
 import { Session } from '@onfeed/models';
 import { FormSliceState, RootState } from '@onfeed/redux';
 import { answerAPI, sessionAPI } from '@onfeed/services';
-import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -25,7 +24,6 @@ const AnswerFeedback = () => {
 
   const [session, setSession] = useState<Session>();
   const [isBubbleClicked, setIsBubbleClicked] = useState<boolean>(false);
-  const [canSave, setCanSave] = useState<boolean>(false);
 
   useEffect(() => {
     if (sessionId) {
@@ -39,10 +37,13 @@ const AnswerFeedback = () => {
     setIsBubbleClicked(true);
   };
 
+  const handleBubbleLeftClick = () => {
+    navigate(-1);
+  };
+
   const handleConfirm = () => {
     answerAPI.create(answers).then(() => navigate(-1));
   };
-
 
   return (
     <>
@@ -52,6 +53,7 @@ const AnswerFeedback = () => {
         )}
       </Flex>
       <BubbleButton position="right" onClick={handleBubbleRightClick} />
+      <BubbleButton position="left" onClick={handleBubbleLeftClick} />
       <NotificationModal
         visible={isBubbleClicked}
         question="A template is going to be saved with the following information:"

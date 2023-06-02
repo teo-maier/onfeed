@@ -1,6 +1,11 @@
 import { Aside, Flex, ScrollArea } from '@mantine/core';
 import { Button, Drawer, SessionDraft } from '@onfeed/components';
-import { ButtonSize, ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
+import {
+  ButtonSize,
+  ButtonVariant,
+  ONFEED_ROUTES,
+  useLogout,
+} from '@onfeed/helpers';
 import { Session } from '@onfeed/models';
 import {
   AuthSliceState,
@@ -34,14 +39,22 @@ const AsideSection: React.FC<AsideSectionProps> = ({ drawerOpened }) => {
   );
 
   const [allDrafts, setAllDrafts] = useState<Session[]>();
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+
+  const handleDeletedDraft = (value: boolean) => {
+    setIsDeleted(value);
+  };
 
   useEffect(() => {
     if (loggedInUser) {
       sessionAPI.getAllDrafts(loggedInUser?.id).then((drafts) => {
         setAllDrafts(drafts);
+        setIsDeleted(false);
       });
     }
-  }, [loggedInUser, allSessions]);
+  }, [loggedInUser, allSessions, isDeleted]);
+
+
 
   return (
     <Aside.Section>
@@ -54,7 +67,10 @@ const AsideSection: React.FC<AsideSectionProps> = ({ drawerOpened }) => {
                 <div className={styles['drawer-content-list']}>
                   {allDrafts ? (
                     allDrafts.map((session) => (
-                      <SessionDraft session={session} />
+                      <SessionDraft
+                        session={session}
+                        deleted={handleDeletedDraft}
+                      />
                     ))
                   ) : (
                     <div
@@ -69,26 +85,6 @@ const AsideSection: React.FC<AsideSectionProps> = ({ drawerOpened }) => {
                 </div>
               </ScrollArea>
             </div>
-          </div>
-          <div className={styles['button-container']}>
-            <Button
-              className="button--secondary"
-              fullWidth
-              icon={<IoSettingsOutline />}
-              variant={ButtonVariant.GHOST}
-              onClick={() => navigate(ONFEED_ROUTES.SETTINGS)}
-            >
-              Settings
-            </Button>
-            <Button
-              className="button--secondary"
-              fullWidth
-              icon={<IoLogOutOutline />}
-              variant={ButtonVariant.GHOST}
-              onClick={() => logout()}
-            >
-              Log out
-            </Button>
           </div>
         </div>
       </Drawer>

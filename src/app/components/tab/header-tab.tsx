@@ -21,6 +21,7 @@ const HeaderTab: React.FC<TabField> = ({
   return (
     <NavLink
       to={path}
+      end
       className={({ isActive }) =>
         classnames(styles['button'], styles[`button--${size.toLowerCase()}`], {
           [styles['button--active']]: isActive,

@@ -1,13 +1,11 @@
 import { Button } from '@onfeed/components';
-import { ButtonSize, ButtonVariant, ONFEED_ROUTES, SLUG_KEY } from '@onfeed/helpers';
+import { ButtonSize, ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
 import { Form } from '@onfeed/models';
-import { FormSliceState, RootState } from '@onfeed/redux';
 import { formAPI } from '@onfeed/services';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { IoAdd } from 'react-icons/io5';
-import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { TemplatesSideMenu } from 'src/app/components/templates-side-menu/templates-side-menu';
 import styles from './view-form.module.scss';
 

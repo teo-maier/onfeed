@@ -8,7 +8,7 @@ import { login } from '../../redux/slices/auth-slice';
 import classnames from 'classnames';
 import { ButtonSize, ButtonVariant } from './../../../helpers/constants/enums';
 import { OnfeedLogo } from '@onfeed/assets';
-import { ONFEED_ROUTES } from 'src/helpers/constants';
+import { ONFEED_ROUTES, UserRole } from 'src/helpers/constants';
 import { Form } from '@onfeed/components';
 
 export interface UserLoginData {
@@ -33,7 +33,11 @@ const LogInForm = () => {
         const userRole = response.authorities[0].authority;
         if (userRole) {
           dispatch(login({ isAuthenticated: true, role: userRole }));
-          navigate(ONFEED_ROUTES.SESSION);
+          if (userRole === UserRole.ADMIN) {
+            navigate(ONFEED_ROUTES.SESSION);
+          } else {
+            navigate(ONFEED_ROUTES.FEEDBACK );
+          }
         } else {
           setMessage('Invalid credentials or role');
           setLoading(false);

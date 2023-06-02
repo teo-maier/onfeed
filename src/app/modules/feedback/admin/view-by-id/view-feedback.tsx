@@ -1,18 +1,11 @@
-import { Flex, ScrollArea } from '@mantine/core';
-import { DoneIcon } from '@onfeed/assets';
+import { Flex } from '@mantine/core';
 import {
-  Avatar,
   Button,
   EmptyState,
   RecipientForm,
   RecipientsHeader,
 } from '@onfeed/components';
-import {
-  ButtonSize,
-  ButtonVariant,
-  getUserInitials,
-  SLUG_KEY,
-} from '@onfeed/helpers';
+import { ButtonSize, ButtonVariant, SLUG_KEY } from '@onfeed/helpers';
 import { Form, SessionRecipients } from '@onfeed/models';
 import {
   RootState,
@@ -20,9 +13,8 @@ import {
   setSessionRecipientsBySessionId,
 } from '@onfeed/redux';
 import { formAPI, sessionAPI, sessionRecipientsAPI } from '@onfeed/services';
-import classnames from 'classnames';
 import { useEffect, useState } from 'react';
-import { MdDone, MdOutlineDone } from 'react-icons/md';
+import { MdOutlineDone } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styles from './view-feedback.module.scss';
@@ -30,12 +22,45 @@ import styles from './view-feedback.module.scss';
 const ViewFeedbackAdmin = () => {
   const dispatch = useDispatch();
   const { [SLUG_KEY]: sessionId } = useParams<{ [SLUG_KEY]: string }>();
+
   const { sessionRecipientsBySessionId: recipients } = useSelector<
     RootState,
     SessionSliceState
   >((state) => state.session);
 
   const [form, setForm] = useState<Form>();
+  const [recipient, setRecipient] = useState<SessionRecipients>();
+
+  const handleOnRecipientClick = (recipient: SessionRecipients) => {
+    if (recipient.id) {
+      formAPI.getByRecipientId(recipient.id).then((formByRecipient) => {
+        setForm(formByRecipient);
+        setRecipient(recipient);
+      });
+    }
+  };
+
+  const onReviewClick = (recipient: SessionRecipients) => {
+    if (sessionId) {
+      sessionAPI.getById(sessionId).then((session) => {
+        if (recipient.id) {
+          console.log(recipient);
+          sessionRecipientsAPI
+            .edit(recipient.id, {
+              id: recipient.id,
+              employee: recipient.employee,
+              session: session,
+              completed: recipient.completed,
+              reviewed: true,
+              createdAt: recipient.createdAt,
+              updatedAt: recipient.updatedAt,
+            })
+            .then((editedRecipient) => setRecipient(editedRecipient));
+            // here
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     if (sessionId) {
@@ -47,14 +72,17 @@ const ViewFeedbackAdmin = () => {
     }
   }, [sessionId]);
 
-  const handleOnRecipientClick = (recipient: SessionRecipients) => {
-    if (recipient.id) {
-      formAPI
-        .getByRecipientId(recipient.id)
-        .then((formByRecipient) => setForm(formByRecipient));
+  useEffect(() => {
+    if (recipients.length > 0) {
+      const firstRecipient = recipients[0];
+      if (firstRecipient.id && firstRecipient.completed) {
+        formAPI.getByRecipientId(firstRecipient.id).then((formByRecipient) => {
+          setForm(formByRecipient);
+          setRecipient(firstRecipient);
+        });
+      }
     }
-  };
-
+  }, [recipients]);
 
   return (
     <Flex justify="center" direction="column" gap="36px" p="0 64px">
@@ -64,22 +92,26 @@ const ViewFeedbackAdmin = () => {
           handleOnRecipientClick={handleOnRecipientClick}
         />
       </div>
-      <Flex justify="flex-start" w="100%" gap="100px">
-        <div>
+      {form && recipient && (
+        <Flex justify="flex-start" w="100%" gap="100px">
           <Button
             className="button--secondary"
-            variant={ButtonVariant.GHOST}
+            variant={
+              recipient.reviewed
+                ? ButtonVariant.SECONDARY_SUCCESS
+                : ButtonVariant.GHOST
+            }
             size={ButtonSize.COMPACT}
             icon={<MdOutlineDone />}
-            onClick={() => console.log('set isReviewed')}
+            onClick={() => onReviewClick(recipient)}
+            style={{ height: 'fit-content' }}
           >
             Reviewed
           </Button>
-        </div>
-        {/* should render answered form here */}
-        {form && <RecipientForm form={form} />}
-        <EmptyState isEmpty={form === undefined}>No one responded</EmptyState>
-      </Flex>
+          <RecipientForm form={form} recipient={recipient} />
+        </Flex>
+      )}
+      <EmptyState isEmpty={form === undefined}>No one responded</EmptyState>
     </Flex>
   );
 };

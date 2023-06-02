@@ -21,6 +21,10 @@
     opacity: 0.7;
   }
 
+  &--selected {
+    background-color: color($greyscale, 700);
+  }
+
   &:hover,
   &:focus {
     background-color: color($greyscale, 700);

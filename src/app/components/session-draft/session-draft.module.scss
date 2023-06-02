@@ -9,11 +9,16 @@
   padding: 8px 16px;
   border-radius: 12px;
   // @include shadow;
-  background-color: color($greyscale , 800);
+  background-color: color($greyscale, 800);
   // border: 1px solid color($primary-shades , 700);
   cursor: pointer;
 
   &-recipient {
     color: color($greyscale, 300);
+  }
+
+  &-current {
+    background-color: color($primary-shades, 900);
+    border: 1px solid color($primary-shades, 600);
   }
 }

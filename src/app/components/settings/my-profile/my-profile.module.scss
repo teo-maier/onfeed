@@ -1,0 +1,30 @@
+@import 'mixins';
+@import 'colors';
+
+.form-container {
+	display: flex;
+	justify-content: flex-start;
+	margin: 0 32%;
+}
+
+.form-content {
+	display: flex;
+	flex-direction: column;
+	background-color: $white;
+	border-radius: 32px;
+	width: min(250px, 90vw);
+	height: fit-content;
+
+	&--edit {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+	}
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+}

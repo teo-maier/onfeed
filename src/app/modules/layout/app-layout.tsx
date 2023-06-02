@@ -31,7 +31,7 @@ const AppLayout: React.FC = () => {
       padding={5}
       header={
         role === UserRole.ADMIN ? (
-          <AdminHeader openDrawer={openDrawer} drawerOpened={drawerOpened} />
+          <AdminHeader openDrawer={openDrawer}/>
         ) : (
           <EmployeeHeader />
         )

@@ -8,7 +8,7 @@ import {
   InformationValues,
   NotificationModal,
 } from '@onfeed/components';
-import { ButtonVariant, ONFEED_ROUTES, SLUG_KEY } from '@onfeed/helpers';
+import { ButtonVariant, ONFEED_ROUTES, showWarningNotification, SLUG_KEY } from '@onfeed/helpers';
 import { Team } from '@onfeed/models';
 import {
   AuthSliceState,
@@ -17,7 +17,6 @@ import {
   SessionSliceState,
   setForm,
   setSessionTitle,
-  TeamSliceState,
 } from '@onfeed/redux';
 import { sessionAPI, teamAPI } from '@onfeed/services';
 import classnames from 'classnames';
@@ -36,10 +35,6 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { selectedTeamMembers } = useSelector<RootState, TeamSliceState>(
-    (state) => state.team
-  );
 
   const { form } = useSelector<RootState, FormSliceState>(
     (state) => state.form
@@ -64,7 +59,6 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
     setActive((current) => (current > 0 ? current - 1 : current));
 
   const handleBubbleRightClick = () => {
-    console.log(sessionId, sessionTitle, active);
     if (sessionId && sessionTitle) {
       switch (active) {
         case 0:
@@ -123,6 +117,13 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
   };
 
   useEffect(() => {
+    if(active === 3 && !infoValues) {
+      showWarningNotification("Please provide the required information !")
+      prevStep();
+    }
+  }, [active])
+
+  useEffect(() => {
     if (sessionId) {
       sessionAPI.getById(sessionId).then((s) => {
         s.title && dispatch(setSessionTitle(s.title));
@@ -166,7 +167,7 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
           <Stepper.Completed>
             <FeedbackStepThree />
             <NotificationModal
-              visible={active === 3}
+              visible={active === 3 && infoValues !== undefined}
               question="A feeedback is going to be sent with the following information:"
               description="Please make sure the informations are correct."
               buttonText="Send"

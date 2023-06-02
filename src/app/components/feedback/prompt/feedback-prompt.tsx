@@ -6,13 +6,22 @@ import {
   SmallBubbleLeft,
   SmallBubbleRight,
 } from '@onfeed/assets';
-import { ONFEED_ROUTES, showWarningNotification } from '@onfeed/helpers';
+import {
+  ONFEED_ROUTES,
+  showSuccessNotification,
+  showWarningNotification,
+} from '@onfeed/helpers';
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BubbleButton } from '../../bubble-button/bubble-button';
 import { FeedbackStepper } from '../stepper/feedback-stepper';
-import { AuthSliceState, RootState, setSessionTitle } from '@onfeed/redux';
+import {
+  AuthSliceState,
+  RootState,
+  setAllSessions,
+  setSessionTitle,
+} from '@onfeed/redux';
 import styles from './feedback-prompt.module.scss';
 import { sessionAPI } from '@onfeed/services';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +39,6 @@ const FeedbackPropmt = () => {
   const handleBubbleRightClick = () => {
     if (title && loggedInUser) {
       dispatch(setSessionTitle(title));
-      // setCanBegin(true);
       const session: Session = {
         title: title,
         description: null,
@@ -41,13 +49,15 @@ const FeedbackPropmt = () => {
         suggestion: false,
         draft: true,
       };
-      sessionAPI
-        .create(session)
-        .then((session) =>
-          navigate(
-            `${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}/${session.id}`
-          )
+      sessionAPI.create(session).then((session) => {
+        navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}/${session.id}`);
+        sessionAPI
+          .getAllByCreatorId(loggedInUser.id)
+          .then((allSessions) => dispatch(setAllSessions(allSessions)));
+        showSuccessNotification(
+          'Draft saved ! You can check the drawer to see it.'
         );
+      });
     } else {
       showWarningNotification('Please compose the title !');
     }
@@ -56,10 +66,6 @@ const FeedbackPropmt = () => {
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {/* {canBegin ? (
-        <FeedbackStepper />
-      ) : (
-        <> */}
       <BubbleButton position="right" onClick={handleBubbleRightClick} />
       <div className={styles['big-bubble-left']}>
         <BigBubbleLeft />
@@ -97,8 +103,6 @@ const FeedbackPropmt = () => {
           </div>
         </Flex>
       </div>
-      {/* </>
-      )} */}
     </>
   );
 };

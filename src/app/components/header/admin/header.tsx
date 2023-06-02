@@ -8,16 +8,13 @@ import { employeeAPI } from '@onfeed/services';
 import { AuthSliceState, RootState, setLoggedInUser } from '@onfeed/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './header.module.scss';
+import { HeaderPopover } from '../../header-popover/header-popover';
 
 interface AdminHeaderProps {
   openDrawer: () => void;
-  drawerOpened: boolean;
 }
 
-const AdminHeader: React.FC<AdminHeaderProps> = ({
-  openDrawer,
-  drawerOpened,
-}) => {
+const AdminHeader: React.FC<AdminHeaderProps> = ({ openDrawer }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,18 +44,21 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({
           >
             Drafts
           </Button>
-          <Button className="button--secondary" variant={ButtonVariant.PRIMARY}>
+          <Button
+            className="button--secondary"
+            variant={ButtonVariant.PRIMARY}
+            onClick={() => {
+              navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.NEW}`);
+            }}
+          >
             Create session
           </Button>
         </Flex>
       </Flex>
       <Flex>
-        {/* navigate to settings on click */}
-        <ProfileButton
-          // employee={employeeDetails.body}
-          handleClick={() => navigate(ONFEED_ROUTES.SETTINGS)}
-          // drawerOpened={drawerOpened}
-        />
+        <HeaderPopover>
+          <ProfileButton />
+        </HeaderPopover>
       </Flex>
     </Flex>
   );

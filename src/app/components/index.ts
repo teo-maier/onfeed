@@ -23,3 +23,4 @@ export * from './empty-state/empty-state';
 export * from './tab/header-tab';
 export * from './drawer/drawer';
 export * from './session-draft/session-draft';
+export * from './settings';

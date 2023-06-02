@@ -4,9 +4,12 @@ import { HttpClient } from '../config/http-client.service';
 export const ANSWER_URL = '/answer';
 
 export const answerAPI = {
-  getByQuestionId: (questionId: string | number): Promise<Answer> => {
+  getByQuestionIdAndEmployeeId: (
+    questionId: string | number,
+    employeeId: string | number
+  ): Promise<Answer> => {
     return HttpClient.get(`${ANSWER_URL}/question`, {
-      params: { questionId: questionId },
+      params: { questionId: questionId, employeeId: employeeId },
     });
   },
 

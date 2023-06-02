@@ -76,9 +76,9 @@ const CreateFormModal: React.FC<ModalProps> = ({
     }
   }, [selectedAnswerType, question.options?.length, inputValue]);
 
-  // useEffect(() => {
-  //   setInputValue(inputValue);
-  // }, [q.value]);
+  useEffect(() => {
+    setInputValue(question.value);
+  }, [question]);
 
   return (
     <div className={styles['modal-content']}>

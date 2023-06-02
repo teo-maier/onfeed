@@ -38,7 +38,6 @@ const AnswerFeedbackForm: React.FC<FeedbackFormProps> = ({
                   {question.value}
                 </div>
                 <CustomAnswer
-                  canSave={canSave}
                   question={question}
                   type={question.answerType}
                   options={question.options}

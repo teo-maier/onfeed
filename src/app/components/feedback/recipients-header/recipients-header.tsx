@@ -2,15 +2,25 @@ import { ScrollArea } from '@mantine/core';
 import { Avatar } from '@onfeed/components';
 import { getUserInitials } from '@onfeed/helpers';
 import { SessionRecipients } from '@onfeed/models';
+import { FormSliceState, RootState } from '@onfeed/redux';
 import classnames from 'classnames';
+import { useSelector } from 'react-redux';
 import styles from './recipients-header.module.scss';
 
 interface RecipientsHeaderProps {
   recipients: SessionRecipients[];
-  handleOnRecipientClick: (recipient: SessionRecipients) => void
+  handleOnRecipientClick: (recipient: SessionRecipients) => void;
 }
 
-const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({ recipients, handleOnRecipientClick }) => {
+const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({
+  recipients,
+  handleOnRecipientClick,
+}) => {
+  const { employeeAnswerId } = useSelector<RootState, FormSliceState>(
+    (state) => state.form
+  );
+
+  console.log(employeeAnswerId);
 
   return (
     <ScrollArea w="calc(100% - 200px)">
@@ -21,6 +31,8 @@ const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({ recipients, handleO
             className={classnames(styles['members-header-item'], {
               [styles['members-header-item--notCompleted']]:
                 !recipient.completed,
+              [styles['members-header-item--selected']]:
+                employeeAnswerId === recipient.employee.id,
             })}
             onClick={() => handleOnRecipientClick(recipient)}
           >

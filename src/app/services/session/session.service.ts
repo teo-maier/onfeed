@@ -45,4 +45,8 @@ export const sessionAPI = {
   edit: (id: number | string, updatedSession: Session): Promise<Session> => {
     return HttpClient.put(`${SESSION_URL}/${id}`, updatedSession);
   },
+
+  delete: (id: number | string): Promise<any> => {
+    return HttpClient.delete(`${SESSION_URL}/${id}`);
+  },
 };

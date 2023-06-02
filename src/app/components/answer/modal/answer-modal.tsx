@@ -12,6 +12,8 @@ const AnswerModal: React.FC<AnswerModalProps> = ({ isEditMode }) => {
   const { form, questions } = useSelector<RootState, FormSliceState>(
     (state) => state.form
   );
+
+  console.log(questions)
   
   return (
     <div className={styles['modal-answer-container']}>
@@ -21,7 +23,9 @@ const AnswerModal: React.FC<AnswerModalProps> = ({ isEditMode }) => {
           <CustomAnswer type={question.answerType} options={question.options} editMode={isEditMode}/>
         </div>
       ))}
-      {isEditMode &&
+
+      {/* form title cannot be updated !!!!!!!!!! */}
+      {/* {isEditMode &&
         form &&
         form.questions.map((question, index) => (
           <div className={styles['modal-answer-content']} key={index}>
@@ -33,7 +37,7 @@ const AnswerModal: React.FC<AnswerModalProps> = ({ isEditMode }) => {
               options={question.options}
             />
           </div>
-        ))}
+        ))} */}
     </div>
   );
 };

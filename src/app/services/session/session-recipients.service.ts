@@ -27,4 +27,14 @@ export const sessionRecipientsAPI = {
       params: { sessionId: sessionId },
     });
   },
+
+  edit: (
+    recipientId: string | number,
+    updatedRecipient: SessionRecipients
+  ): Promise<SessionRecipients> => {
+    return HttpClient.put(
+      `${SESSION_RECIPIENTS_URL}/${recipientId}`,
+      updatedRecipient
+    );
+  },
 };

@@ -37,13 +37,19 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           {children}
           <div className={styles['modal-button-container']}>
             <Button
+              className="button--secondary"
               fullWidth
               variant={ButtonVariant.GHOST}
               onClick={handleCancel}
             >
               Cancel
             </Button>
-            <Button fullWidth variant={buttonType} onClick={handleConfirm}>
+            <Button
+              className="button--secondary"
+              fullWidth
+              variant={buttonType}
+              onClick={handleConfirm}
+            >
               {buttonText}
             </Button>
           </div>

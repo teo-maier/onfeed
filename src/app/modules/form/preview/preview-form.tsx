@@ -63,9 +63,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
 
   const handleConfirm = () => {
     dispatch(removeIdFromQuestions());
-  };
-
-  useEffect(() => {
     if (infoValues) {
       if (editMode) {
         formAPI
@@ -93,7 +90,7 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
           });
       }
     }
-  }, [questions, editMode]);
+  };
 
   return (
     <>
@@ -123,13 +120,15 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
           <Flex direction="column" gap="xs">
             <div className="caption">Title</div>
             <div className={classnames('caption', styles['info-values'])}>
-              {editMode && form ? form.title : infoValues?.title}
+              {editMode && form && !infoValues ? form.title : infoValues?.title}
             </div>
           </Flex>
           <Flex direction="column" gap="xs">
             <div className="caption">Description</div>
             <div className={classnames('caption', styles['info-values'])}>
-              {editMode && form ? form.description : infoValues?.description}
+              {editMode && form && !infoValues
+                ? form.description
+                : infoValues?.description}
             </div>
           </Flex>
           <Flex direction="column" gap="xs">

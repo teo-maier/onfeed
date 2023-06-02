@@ -30,16 +30,22 @@ const FeedbackPageEmployee = () => {
     }
   }, [loggedInUser]);
 
-
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <Flex direction="row" justify="space-around" gap="120px">
       <Flex direction="column" gap="40px">
         <h6 style={{ margin: 0 }}>{'Requested'}</h6>
-        {notCompletedSessions &&
+        {notCompletedSessions && notCompletedSessions?.length > 0 ? (
           notCompletedSessions.map((session) => (
             <FeedbackList isCompleted={false} session={session} />
-          ))}
+          ))
+        ) : (
+          <div
+            className={classnames('button--secondary', styles['empty-state'])}
+          >
+            You have no requests.
+          </div>
+        )}
       </Flex>
       <Flex direction="column" gap="40px">
         <h6 style={{ margin: 0 }}>{'Answered'}</h6>
