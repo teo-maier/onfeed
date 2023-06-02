@@ -1,0 +1,23 @@
+@import 'colors', 'mixins';
+
+.view-form-container {
+  display: flex;
+  flex-direction: row;
+  height: calc(100% - 64px);
+  padding: 0 16px;
+  gap: 160px;
+}
+
+.empty-text {
+  color: color($greyscale, 500);
+}
+
+.empty-container {
+  height: calc(50vh + 74px);
+  // min-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  justify-content: center;
+  align-items: center;
+}

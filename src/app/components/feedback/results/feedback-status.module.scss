@@ -1,0 +1,23 @@
+@import 'colors', 'mixins';
+
+.table-badge {
+  width: 88px;
+  height: 24px;
+  padding: 6px;
+  border-radius: 12px;
+  text-transform: inherit;
+
+  &--completed {
+    color: color($green-shades, 300);
+    background-color: color($green-shades, 800);
+  }
+
+  &--in-progress {
+    color: color($greyscale, 300);
+    background-color: color($greyscale, 700);
+  }
+}
+
+.table-badge::first-letter {
+  text-transform: capitalize;
+}

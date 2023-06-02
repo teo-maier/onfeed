@@ -1,0 +1,33 @@
+@import 'colors', 'mixins';
+
+.option-input {
+    // border-bottom: 1px solid color($greyscale, 300);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding-left: 12px;
+    padding-right: 0px;
+    border-radius: 12px;
+    margin: 0;
+    background-color: color($greyscale, 800);
+    &:hover,
+    &:active,
+    &:focus {
+      border: none;
+      // border-bottom: 1px solid color($greyscale, 300);
+      outline: 0px;
+    }
+  }
+  
+  .options-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .options-title {
+    color: color($greyscale, 300);
+    margin: 8px 16px;
+  }
+  

@@ -1,0 +1,11 @@
+@import 'mixins', 'colors';
+
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-values {
+  color: color($greyscale, 300);
+}

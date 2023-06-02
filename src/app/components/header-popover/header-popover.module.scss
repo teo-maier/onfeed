@@ -1,0 +1,17 @@
+@import 'colors', 'mixins';
+
+.header-feedback-modal-container {
+  background-color: $white;
+  @include shadow;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  width: 200px;
+  border-radius: 12px;
+  gap: 16px;
+}
+
+.empty-state {
+  color: color($greyscale, 400);
+}

@@ -1,0 +1,9 @@
+@import 'colors', 'mixins';
+
+.empty-container {
+	display: flex;
+	justify-content: center;
+	padding: 16px 0;
+	color: color($greyscale, 500);
+	font-size: 14px;
+}

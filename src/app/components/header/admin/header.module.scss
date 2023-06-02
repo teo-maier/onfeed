@@ -1,0 +1,46 @@
+@import 'colors', 'mixins';
+
+.popover {
+  border-radius: 24px;
+  @include shadow;
+
+  &--body {
+    width: 200px;
+    border-radius: 24px;
+    @include shadow;
+  }
+
+  &--title {
+    color: color($greyscale, 300);
+    margin-left: 16px;
+  }
+
+  &--inner {
+    padding: 0px 16px 16px;
+  }
+
+  &--header {
+    border: 0px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 16px 16px 8px 16px;
+  }
+}
+
+.popover .calendar-date {
+  border-radius: 24px;
+
+  &:hover {
+    background-color: color($greyscale, 700);
+  }
+
+  &:active {
+    background-color: color($greyscale, 600);
+  }
+}
+
+.button-active {
+  background-color: color($greyscale, 900);
+  border: none;
+  text-decoration: none;
+}

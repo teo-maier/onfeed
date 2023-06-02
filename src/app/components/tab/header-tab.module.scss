@@ -1,0 +1,43 @@
+@import 'colors';
+@import 'mixins';
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  cursor: pointer;
+  padding: 16px 24px;
+  border-radius: 30px;
+  color: color($greyscale, 300);
+  background-color: transparent;
+  transition: background-color 150ms;
+  text-decoration: none;
+
+  &--active {
+    background-color: color($greyscale, 700);
+    color: color($greyscale, 300);
+  }
+
+  &--compact {
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+
+    // Typography
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: color($greyscale, 700);
+  }
+
+  &:active {
+    background-color: color($greyscale, 600);
+  }
+}

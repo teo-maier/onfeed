@@ -1,0 +1,13 @@
+.settings-container {
+	display: flex;
+	flex-direction: column;
+	max-height: 100vh;
+}
+
+.settings-content-container {
+	display: flex;
+	flex-direction: row;
+	height: calc(100% - 64px);
+	padding: 16px;
+	gap: 32px;
+}

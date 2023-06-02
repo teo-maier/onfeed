@@ -7,9 +7,9 @@ import { useForm } from '@mantine/form';
 import { login } from '../../redux/slices/auth-slice';
 import classnames from 'classnames';
 import { ButtonSize, ButtonVariant } from './../../../helpers/constants/enums';
-import { ReactComponent as Logo } from './../../../assets/onfeed-logo.svg';
-import { Form } from './../../components/form/form';
-import { ONFEED_ROUTES } from 'src/helpers/constants';
+import { OnfeedLogo } from '@onfeed/assets';
+import { ONFEED_ROUTES, UserRole } from 'src/helpers/constants';
+import { Form } from '@onfeed/components';
 
 export interface UserLoginData {
   email: string;
@@ -29,15 +29,19 @@ const LogInForm = () => {
     setLoading(true);
 
     AuthService.login(email, password)
-      .then((token) => {
-        const userRole = AuthService.getRoleFromToken(token);
-        // if (userRole) {
+      .then((response) => {
+        const userRole = response.authorities[0].authority;
+        if (userRole) {
           dispatch(login({ isAuthenticated: true, role: userRole }));
-          navigate(ONFEED_ROUTES.DASHBOARD);
-        // } else {
-        //   setMessage('Invalid credentials or role');
-        //   setLoading(false);
-        // }
+          if (userRole === UserRole.ADMIN) {
+            navigate(ONFEED_ROUTES.SESSION);
+          } else {
+            navigate(ONFEED_ROUTES.FEEDBACK );
+          }
+        } else {
+          setMessage('Invalid credentials or role');
+          setLoading(false);
+        }
       })
       .catch(({ response }) => {
         let errorMsg = response?.data?.error || response?.data || response;
@@ -119,7 +123,7 @@ const LogInForm = () => {
         </div>
       )}
       <div className={styles['log-in-container']}>
-        <Logo />
+        <OnfeedLogo />
         <Form
           loading={loading}
           onSubmit={handleLogin}

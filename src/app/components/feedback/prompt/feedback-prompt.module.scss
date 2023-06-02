@@ -1,0 +1,109 @@
+@import 'mixins', 'colors';
+
+// .small-bubble-left {
+//   height: 352px;
+//   width: 352px;
+//   position: absolute;
+//   top: calc(100% - -50px);
+//   left: calc(100% - 190px);
+//   border-radius: 50%;
+//   background-color: color($primary-shades, 500);
+//   opacity: 0.1;
+// }
+
+// .big-bubble-left {
+//   height: 1653px;
+//   width: 1653px;
+//   position: absolute;
+//   top: calc(100% + 264px);
+//   left: calc(100% - 870px);
+//   border-radius: 50%;
+//   background-color: color($primary-shades, 500);
+//   opacity: 0.05;
+// }
+
+// .small-bubble-right {
+//   height: 881px;
+//   width: 881px;
+//   position: absolute;
+//   top: calc(100% - 700px);
+//   left: calc(100% + 1000px);
+//   border-radius: 50%;
+//   background-color: color($primary-shades, 500);
+//   opacity: 0.05;
+// }
+
+// .big-bubble-right {
+//   height: 500px;
+//   width: 491px;
+//   position: absolute;
+//   top: calc(100% + 360px);
+//   left: calc(100% + 1260px);
+//   border-radius: 50%;
+//   background-color: color($primary-shades, 500);
+//   opacity: 0.15;
+// }
+
+// .outer-div {
+//   height: 100px;
+//   width: 100px;
+//   position: relative;
+// }
+
+.big-bubble-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.small-bubble-left {
+  position: absolute;
+  left: -4px;
+  bottom: 200px;
+}
+
+.small-bubble-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.big-bubble-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.description {
+  display: flex;
+  text-align: center;
+  color: color($greyscale, 400);
+}
+
+.prompt-container {
+  position: relative;
+  z-index: 2;
+  height: calc(50vh + 74px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prompt-input-container {
+  width: 250px;
+  padding: 6px 16px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 30px rgba(221, 230, 255, 1);
+  border: none;
+}
+
+.prompt-input {
+  &::placeholder {
+    color: color($greyscale, 400);
+  }
+  &:focus-visible {
+    outline: none;
+  }
+  border: none;
+}

@@ -1,0 +1,5 @@
+@import 'mixins', 'colors';
+
+.empty-state {
+  color: color($greyscale, 400);
+}

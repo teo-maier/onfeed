@@ -1,14 +1,17 @@
+import { UserRole } from '@onfeed/helpers';
+import { Employee } from '@onfeed/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserRole } from 'src/app/services/auth/authentication.service';
 
 export interface AuthSliceState {
   isAuthenticated: boolean;
   role?: UserRole | null;
+  loggedInUser?: Employee | null;
 }
 
 const initialState: AuthSliceState = {
   isAuthenticated: false,
   role: undefined,
+  loggedInUser: null,
 };
 
 export const authSlice = createSlice({
@@ -29,9 +32,12 @@ export const authSlice = createSlice({
       state.role = undefined;
       state.isAuthenticated = false;
     },
+    setLoggedInUser: (state, { payload }: PayloadAction<Employee>) => {
+      state.loggedInUser = payload;
+    },
   },
 });
 
-export const { setAuthenticated, setRole, login, logout } = authSlice.actions;
+export const { setAuthenticated, setRole, login, logout, setLoggedInUser } = authSlice.actions;
 
 export default authSlice.reducer;

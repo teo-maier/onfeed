@@ -10,7 +10,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        includePaths: ['src/theme'],
+        includePaths: ['src/theme', 'styles.scss'],
       },
     },
   },
@@ -36,6 +36,10 @@ export default defineConfig({
       },
     }),
   ],
+
+  build: {
+    cssCodeSplit: false,
+  },
 
   // Uncomment this if you are using workers.
   // worker: {

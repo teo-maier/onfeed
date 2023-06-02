@@ -1,0 +1,31 @@
+@import 'colors', 'mixins';
+
+.table-container {
+  width: calc(100% - 468px);
+  padding: 36px 0 0 0;
+}
+
+.table-anon {
+  height: 8px;
+  width: 8px;
+  background-color: color($red-shades, 500);
+  border-radius: 50%;
+  display: inline-block;
+  &--isAnon {
+    background-color: color($green-shades, 500);
+  }
+}
+
+.empty-text {
+  color: color($greyscale, 500)
+}
+
+.empty-container {
+  height: calc(50vh + 74px);
+  // min-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  justify-content: center;
+  align-items: center;
+}

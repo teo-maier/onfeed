@@ -1,0 +1,7 @@
+@import 'colors', 'mixins';
+
+.badge-container {
+    background-color: color($primary-shades, 900);
+    color: color($primary-shades, 500);
+    text-transform: capitalize;
+  }

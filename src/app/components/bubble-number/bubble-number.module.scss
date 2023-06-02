@@ -1,0 +1,44 @@
+@import 'colors', 'mixins';
+
+.bubble-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: color($primary-shades, 500);
+  border-radius: 50%;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  align-self: center;
+  color: color($greyscale, 1000);
+  &--grade {
+    color: $white;
+    outline: 2px solid color($greyscale, 500);
+    background-color: color($greyscale, 500);
+  }
+  &--answered {
+    color: $black;
+    outline: 2px solid color($green-shades, 700);
+    background-color: color($green-shades, 700);
+  }
+  &--notAnswered {
+    color: $black;
+    outline: 2px solid color($yellow-shades, 700);
+    background-color: color($yellow-shades, 700);
+  }
+  &--total {
+    color: $black;
+    outline: 2px solid color($greyscale, 600);
+    background-color: color($greyscale, 600);
+  }
+}
+
+.bubble-number-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px;
+  &--feedback {
+    padding: 0px;
+  }
+}

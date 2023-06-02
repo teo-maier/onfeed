@@ -1,0 +1,37 @@
+@import 'colors', 'mixins';
+
+.button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 16px;
+  width: 238px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: 1px solid transparent;
+  justify-content: space-between;
+
+  &:hover {
+    background-color: color($primary-shades, 900);
+  }
+
+  &:focus-visible {
+    outline: 4px solid color($greyscale, 000);
+  }
+
+  &--active {
+    background-color: color($primary-shades, 900);
+    border: 1px solid color($primary-shades, 500);
+    color: color($primary-shades, 500);
+  }
+  &--icon {
+    // color: color($greyscale, 300);
+    display: flex;
+    align-items: center;
+    padding: 8px;
+		width: 238px;
+		height: 40px;
+		border-radius: 12px;
+  }
+}
