@@ -3,7 +3,7 @@ import { ReactComponent as BubbleButtonRight } from './bubble-button-right.svg';
 import { ReactComponent as CancelIcon } from './cancel-icon.svg';
 import { ReactComponent as DeleteIcon } from './delete-icon.svg';
 import { ReactComponent as InfoIcon } from './info-icon.svg';
-import { ReactComponent as OnfeedLogo } from './onfeed-logo.svg';
+import { ReactComponent as Logo } from './logo.svg';
 import { ReactComponent as DoneIcon } from './done-icon.svg';
 import { ReactComponent as UsersIcon } from './users-icon.svg';
 import { ReactComponent as ListIcon } from './list-icon.svg';
@@ -18,7 +18,7 @@ export {
   CancelIcon,
   DeleteIcon,
   InfoIcon,
-  OnfeedLogo,
+  Logo,
   DoneIcon,
   UsersIcon,
   ListIcon,

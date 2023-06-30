@@ -14,8 +14,6 @@ import classnames from 'classnames';
 import styles from './create-form-modal.module.scss';
 import { Question } from '@onfeed/models';
 import { AnswerTypeEnum, AnswerTypeEnumLabel } from '@onfeed/helpers';
-import { useDispatch, useSelector } from 'react-redux';
-import { FormSliceState, RootState } from '@onfeed/redux';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -31,7 +29,6 @@ interface ModalProps {
   handleRemove: (question: Question) => void;
   question: Question;
   questionIndex: number;
-  mode: boolean;
 }
 
 const CreateFormModal: React.FC<ModalProps> = ({
@@ -40,7 +37,6 @@ const CreateFormModal: React.FC<ModalProps> = ({
   handleRemove,
   question,
   questionIndex,
-  mode,
 }) => {
   const { classes } = useStyles();
 
@@ -78,6 +74,7 @@ const CreateFormModal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     setInputValue(question.value);
+    setSelectedAnswerType(question.answerType);
   }, [question]);
 
   return (

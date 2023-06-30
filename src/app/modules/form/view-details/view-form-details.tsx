@@ -4,6 +4,7 @@ import {
   ButtonSize,
   ButtonVariant,
   ONFEED_ROUTES,
+  showErrorNotification,
   SLUG_KEY,
 } from '@onfeed/helpers';
 import { Form } from '@onfeed/models';
@@ -39,6 +40,19 @@ const ViewFormDetails: React.FC<ViewFormDetailsProps> = ({ selectForm }) => {
       });
     }
   }, [formId]);
+
+  const handleConfirmDelete = () => {
+    formId &&
+      formAPI
+        .delete(formId)
+        .then(() => navigate(`${ONFEED_ROUTES.FORM}`))
+        .catch(() => {
+          setToggleModal(false);
+          showErrorNotification(
+            'Cannot delete a form that was assigned to a session!'
+          );
+        });
+  };
 
   return (
     <Flex
@@ -95,12 +109,7 @@ const ViewFormDetails: React.FC<ViewFormDetailsProps> = ({ selectForm }) => {
         buttonText="Delete form"
         buttonType={ButtonVariant.PRIMARY_DANGER}
         handleCancel={() => setToggleModal(false)}
-        handleConfirm={() => {
-          formId &&
-            formAPI
-              .delete(formId)
-              .then(() => navigate(`${ONFEED_ROUTES.FORM}`));
-        }}
+        handleConfirm={handleConfirmDelete}
       />
     </Flex>
   );

@@ -1,5 +1,5 @@
 import { Flex } from '@mantine/core';
-import { OnfeedLogo } from '@onfeed/assets';
+import { Logo } from '@onfeed/assets';
 import { useNavigate } from 'react-router-dom';
 import { Button, HeaderTab, ProfileButton } from '@onfeed/components';
 import { ButtonVariant, ONFEED_ROUTES } from '@onfeed/helpers';
@@ -30,7 +30,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ openDrawer }) => {
 
   return (
     <Flex align="center" justify="space-between" gap="88px" p="12px 36px">
-      <OnfeedLogo />
+      <Logo />
       <Flex justify="space-between" w="100%" p="0 32px 0 16px">
         <Flex gap="24px">
           <HeaderTab path={ONFEED_ROUTES.FORM} title="Forms" />

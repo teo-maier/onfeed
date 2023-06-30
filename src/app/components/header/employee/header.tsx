@@ -1,5 +1,5 @@
 import { Flex } from '@mantine/core';
-import { OnfeedLogo } from '@onfeed/assets';
+import { Logo } from '@onfeed/assets';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -22,7 +22,7 @@ const EmployeeHeader: React.FC = () => {
 
   return (
     <Flex align="center" justify="space-between" gap="88px" p="12px 36px">
-      <OnfeedLogo />
+      <Logo />
       <Flex justify="space-between" w="100%" p="0 32px 0 16px">
         <HeaderTab path={ONFEED_ROUTES.FEEDBACK} title="Feedbacks" />
       </Flex>

@@ -12,11 +12,7 @@ interface FeedbackStepThreeProps {
 const FeedbackStepThree: React.FC<FeedbackStepThreeProps> = ({
   getInfoModalValues,
 }) => {
-  const dispatch = useDispatch();
-  const { form } = useSelector<RootState, FormSliceState>(
-    (state) => state.form
-  );
-
+  
   const handleSaveInfo = (info: InformationValues) => {
     if (getInfoModalValues) {
       getInfoModalValues(info);

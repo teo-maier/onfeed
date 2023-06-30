@@ -63,7 +63,6 @@ const CreateForm = () => {
     }
   }, [editMode]);
 
-  console.log(questions)
   return (
     <div className={styles['form-wrapper']}>
       <h6 className={styles['form-title']}>
@@ -80,7 +79,6 @@ const CreateForm = () => {
               handleRemove={handleRemoveQuestion}
               question={question}
               questionIndex={index + 1}
-              mode={editMode}
             />
           ))}
           <Button

@@ -2,13 +2,11 @@ import styles from './info-modal.module.scss';
 import { Input as CustomInput } from '../custom-input/custom-input';
 import { InfoIcon } from '@onfeed/assets';
 import classnames from 'classnames';
-import { Flex, Switch, Textarea } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 import { Form } from '@onfeed/models';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, SessionSliceState, setSessionTitle } from '@onfeed/redux';
-import { SLUG_KEY } from '@onfeed/helpers';
-import { useParams } from 'react-router-dom';
 
 export interface InformationValues {
   title: string;
@@ -22,7 +20,6 @@ interface InfoModalProps {
   form?: Form | null;
   labelTitle: string;
   labelTextarea: string;
-  labelTags: string | null;
   sendInfo: (values: InformationValues) => void;
 }
 
@@ -30,7 +27,6 @@ const InfoModal: React.FC<InfoModalProps> = ({
   form,
   labelTitle,
   labelTextarea,
-  labelTags,
   sendInfo,
 }) => {
   const dispatch = useDispatch();
@@ -50,29 +46,29 @@ const InfoModal: React.FC<InfoModalProps> = ({
   const tagsArray = tags.split(' ');
 
   useEffect(() => {
-    if (title && description && tags.length > 0) {
-      console.log(description);
+    if (title && description) {
       sendInfo({
         title: title,
         description: description,
-        tags: tagsArray,
       });
     }
     if (!form && (sessionTitle || title) && description) {
       sendInfo({
         title: sessionTitle === title ? sessionTitle : title,
         description: description,
-        anonChecked: anonChecked,
-        suggestionChecked: suggestionChecked,
+        // anonChecked: anonChecked,
+        // suggestionChecked: suggestionChecked,
       });
       dispatch(setSessionTitle(title));
     }
   }, [title, description, tags, anonChecked, suggestionChecked]);
 
-  useEffect(() => {
-    setAnonChecked(anonChecked);
-    setSuggestionChecked(suggestionChecked);
-  }, [anonChecked, suggestionChecked]);
+  // [FUTURE DEVELOPMENT]
+
+  // useEffect(() => {
+  //   setAnonChecked(anonChecked);
+  //   setSuggestionChecked(suggestionChecked);
+  // }, [anonChecked, suggestionChecked]);
 
   useEffect(() => {
     if (form === undefined && sessionTitle) {
@@ -80,6 +76,14 @@ const InfoModal: React.FC<InfoModalProps> = ({
     }
   }, [sessionTitle]);
 
+  useEffect(() => {
+    if (title && description) {
+      sendInfo({
+        title: title,
+        description: description,
+      });
+    }
+  }, []);
 
   return (
     <div
@@ -101,18 +105,21 @@ const InfoModal: React.FC<InfoModalProps> = ({
         <CustomInput
           className={classnames('button--secondary', styles['input-modal'])}
           placeholder={'Write your title here...'}
-          value={sessionTitle ? title : form?.title}
+          // value={sessionTitle ? title : form?.title}
+          value={title}
           label={labelTitle}
           onChange={(event) => setTitle(event.target.value)}
         />
         <Textarea
           w={'100%'}
           placeholder={'Write your description here...'}
-          value={form?.description === description ? form.description : description}
+          value={
+            form?.description === description ? form.description : description
+          }
           label={labelTextarea}
           onChange={(event) => setDescription(event.target.value)}
         />
-        {form === undefined ? (
+        {/* {form === undefined ? (
           <Flex direction={'column'} gap="16px">
             <Switch
               label="Anonymous feedback"
@@ -133,7 +140,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
             label={labelTags}
             onChange={(event) => setTags(event.target.value)}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

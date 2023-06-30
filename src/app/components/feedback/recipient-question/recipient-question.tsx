@@ -43,6 +43,8 @@ const RecipientQuestion: React.FC<RecipientAnswerProps> = ({
     }
   }, [question]);
 
+  // BUG - answers not displayed
+  console.log(answer);
   return (
     <Flex direction="column" gap="16px">
       <div className="question">{question.value}</div>

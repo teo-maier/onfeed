@@ -1,3 +1,4 @@
+import { showErrorNotification, showSuccessNotification } from '@onfeed/helpers';
 import { Employee } from '@onfeed/models';
 import { AuthSliceState, RootState } from '@onfeed/redux';
 import { employeeAPI } from '@onfeed/services';
@@ -10,6 +11,13 @@ const MyProfile = () => {
     (state) => state.auth
   );
 
+  const handleOnSubmit = (employee: Employee) => {
+    employeeAPI
+    .edit(employee)
+    .then(() => showSuccessNotification('Details changed successfully!'))
+    .catch(() => showErrorNotification('Could not update details!'));
+  }
+
   return (
     <div className={styles['form-container']}>
       <div className={styles['form-content']}>
@@ -18,7 +26,7 @@ const MyProfile = () => {
             formTitle="My profile"
             subTitle={'Account details'}
             employee={loggedInUser}
-            onSubmit={(e: Employee) => employeeAPI.edit(e)}
+            onSubmit={handleOnSubmit}
           />
         ) : null}
       </div>

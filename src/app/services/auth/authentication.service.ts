@@ -19,10 +19,8 @@ export const AuthService = {
       email,
       password,
     }).then((response) => {
-      console.log(response.headers['authorization'])
       if (response.headers['authorization']) {
         setTokenToCookie(response.headers['authorization']);
-        console.log(getValueFromCookie('ILikeCookies'));
         sessionStorage.setItem('token', response.headers['authorization']);
       }
       return response.data;

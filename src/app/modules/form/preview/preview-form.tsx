@@ -100,7 +100,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
           form={editMode ? form : null}
           labelTitle="Form title"
           labelTextarea="Description"
-          labelTags="Tags"
           sendInfo={handleInfoValues}
         />
       </Flex>
@@ -129,12 +128,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
               {editMode && form && !infoValues
                 ? form.description
                 : infoValues?.description}
-            </div>
-          </Flex>
-          <Flex direction="column" gap="xs">
-            <div className="caption">Tags</div>
-            <div className={classnames('caption', styles['info-values'])}>
-              {infoValues?.tags}
             </div>
           </Flex>
         </Flex>

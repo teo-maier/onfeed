@@ -4,7 +4,6 @@ import { resetAlreadySelected, RootState, TeamSliceState } from '@onfeed/redux';
 import classnames from 'classnames';
 import { useEffect } from 'react';
 import { IoAdd } from 'react-icons/io5';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../button/button';
 import styles from './team-member-list.module.scss';
 
@@ -17,20 +16,6 @@ const TeamMemberList: React.FC<TeamMemberListProps> = ({
   members,
   onClick,
 }) => {
-  const dispatch = useDispatch();
-
-  const { alreadySelected, selectedTeamMembers} = useSelector<RootState, TeamSliceState>(
-    (state) => state.team
-  );
-
-  // useEffect(() => {
-  //   console.log(alreadySelected)
-  //   if (alreadySelected) {
-  //     showWarningNotification('Employee already selected !');
-  //     dispatch(resetAlreadySelected());
-  //   }
-  // }, [selectedTeamMembers]);
-
   return (
     <div className={styles['team-container']}>
       {members?.map((member: TeamMember | Employee) => (

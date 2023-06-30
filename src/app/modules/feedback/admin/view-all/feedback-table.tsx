@@ -44,6 +44,12 @@ const FeedbackPageAdmin = () => {
     navigate(`${ONFEED_ROUTES.SESSION}/${ONFEED_ROUTES.VIEW}/${id}`);
   };
 
+  const getDate = (date: Date | undefined) => {
+    if (date) {
+      return new Date(date).toLocaleDateString('cy-GB');
+    }
+  };
+
   const rows =
     allSessions.length > 0 &&
     allSessions.map((session: Session) => (
@@ -55,14 +61,14 @@ const FeedbackPageAdmin = () => {
         <td>
           <FeedbackStatus sessionId={session.id!} />
         </td>
-        <td className="body--secondary">{session.updatedAt?.toString()}</td>
-        <td>
+        <td className="body--secondary">{getDate(session.updatedAt)}</td>
+        {/* <td>
           <span
             className={classnames(styles['table-anon'], {
               [styles['table-anon--isAnon']]: session.anonymous,
             })}
           ></span>
-        </td>
+        </td> */}
       </tr>
     ));
 
@@ -79,7 +85,7 @@ const FeedbackPageAdmin = () => {
                   <th>Results</th>
                   <th>Status</th>
                   <th>Date</th>
-                  <th>Anonymous</th>
+                  {/* <th>Anonymous</th> */}
                 </tr>
               </thead>
               <tbody>{rows}</tbody>

@@ -7,7 +7,7 @@ import { useForm } from '@mantine/form';
 import { login } from '../../redux/slices/auth-slice';
 import classnames from 'classnames';
 import { ButtonSize, ButtonVariant } from './../../../helpers/constants/enums';
-import { OnfeedLogo } from '@onfeed/assets';
+import { Logo } from '@onfeed/assets';
 import { ONFEED_ROUTES, UserRole } from 'src/helpers/constants';
 import { Form } from '@onfeed/components';
 
@@ -123,7 +123,7 @@ const LogInForm = () => {
         </div>
       )}
       <div className={styles['log-in-container']}>
-        <OnfeedLogo />
+        <Logo />
         <Form
           loading={loading}
           onSubmit={handleLogin}
