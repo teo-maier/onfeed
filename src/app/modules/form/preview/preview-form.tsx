@@ -47,6 +47,7 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
 
   const handleBubbleClickRight = () => {
     if (infoValues) {
+      dispatch(removeIdFromQuestions());
       setNextClick(true);
     } else {
       showWarningNotification('Please add information !');
@@ -62,7 +63,6 @@ const PreviewForm: React.FC<PreviewFormProps> = ({ goBack }) => {
   };
 
   const handleConfirm = () => {
-    dispatch(removeIdFromQuestions());
     if (infoValues) {
       if (editMode) {
         formAPI

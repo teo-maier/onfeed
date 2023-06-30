@@ -111,7 +111,7 @@ const ViewFeedbackAdmin = () => {
           <RecipientForm form={form} recipient={recipient} />
         </Flex>
       )}
-      <EmptyState isEmpty={form === undefined}>No one responded</EmptyState>
+      <EmptyState isEmpty={form === undefined}>No one responded yet</EmptyState>
     </Flex>
   );
 };

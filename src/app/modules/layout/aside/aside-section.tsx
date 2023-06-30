@@ -65,7 +65,7 @@ const AsideSection: React.FC<AsideSectionProps> = ({ drawerOpened }) => {
             <div className={styles['drawer-content']}>
               <ScrollArea h="100%" scrollbarSize={8}>
                 <div className={styles['drawer-content-list']}>
-                  {allDrafts ? (
+                  {allDrafts && allDrafts?.length > 0 ? (
                     allDrafts.map((session) => (
                       <SessionDraft
                         session={session}
@@ -79,7 +79,7 @@ const AsideSection: React.FC<AsideSectionProps> = ({ drawerOpened }) => {
                         styles['empty-state']
                       )}
                     >
-                      No drafts
+                      No drafts created yet
                     </div>
                   )}
                 </div>

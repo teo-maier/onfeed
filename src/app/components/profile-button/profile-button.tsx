@@ -1,20 +1,19 @@
-import { ButtonVariant } from '@onfeed/helpers';
+import { ButtonVariant, getUserInitials } from '@onfeed/helpers';
+import { AuthSliceState, RootState } from '@onfeed/redux';
 import { MdMenu } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { Avatar } from '../avatar/avatar';
 import { Button } from '../button/button';
 import styles from './profile-button.module.scss';
 
 interface ProfileButtonProps {
-  //   employee:  Employee;
   handleClick?: () => void;
-  drawerOpened?: boolean;
 }
 
-const ProfileButton: React.FC<ProfileButtonProps> = ({
-  //   employee,
-  handleClick,
-  drawerOpened,
-}) => {
+const ProfileButton: React.FC<ProfileButtonProps> = ({ handleClick }) => {
+  const { loggedInUser } = useSelector<RootState, AuthSliceState>(
+    (state) => state.auth
+  );
   return (
     <Button
       fullWidth
@@ -22,7 +21,7 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({
       onClick={() => handleClick && handleClick()}
       className={styles['user-button-container']}
     >
-      <Avatar initials={'TM'} />
+      <Avatar initials={loggedInUser ? getUserInitials(loggedInUser) : ''} />
       <MdMenu size={16} color="black" />
     </Button>
   );

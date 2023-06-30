@@ -44,7 +44,7 @@ export const OnfeedRoutes = () => {
           />
         }
       >
-        {role === UserRole.ADMIN ? (
+        {role === UserRole.MANAGER ? (
           <Route path="/" element={<AppLayout />}>
             <Route
               index

@@ -33,7 +33,7 @@ const LogInForm = () => {
         const userRole = response.authorities[0].authority;
         if (userRole) {
           dispatch(login({ isAuthenticated: true, role: userRole }));
-          if (userRole === UserRole.ADMIN) {
+          if (userRole === UserRole.MANAGER) {
             navigate(ONFEED_ROUTES.SESSION);
           } else {
             navigate(ONFEED_ROUTES.FEEDBACK );

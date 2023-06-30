@@ -65,7 +65,11 @@ export const formSlice = createSlice({
       }
     },
     removeIdFromQuestions: (state) => {
-      state.questions.map((question) => delete question['id']);
+      state.questions = state.questions.map((obj) => {
+        const { id, ...rest } = obj;
+        return rest;
+      });
+      // state.questions.map((question) => delete question['id']);
     },
     setAnswer: (state, { payload }: PayloadAction<Answer>) => {
       if (!state.answers.some((q) => q.question.id === payload.question.id)) {

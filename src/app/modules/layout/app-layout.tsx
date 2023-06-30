@@ -30,7 +30,7 @@ const AppLayout: React.FC = () => {
     <AppShell
       padding={5}
       header={
-        role === UserRole.ADMIN ? (
+        role === UserRole.MANAGER ? (
           <AdminHeader openDrawer={openDrawer}/>
         ) : (
           <EmployeeHeader />
