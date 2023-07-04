@@ -20,7 +20,6 @@ const RecipientsHeader: React.FC<RecipientsHeaderProps> = ({
     (state) => state.form
   );
 
-  console.log(employeeAnswerId);
 
   return (
     <ScrollArea w="calc(100% - 200px)">

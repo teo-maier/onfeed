@@ -25,7 +25,6 @@ export const teamSlice = createSlice({
         state.selectedTeamMembers = [...state.selectedTeamMembers, payload];
         state.alreadySelected = false;
       } else {
-        console.log('ALO')
         state.alreadySelected = true;
       }
     },

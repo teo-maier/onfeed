@@ -10,6 +10,7 @@ import { ButtonSize, ButtonVariant } from './../../../helpers/constants/enums';
 import { Logo } from '@onfeed/assets';
 import { ONFEED_ROUTES, UserRole } from 'src/helpers/constants';
 import { Form } from '@onfeed/components';
+import { showErrorNotification } from '@onfeed/helpers';
 
 export interface UserLoginData {
   email: string;
@@ -36,7 +37,7 @@ const LogInForm = () => {
           if (userRole === UserRole.MANAGER) {
             navigate(ONFEED_ROUTES.SESSION);
           } else {
-            navigate(ONFEED_ROUTES.FEEDBACK );
+            navigate(ONFEED_ROUTES.FEEDBACK);
           }
         } else {
           setMessage('Invalid credentials or role');
@@ -50,6 +51,7 @@ const LogInForm = () => {
         }
         setMessage(errorMsg);
         setLoading(false);
+        showErrorNotification('Invalid credentials');
       });
   };
 

@@ -13,7 +13,6 @@ const AnswerModal: React.FC<AnswerModalProps> = ({ isEditMode }) => {
     (state) => state.form
   );
 
-  console.log(questions)
   
   return (
     <div className={styles['modal-answer-container']}>

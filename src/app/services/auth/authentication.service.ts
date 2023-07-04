@@ -1,4 +1,4 @@
-import { getValueFromCookie, setTokenToCookie, UserRole } from '@onfeed/helpers';
+import { setTokenToCookie, UserRole } from '@onfeed/helpers';
 import jwt_decode from 'jwt-decode';
 import { HttpClient } from '../config/http-client.service';
 

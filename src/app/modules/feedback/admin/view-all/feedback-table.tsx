@@ -54,7 +54,7 @@ const FeedbackPageAdmin = () => {
     allSessions.length > 0 &&
     allSessions.map((session: Session) => (
       <tr key={session.id} onClick={() => handleOnRowClick(session.id!)}>
-        <td className="body--secondary">{session.title}</td>
+        <td className="body--secondary" width={300}>{session.title}</td>
         <td className="body--secondary">
           <FeedbackBubbleResults sessionId={session.id!} />
         </td>

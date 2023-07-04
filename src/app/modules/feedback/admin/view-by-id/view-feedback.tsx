@@ -44,7 +44,6 @@ const ViewFeedbackAdmin = () => {
     if (sessionId) {
       sessionAPI.getById(sessionId).then((session) => {
         if (recipient.id) {
-          console.log(recipient);
           sessionRecipientsAPI
             .edit(recipient.id, {
               id: recipient.id,

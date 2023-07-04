@@ -84,7 +84,6 @@ const CustomAnswer: React.FC<CustomAnswerProps> = ({
     // console.log(question);
     if (question && loggedInUser && !editMode) {
       if (textAreaAnswer) {
-        console.log('AAA');
         dispatch(
           setAnswer({
             value: textAreaAnswer,
