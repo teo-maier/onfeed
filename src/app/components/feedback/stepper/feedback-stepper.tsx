@@ -8,7 +8,12 @@ import {
   InformationValues,
   NotificationModal,
 } from '@onfeed/components';
-import { ButtonVariant, ONFEED_ROUTES, showWarningNotification, SLUG_KEY } from '@onfeed/helpers';
+import {
+  ButtonVariant,
+  ONFEED_ROUTES,
+  showWarningNotification,
+  SLUG_KEY,
+} from '@onfeed/helpers';
 import { Team } from '@onfeed/models';
 import {
   AuthSliceState,
@@ -117,11 +122,11 @@ const FeedbackStepper: React.FC<FeedbackStepperProps> = () => {
   };
 
   useEffect(() => {
-    if(active === 3 && !infoValues) {
-      showWarningNotification("Please provide the required information !")
+    if (active === 3 && !infoValues) {
+      showWarningNotification('Please provide the required information !');
       prevStep();
     }
-  }, [active])
+  }, [active]);
 
   useEffect(() => {
     if (sessionId) {

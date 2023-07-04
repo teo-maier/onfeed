@@ -41,8 +41,11 @@ const AnswerFeedback = () => {
     navigate(-1);
   };
 
+  console.log(session);
   const handleConfirm = () => {
-    answerAPI.create(answers).then(() => navigate(-1));
+    if (session) {
+      answerAPI.create(answers, session).then(() => navigate(-1));
+    }
   };
 
   return (

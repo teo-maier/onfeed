@@ -10,7 +10,7 @@ import styles from './recipient-answer.module.scss';
 
 interface RecipientAnswerProps {
   question: Question;
-  recipient?: SessionRecipients;
+  recipient: SessionRecipients;
 }
 
 const RecipientQuestion: React.FC<RecipientAnswerProps> = ({
@@ -22,20 +22,28 @@ const RecipientQuestion: React.FC<RecipientAnswerProps> = ({
   const { loggedInUser, role } = useSelector<RootState, AuthSliceState>(
     (state) => state.auth
   );
-
+  console.log(recipient);
   const [answer, setAnswer] = useState<Answer>();
 
   useEffect(() => {
-    if (question.id) {
+    if (recipient.session && recipient.session.id && question.id) {
       if (role === UserRole.EMPLOYEE && loggedInUser) {
         answerAPI
-          .getByQuestionIdAndEmployeeId(question.id, loggedInUser.id)
+          .getBySessionIdAndEmployeeId(
+            recipient?.session.id,
+            loggedInUser.id,
+            question.id
+          )
           .then((answer) => setAnswer(answer));
         dispatch(setEmployeeAnswerId(loggedInUser.id));
       } else {
         if (recipient) {
           answerAPI
-            .getByQuestionIdAndEmployeeId(question.id, recipient.employee.id)
+            .getBySessionIdAndEmployeeId(
+              recipient?.session.id,
+              recipient.employee.id,
+              question.id
+            )
             .then((answer) => setAnswer(answer));
           dispatch(setEmployeeAnswerId(recipient.employee.id));
         }

@@ -1,19 +1,23 @@
-import { Answer } from '@onfeed/models';
+import { Answer, Session } from '@onfeed/models';
 import { HttpClient } from '../config/http-client.service';
 
 export const ANSWER_URL = '/answer';
 
 export const answerAPI = {
-  getByQuestionIdAndEmployeeId: (
-    questionId: string | number,
-    employeeId: string | number
+  getBySessionIdAndEmployeeId: (
+    sessionId: string | number,
+    employeeId: string | number,
+    questionId: string | number
   ): Promise<Answer> => {
     return HttpClient.get(`${ANSWER_URL}/question`, {
-      params: { questionId: questionId, employeeId: employeeId },
+      params: { sessionId: sessionId, employeeId: employeeId, questionId: questionId },
     });
   },
 
-  create: (answers: Answer[]): Promise<Answer[]> => {
-    return HttpClient.post(`${ANSWER_URL}`, { answers: answers });
+  create: (answers: Answer[], session: Session): Promise<Answer[]> => {
+    return HttpClient.post(`${ANSWER_URL}`, {
+      answers: answers,
+      session: session,
+    });
   },
 };

@@ -6,7 +6,7 @@ import {
   RecipientsHeader,
 } from '@onfeed/components';
 import { ButtonSize, ButtonVariant, SLUG_KEY } from '@onfeed/helpers';
-import { Form, SessionRecipients } from '@onfeed/models';
+import { Form, Session, SessionRecipients } from '@onfeed/models';
 import {
   RootState,
   SessionSliceState,
@@ -28,13 +28,13 @@ const ViewFeedbackAdmin = () => {
     SessionSliceState
   >((state) => state.session);
 
-  const [form, setForm] = useState<Form>();
+  const [session, setSession] = useState<Session>();
   const [recipient, setRecipient] = useState<SessionRecipients>();
 
   const handleOnRecipientClick = (recipient: SessionRecipients) => {
-    if (recipient.id) {
-      formAPI.getByRecipientId(recipient.id).then((formByRecipient) => {
-        setForm(formByRecipient);
+    if (recipient && sessionId) {
+      sessionAPI.getById(sessionId).then((session) => {
+        setSession(session);
         setRecipient(recipient);
       });
     }
@@ -55,7 +55,7 @@ const ViewFeedbackAdmin = () => {
               updatedAt: recipient.updatedAt,
             })
             .then((editedRecipient) => setRecipient(editedRecipient));
-            // here
+          // here
         }
       });
     }
@@ -72,11 +72,11 @@ const ViewFeedbackAdmin = () => {
   }, [sessionId]);
 
   useEffect(() => {
-    if (recipients.length > 0) {
+    if (recipients.length > 0 && sessionId) {
       const firstRecipient = recipients[0];
       if (firstRecipient.id && firstRecipient.completed) {
-        formAPI.getByRecipientId(firstRecipient.id).then((formByRecipient) => {
-          setForm(formByRecipient);
+        sessionAPI.getById(sessionId).then((session) => {
+          setSession(session);
           setRecipient(firstRecipient);
         });
       }
@@ -91,7 +91,7 @@ const ViewFeedbackAdmin = () => {
           handleOnRecipientClick={handleOnRecipientClick}
         />
       </div>
-      {form && recipient && (
+      {session && recipient && (
         <Flex justify="flex-start" w="100%" gap="100px">
           <Button
             className="button--secondary"
@@ -107,10 +107,10 @@ const ViewFeedbackAdmin = () => {
           >
             Reviewed
           </Button>
-          <RecipientForm form={form} recipient={recipient} />
+          <RecipientForm session={session} recipient={recipient} />
         </Flex>
       )}
-      <EmptyState isEmpty={form === undefined}>No one responded yet</EmptyState>
+      <EmptyState isEmpty={session === undefined}>No one responded yet</EmptyState>
     </Flex>
   );
 };

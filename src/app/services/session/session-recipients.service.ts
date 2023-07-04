@@ -20,6 +20,10 @@ export const sessionRecipientsAPI = {
     return HttpClient.get(`${SESSION_RECIPIENTS_URL}/${recipientId}`);
   },
 
+  getByEmployeeIdAndSessionId: (employeeId: string | number, sessionId: string | number): Promise<SessionRecipients> => {
+    return HttpClient.get(`${SESSION_RECIPIENTS_URL}/${employeeId}/${sessionId}`);
+  },
+
   getSessionResultBySessionId: (
     sessionId: string | number
   ): Promise<SessionResults> => {
